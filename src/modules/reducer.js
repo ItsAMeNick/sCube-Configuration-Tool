@@ -40,7 +40,22 @@ const sCubeReducer = (state = initialState, action) => {
             let id = uuidv1();
             newState.CF.sub_groups[id] = {
                 id: id,
-                subgroup: ""
+                subgroup: "",
+                fields: {}
+            };
+            return newState;
+        }
+
+        case "add_CF_subgroup_field": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.CF.sub_groups[action.payload].fields[id] = {
+                id: id,
+                label: "",
+                type: "",
+                disp_order: "",
+                required: "",
+                aca_disp: "",
             };
             return newState;
         }
