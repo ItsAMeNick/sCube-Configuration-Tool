@@ -42,8 +42,8 @@ class CF extends Component {
 
     generateSubgroupCards() {
         let cards = [];
-        if (!this.props.page_data.sub_groups) return null;
-        cards = Object.values(this.props.page_data.sub_groups).map(sg => {
+        if (!this.props.page_data.subgroups) return null;
+        cards = Object.values(this.props.page_data.subgroups).map(sg => {
             return (
                 <div style={{"padding":"0px 10px 10px 10px","width":"100%","float":"left"}} key={sg.id}>
                 <Card>
@@ -56,7 +56,7 @@ class CF extends Component {
                     <Card.Body>
                         <Row>
                             <Col><Form.Label>Custom Fields Subgroup</Form.Label></Col>
-                            <Col><Form.Control id="group_code" value={this.props.page_data.sub_groups[sg.id].subgroup} type="text" onChange={e => this.handleChangeSubgroup(e, sg.id)}/></Col>
+                            <Col><Form.Control id="group_code" value={this.props.page_data.subgroups[sg.id].subgroup} type="text" onChange={e => this.handleChangeSubgroup(e, sg.id)}/></Col>
                         </Row>
                     </Card.Body>
                     </div>
@@ -91,14 +91,14 @@ class CF extends Component {
 
     genFields(id) {
         let fields = [];
-        fields = Object.values(this.props.page_data.sub_groups[id].fields).map(f => {
+        fields = Object.values(this.props.page_data.subgroups[id].fields).map(f => {
             return (
                 <tr key={f.id}>
-                    <td><Form.Control id={"label"} value={this.props.page_data.sub_groups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"type"} value={this.props.page_data.sub_groups[id].fields[f.id].type} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"disp_order"} value={this.props.page_data.sub_groups[id].fields[f.id].disp_order} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"required"} value={this.props.page_data.sub_groups[id].fields[f.id].required} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.sub_groups[id].fields[f.id].aca_disp} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"label"} value={this.props.page_data.subgroups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"type"} value={this.props.page_data.subgroups[id].fields[f.id].type} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"disp_order"} value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"required"} value={this.props.page_data.subgroups[id].fields[f.id].required} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
                     <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>
                 </tr>
             );

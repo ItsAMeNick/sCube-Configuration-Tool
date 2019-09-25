@@ -24,7 +24,7 @@ class GRD extends Component {
                     <strong>{this.props.title}</strong>
                 </Card.Header>
                 <Card.Body>
-                <div style={{"width":"50%"}}>
+                <div style={{"width":"50%","padding":"10px","float":"left"}}>
                     <Row>
                         <Col><Form.Label>Record Type Alias</Form.Label></Col>
                         <Col><Form.Control id="alias" value={this.props.page_data.alias} type="text" onChange={this.handleChange}/></Col>
@@ -48,6 +48,12 @@ class GRD extends Component {
                     <Row>
                         <Col><Form.Label>Category</Form.Label></Col>
                         <Col><Form.Control id="category" value={this.props.page_data.category} type="text" onChange={this.handleChange}/></Col>
+                    </Row>
+                </div>
+                <div style={{"width":"50%","padding":"10px","float":"left"}}>
+                    <Row>
+                        <Col><Form.Label>Service Provider Code</Form.Label></Col>
+                        <Col><Form.Control id="svp" value={this.props.page_data.svp} type="text" onChange={this.handleChange}/></Col>
                     </Row>
                 </div>
                 </Card.Body>

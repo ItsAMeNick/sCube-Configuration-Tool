@@ -4,6 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     page: 2,
     GRD: {
+        svp: "",
         alias: "",
         module: "",
         type: "",
@@ -12,7 +13,7 @@ const initialState = {
     },
     CF: {
         group_code: "",
-        sub_groups: {},
+        subgroups: {},
     }
 };
 
@@ -37,20 +38,20 @@ const sCubeReducer = (state = initialState, action) => {
 
         case "update_CF_subgroup": {
             let newState = _.cloneDeep(state);
-            newState.CF.sub_groups[action.payload.subgroup].subgroup = action.payload.value;
+            newState.CF.subgroups[action.payload.subgroup].subgroup = action.payload.value;
             return newState;
         }
 
         case "update_CF_subgroup_field": {
             let newState = _.cloneDeep(state);
-            newState.CF.sub_groups[action.payload.subgroup].fields[action.payload.field][action.payload.label] = action.payload.value;
+            newState.CF.subgroups[action.payload.subgroup].fields[action.payload.field][action.payload.label] = action.payload.value;
             return newState;
         }
 
         case "add_CF_subgroup": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
-            newState.CF.sub_groups[id] = {
+            newState.CF.subgroups[id] = {
                 id: id,
                 subgroup: "",
                 fields: {}
@@ -61,7 +62,7 @@ const sCubeReducer = (state = initialState, action) => {
         case "add_CF_subgroup_field": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
-            newState.CF.sub_groups[action.payload].fields[id] = {
+            newState.CF.subgroups[action.payload].fields[id] = {
                 id: id,
                 label: "",
                 type: "",
@@ -74,14 +75,14 @@ const sCubeReducer = (state = initialState, action) => {
 
         case "del_CF_subgroup": {
             let newState = _.cloneDeep(state);
-            delete newState.CF.sub_groups[action.payload]
+            delete newState.CF.subgroups[action.payload]
             return newState;
         }
 
         case "del_CF_subgroup_field": {
             let newState = _.cloneDeep(state);
             console.log(action.payload)
-            delete newState.CF.sub_groups[action.payload.subgroup].fields[action.payload.field];
+            delete newState.CF.subgroups[action.payload.subgroup].fields[action.payload.field];
             return newState;
         }
 
