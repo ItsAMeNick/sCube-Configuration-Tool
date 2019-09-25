@@ -3,8 +3,15 @@ import { connect } from "react-redux";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
+import Pagination from "react-bootstrap/Pagination";
+
+import GRD from "./components/GeneralRecordDetails.js";
 
 import "./App.css";
+
+import page_structure from "./components/page_structure.js";
+let pages = page_structure.pages;
 
 class App extends Component {
     constructor(props) {
@@ -15,6 +22,7 @@ class App extends Component {
     handlePage() {
         switch(this.props.page) {
             case 0: return "Hello";
+            case 1: return <GRD/>;
             default: return null;
         }
     }
@@ -28,9 +36,11 @@ class App extends Component {
                     <hr/>
                 </Col>
             </Row>
-            <Row>
+            <Card>
                 {this.handlePage()}
-            </Row>
+                <Card.Footer>
+                </Card.Footer>
+            </Card>
         </div>
         );
     }

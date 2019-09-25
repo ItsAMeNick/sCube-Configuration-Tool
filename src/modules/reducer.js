@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 const initialState = {
-    page: 0,
+    page: 1,
 };
 
 const sCubeReducer = (state = initialState, action) => {
