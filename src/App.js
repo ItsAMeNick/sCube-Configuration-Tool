@@ -142,9 +142,11 @@ class App extends Component {
             <Card>
                 {this.handlePageBody()}
                 <Card.Footer>
-                <Pagination onClick={(e) => this.handlePagination(e)}>
+                <div style={{"alignItems":"center", "display":"flex"}}>
+                <Pagination onClick={(e) => this.handlePagination(e)} style={{"margin":"auto"}}>
                     {this.handlePageFooter()}
                 </Pagination>
+                </div>
                 </Card.Footer>
             </Card>
         </div>
