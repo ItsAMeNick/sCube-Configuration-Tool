@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "react-bootstrap/Card";
 
-class GRD extends Component {
+class INSP extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -13,7 +13,7 @@ class GRD extends Component {
         return (
             <React.Fragment>
                 <Card.Header>
-                    <strong>{this.props.title}</strong>
+                    <strong>{this.props.title}s</strong>
                 </Card.Header>
                 <Card.Body>
                     <Card.Text>
@@ -32,4 +32,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GRD);
+export default connect(mapStateToProps, mapDispatchToProps)(INSP);

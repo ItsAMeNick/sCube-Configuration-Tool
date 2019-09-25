@@ -6,7 +6,19 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Pagination from "react-bootstrap/Pagination";
 
+import STRT from "./components/Start.js";
 import GRD from "./components/GeneralRecordDetails.js";
+import CF from "./components/CustomFields.js";
+import FEE from "./components/Fees.js";
+import CONT from "./components/ContactTypes.js";
+import INTK from "./components/IntakeForm.js";
+import INSP from "./components/Inspections.js";
+import CHCK from "./components/Checklists.js";
+import STAT from "./components/Status.js";
+import DOC from "./components/DocumentTypes.js";
+import DDL from "./components/SharedDropdownLists.js";
+import COND from "./components/Conditions.js";
+import FIN from "./components/Finish.js";
 
 import "./App.css";
 
@@ -29,8 +41,19 @@ class App extends Component {
 
     handlePageBody() {
         switch(page_map[this.props.page].id) {
-            case "STRT": return "Hello";
-            case 1: return <GRD/>;
+            case "STRT": return <STRT title={page_map[this.props.page].title}/>;
+            case "GRD": return <GRD title={page_map[this.props.page].title}/>;
+            case "CF": return <CF title={page_map[this.props.page].title}/>;
+            case "FEE": return <FEE title={page_map[this.props.page].title}/>;
+            case "CONT": return <CONT title={page_map[this.props.page].title}/>;
+            case "INTK": return <INTK title={page_map[this.props.page].title}/>;
+            case "INSP": return <INSP title={page_map[this.props.page].title}/>;
+            case "CHCK": return <CHCK title={page_map[this.props.page].title}/>;
+            case "STAT": return <STAT title={page_map[this.props.page].title}/>;
+            case "DOC": return <DOC title={page_map[this.props.page].title}/>;
+            case "DDL": return <DDL title={page_map[this.props.page].title}/>;
+            case "COND": return <COND title={page_map[this.props.page].title}/>;
+            case "FIN": return <FIN title={page_map[this.props.page].title}/>;
             default: return null;
         }
     }

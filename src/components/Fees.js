@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "react-bootstrap/Card";
 
-class GRD extends Component {
+class FEE extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -32,4 +32,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GRD);
+export default connect(mapStateToProps, mapDispatchToProps)(FEE);

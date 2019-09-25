@@ -11,7 +11,7 @@ var pages = {
     1: {
         title: "General Record Details",
         order: 1,
-        id: "GNR"
+        id: "GRD"
     },
     2: {
         title: "Custom Fields",
