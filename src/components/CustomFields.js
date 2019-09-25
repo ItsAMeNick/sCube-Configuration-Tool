@@ -20,6 +20,10 @@ class CF extends Component {
         this.props.update(event.target.id, event.target.value);
     }
 
+    handleChangeSubgroup(event, subgroup) {
+        this.props.updateSubgroup(subgroup, event.target.value);
+    }
+
     handleChangeField(event, subgroup, field) {
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.value);
     }
@@ -52,7 +56,7 @@ class CF extends Component {
                     <Card.Body>
                         <Row>
                             <Col><Form.Label>Custom Fields Subgroup</Form.Label></Col>
-                            <Col><Form.Control id="group_code" value={this.props.page_data.group_code} type="text" onChange={this.handleChange}/></Col>
+                            <Col><Form.Control id="group_code" value={this.props.page_data.sub_groups[sg.id].subgroup} type="text" onChange={e => this.handleChangeSubgroup(e, sg.id)}/></Col>
                         </Row>
                     </Card.Body>
                     </div>
@@ -155,6 +159,13 @@ const mapDispatchToProps = dispatch => ({
     deleteSubgroup: (id) => dispatch({
         type: "del_CF_subgroup",
         payload: id,
+    }),
+    updateSubgroup: (sg, v) => dispatch({
+        type: "update_CF_subgroup",
+        payload: {
+            subgroup: sg,
+            value: v,
+        }
     }),
     updateSubgroupField: (f, sg, l, v) => dispatch({
         type: "update_CF_subgroup_field",

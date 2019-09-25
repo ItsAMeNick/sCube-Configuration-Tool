@@ -35,7 +35,13 @@ const sCubeReducer = (state = initialState, action) => {
             return newState;
         }
 
-        case "update_CF_ssubgroup_field": {
+        case "update_CF_subgroup": {
+            let newState = _.cloneDeep(state);
+            newState.CF.sub_groups[action.payload.subgroup].subgroup = action.payload.value;
+            return newState;
+        }
+
+        case "update_CF_subgroup_field": {
             let newState = _.cloneDeep(state);
             newState.CF.sub_groups[action.payload.subgroup].fields[action.payload.field][action.payload.label] = action.payload.value;
             return newState;
