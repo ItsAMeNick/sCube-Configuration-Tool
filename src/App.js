@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
+import "./App.css";
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    handlePage() {
+        switch(this.props.page) {
+            case 0: return "Hello";
+            default: return null;
+        }
+    }
+
+    render() {
+        return (
+        <div className="App">
+            <Row>
+                <Col>
+                    <h1>[s]Cube Configuration Tool</h1>
+                    <hr/>
+                </Col>
+            </Row>
+            <Row>
+                {this.handlePage()}
+            </Row>
+        </div>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    page: state.page
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
