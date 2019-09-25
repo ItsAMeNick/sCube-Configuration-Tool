@@ -13,18 +13,27 @@ class CF extends Component {
         super(props);
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeField = this.handleChangeField.bind(this);
     }
 
     handleChange(event) {
         this.props.update(event.target.id, event.target.value);
     }
 
+    handleChangeField(event, subgroup, field) {
+        this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.value);
+    }
+
     handleDelete(event) {
-        this.props.delSubgroup(event.target.id);
+        this.props.deleteSubgroup(event.target.id);
     }
 
     addSubgroupFieldHelper(event) {
         this.props.addSubgroupField(event.target.id);
+    }
+
+    deleteSubgroupFieldHelper(event, subgroup) {
+        this.props.deleteSubgroupField(subgroup, event.target.id);
     }
 
     generateSubgroupCards() {
@@ -81,11 +90,12 @@ class CF extends Component {
         fields = Object.values(this.props.page_data.sub_groups[id].fields).map(f => {
             return (
                 <tr key={f.id}>
-                    <td>{f.label}</td>
-                    <td>{f.type}</td>
-                    <td>{f.disp_order}</td>
-                    <td>{f.required}</td>
-                    <td>{f.aca_disp}</td>
+                    <td><Form.Control id={"label"} value={this.props.page_data.sub_groups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"type"} value={this.props.page_data.sub_groups[id].fields[f.id].type} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"disp_order"} value={this.props.page_data.sub_groups[id].fields[f.id].disp_order} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"required"} value={this.props.page_data.sub_groups[id].fields[f.id].required} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.sub_groups[id].fields[f.id].aca_disp} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>
                 </tr>
             );
         })
@@ -142,10 +152,26 @@ const mapDispatchToProps = dispatch => ({
         type: "add_CF_subgroup_field",
         payload: id,
     }),
-    delSubgroup: (id) => dispatch({
+    deleteSubgroup: (id) => dispatch({
         type: "del_CF_subgroup",
         payload: id,
-    })
+    }),
+    updateSubgroupField: (f, sg, l, v) => dispatch({
+        type: "update_CF_subgroup_field",
+        payload: {
+            subgroup: sg,
+            field: f,
+            label: l,
+            value: v
+        }
+    }),
+    deleteSubgroupField: (sg, f) => dispatch({
+        type: "del_CF_subgroup_field",
+        payload: {
+            subgroup: sg,
+            field: f
+        }
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CF);

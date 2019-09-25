@@ -35,6 +35,12 @@ const sCubeReducer = (state = initialState, action) => {
             return newState;
         }
 
+        case "update_CF_ssubgroup_field": {
+            let newState = _.cloneDeep(state);
+            newState.CF.sub_groups[action.payload.subgroup].fields[action.payload.field][action.payload.label] = action.payload.value;
+            return newState;
+        }
+
         case "add_CF_subgroup": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
@@ -63,6 +69,13 @@ const sCubeReducer = (state = initialState, action) => {
         case "del_CF_subgroup": {
             let newState = _.cloneDeep(state);
             delete newState.CF.sub_groups[action.payload]
+            return newState;
+        }
+
+        case "del_CF_subgroup_field": {
+            let newState = _.cloneDeep(state);
+            console.log(action.payload)
+            delete newState.CF.sub_groups[action.payload.subgroup].fields[action.payload.field];
             return newState;
         }
 
