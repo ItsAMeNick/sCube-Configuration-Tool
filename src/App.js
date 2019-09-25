@@ -11,7 +11,15 @@ import GRD from "./components/GeneralRecordDetails.js";
 import "./App.css";
 
 import page_structure from "./components/page_structure.js";
-let pages = page_structure.pages;
+let page_map = Object.keys(page_structure.pages).map(k => {
+    return page_structure.pages[k];
+}).sort((a, b) => {
+    if (a.order > b.order) {
+        return true;
+    } else {
+        return a.title > b.title;
+    }
+});
 
 class App extends Component {
     constructor(props) {
@@ -19,11 +27,83 @@ class App extends Component {
         this.state = {};
     }
 
-    handlePage() {
-        switch(this.props.page) {
-            case 0: return "Hello";
+    handlePageBody() {
+        switch(page_map[this.props.page].id) {
+            case "STRT": return "Hello";
             case 1: return <GRD/>;
             default: return null;
+        }
+    }
+
+    handlePageFooter() {
+        let pages = [];
+
+        if (this.props.page >= 2) {
+            pages.push(<Pagination.Item key={"first"}>{"<<<"}</Pagination.Item>);
+        }
+        if (this.props.page >= 1) {
+            pages.push(<Pagination.Item key={"prev_button"}>{"<"}</Pagination.Item>);
+        }
+        if (this.props.page >= 2) {
+            pages.push(<Pagination.Item disabled key={"prev_ellipsis"}>{"..."}</Pagination.Item>);
+        }
+        if (this.props.page >= 1) {
+            pages.push(<Pagination.Item key={"prev"}>{page_map[this.props.page-1].title}</Pagination.Item>);
+        }
+
+        pages.push(<Pagination.Item active={true} key={"active"}>{page_map[this.props.page].title}</Pagination.Item>);
+
+        if (this.props.page <= page_map.length-2) {
+            pages.push(<Pagination.Item key={"next"}>{page_map[this.props.page+1].title}</Pagination.Item>);
+        }
+        if (this.props.page <= page_map.length-3) {
+            pages.push(<Pagination.Item disabled key={"next_ellipsis"}>{"..."}</Pagination.Item>);
+        }
+        if (this.props.page <= page_map.length-2) {
+            pages.push(<Pagination.Item key={"next_button"}>{">"}</Pagination.Item>);
+        }
+        if (this.props.page <= page_map.length-3) {
+            pages.push(<Pagination.Item key={"last"}>{">>>"}</Pagination.Item>);
+        }
+
+        return pages;
+    }
+
+    handlePagination(event) {
+        if (event.target.tagName === "A") {
+            //Clicked on a link
+            switch(event.target.text) {
+                case "<<<": {
+                    this.props.updatePageNum(0);
+                    break;
+                }
+                case ">>>": {
+                    this.props.updatePageNum(page_map.length-1);
+                    break;
+                }
+                case "<": {
+                    this.props.updatePageNum(this.props.page-1);
+                    break;
+                }
+                case ">": {
+                    this.props.updatePageNum(this.props.page+1);
+                    break;
+                }
+                default: {
+                    let p = 0;
+                    for (let i in page_map) {
+                        if (page_map[i].title === event.target.text) {
+                            p = i;
+                            break;
+                        }
+                    }
+                    this.props.updatePageNum(parseInt(p));
+                    break;
+                }
+            }
+        } else {
+            //Clicked on the current page...
+            //Probably do nothing
         }
     }
 
@@ -37,8 +117,11 @@ class App extends Component {
                 </Col>
             </Row>
             <Card>
-                {this.handlePage()}
+                {this.handlePageBody()}
                 <Card.Footer>
+                <Pagination onClick={(e) => this.handlePagination(e)}>
+                    {this.handlePageFooter()}
+                </Pagination>
                 </Card.Footer>
             </Card>
         </div>
@@ -47,10 +130,14 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    page: state.page
+    page: state.page,
 });
 
 const mapDispatchToProps = dispatch => ({
+    updatePageNum: p => dispatch({
+        type: "update_page_number",
+        payload: p
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

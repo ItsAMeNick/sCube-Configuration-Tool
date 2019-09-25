@@ -13,11 +13,11 @@ class GRD extends Component {
         return (
             <React.Fragment>
                 <Card.Header>
-                    <Card.Title>General Record Information</Card.Title>
+                    <strong>General Record Information</strong>
                 </Card.Header>
                 <Card.Body>
                     <Card.Text>
-                    With supporting text below as a natural lead-in to additional content.
+                        Field Stuffs
                     </Card.Text>
                 </Card.Body>
             </React.Fragment>
