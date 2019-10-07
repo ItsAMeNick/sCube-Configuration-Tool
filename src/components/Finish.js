@@ -34,37 +34,87 @@ class FIN extends Component {
         text += this.props.data.CF.group_code;
         text += '</appSpecInfoGroupCode>';
         text += '<r1CheckboxGroup>APPLICATION</r1CheckboxGroup>';
-        text += '<servProvCode>';
+        text += '<serviceProviderCode>';
         text += this.props.data.GRD.svp;
-        text += '</servProvCode>';
+        text += '</serviceProviderCode>';
         text += '<asiModels>';
 
         for (let i in this.props.data.CF.subgroups) {
             let sg = this.props.data.CF.subgroups[i].subgroup;
             for (let f in this.props.data.CF.subgroups[i].fields) {
+                //ZPM: I made some updates here; specifically with how checkboxCode is called again in the XML for individual ASI Models.
+                //ZPM: I also adjusted to close out /asiModel.
                 let field = this.props.data.CF.subgroups[i].fields[f];
                 text += '<asiModel>';
                 text += '<r1CheckboxCode>';
-                text += sg;
+                text += this.props.data.CF.group_code;
                 text += '</r1CheckboxCode>';
                 text += '<r1CheckboxDesc>';
                 text += field.label;
                 text += '</r1CheckboxDesc>';
                 text += '<r1CheckboxGroup>APPLICATION</r1CheckboxGroup>';
                 text += '<r1CheckboxType>';
-                text += field.type;
+                text += sg;
                 text += '</r1CheckboxType>';
                 text += '<servProvCode>';
                 text += this.props.data.GRD.svp;
                 text += '</servProvCode>';
-                //YOU LEFT OFF HERE NICK!
+                //Drop downs; assume not handled in initial implementation.
+                text += '<asiDropdownModels/>';
+                //Display length; assume not hanlded in initial implementation.
+                text += '<displayLength>0</displayLength>';
+                //No clue what this does: 
+                text += '<locationQueryFlag>N</locationQueryFlag>';
+                //max length; assume not handled in iniital implementation
+                text += '<maxLength>0</maxLength>';
+                text += '<r1AttributeValueReqFlag>'; 
+                if(field.required == true)
+                {
+                    text += 'Y';
 
-                text += '<asiModel>';
+                }
+                else 
+                {
+                    text += 'N';
+                }
+                //need to capture if required or not here. Will come back to, but for now; we say always no.
+                text += '</r1AttributeValueReqFlag>';
+                //This will handle types once implemented. Fields correspond via 1-9 to the type of field. For now; text
+                text += '<r1CheckboxInd>'
+                text += field.type;
+                text += '</r1CheckboxInd>';
+                //Display Order
+                text += '<r1DisplayOrder>'; 
+                text += field.disp_order;
+                text += '</r1DisplayOrder>';
+                //rest of this i don't think i care about for now.
+                text +='<r1ReqFeeCalc>N</r1ReqFeeCalc>';
+                text +='<r1SearchableFlag>N</r1SearchableFlag>';
+                text +='<r1SearchableForAca>N</r1SearchableForAca>';
+                text +='<r1SupervisorEditOnlyFlag>N</r1SupervisorEditOnlyFlag>';
+                text +='<recDate>2019-10-07T09:52:29-04:00</recDate>';
+                text +='<recFulNam>ADMIN</recFulNam>';
+                text +='<recStatus>A</recStatus>';
+                text +='<refAppSpecInfoFieldI18NModels/>';
+                text +='<vchDispFlag>'
+                if(field.aca_disp == true)
+                {
+                    text += 'Y';
+
+                }
+                else 
+                {
+                    text += 'N';
+                }
+                text += '</vchDispFlag>';
+                text += '</asiModel>';
+
+                //YOU LEFT OFF HERE NICK!
             }
         }
-
         text += '</asiModels>';
-
+        text += '</asiGroup>';
+        text += '</list>';
         return text;
     }
 

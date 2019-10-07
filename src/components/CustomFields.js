@@ -16,6 +16,7 @@ class CF extends Component {
         this.handleChangeField = this.handleChangeField.bind(this);
     }
 
+
     handleChange(event) {
         this.props.update(event.target.id, event.target.value);
     }
@@ -27,7 +28,10 @@ class CF extends Component {
     handleChangeField(event, subgroup, field) {
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.value);
     }
+    handleChangeCHECKED(event, subgroup, field) {
+        this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.checked);
 
+    };
     handleDelete(event) {
         this.props.deleteSubgroup(event.target.id);
     }
@@ -74,7 +78,7 @@ class CF extends Component {
                                 <th>Field Label</th>
                                 <th>Type</th>
                                 <th>Display Order</th>
-                                <th>Requried</th>
+                                <th>Required</th>
                                 <th>ACA Displayable</th>
                             </tr>
                             {this.genFields(sg.id)}
@@ -88,24 +92,33 @@ class CF extends Component {
         });
         return cards;
     }
-
+//Yeah we have a weird glitch with checkboxes losing their "checked" property when you navigate off the page. The system recognizes the fact that the box was checked at one point, but there's no way to un-check.
     genFields(id) {
         let fields = [];
         fields = Object.values(this.props.page_data.subgroups[id].fields).map(f => {
             return (
                 <tr key={f.id}>
                     <td><Form.Control id={"label"} value={this.props.page_data.subgroups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"type"} value={this.props.page_data.subgroups[id].fields[f.id].type} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"disp_order"} value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"required"} value={this.props.page_data.subgroups[id].fields[f.id].required} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"type"}  as ="select" value={this.props.page_data.subgroups[id].fields[f.id].type} onChange={e => this.handleChangeField(e, f.id, id)}>
+                    <option label="Select" value = "0"/>
+                    <option label="Text" value = "1"/>
+                    <option label="Date" value = "2"/>
+                    <option label="Yes/No" value = "3"/>
+                    <option label="Number" value = "4"/>
+                    <option label="TextArea" value = "6"/>
+                    <option label="Time" value = "7"/>
+                    <option label="Money" value = "8"/>
+                    <option label="Checkbox" value = "9"/>
+                    </Form.Control></td>
+                    <td><Form.Control id={"disp_order"} value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="number" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"required"} value={this.props.page_data.subgroups[id].fields[f.id].required} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
+                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
                     <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>
                 </tr>
             );
         })
         return fields;
     }
-
     render() {
         return (
             <React.Fragment>
