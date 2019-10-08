@@ -93,6 +93,7 @@ class CF extends Component {
         return cards;
     }
 //Yeah we have a weird glitch with checkboxes losing their "checked" property when you navigate off the page. The system recognizes the fact that the box was checked at one point, but there's no way to un-check.
+//Also looking into shared drop downs presently. looks to be a pain.
     genFields(id) {
         let fields = [];
         fields = Object.values(this.props.page_data.subgroups[id].fields).map(f => {

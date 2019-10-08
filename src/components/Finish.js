@@ -77,9 +77,7 @@ class FIN extends Component {
                 {
                     text += 'N';
                 }
-                //need to capture if required or not here. Will come back to, but for now; we say always no.
                 text += '</r1AttributeValueReqFlag>';
-                //This will handle types once implemented. Fields correspond via 1-9 to the type of field. For now; text
                 text += '<r1CheckboxInd>'
                 text += field.type;
                 text += '</r1CheckboxInd>';
@@ -100,7 +98,6 @@ class FIN extends Component {
                 if(field.aca_disp == true)
                 {
                     text += 'Y';
-
                 }
                 else 
                 {
@@ -109,7 +106,7 @@ class FIN extends Component {
                 text += '</vchDispFlag>';
                 text += '</asiModel>';
 
-                //YOU LEFT OFF HERE NICK!
+                //YOU LEFT OFF HERE NICK! jk i finished it up 
             }
         }
         text += '</asiModels>';
