@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import jszip from "jszip";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -13,11 +14,21 @@ class FIN extends Component {
 
     bigRedButton() {
         console.log("Starting Generation");
+        let zip = new jszip();
 
         //Genereate ASIGroupModel
         let asiGroupModel = this.genASIGroupModel();
-
+        zip.file("ASIGroupModel.xml", asiGroupModel);
         console.log(asiGroupModel);
+
+        zip.generateAsync({type: "blob"}).then(content => {
+            console.log(content);
+            const element = document.createElement("a");
+            element.href = URL.createObjectURL(content);
+            element.download = "sCube_"+this.props.data.id+".zip";
+            document.body.appendChild(element); // Required for this to work in FireFox
+            element.click();
+        })
     }
 
     genASIGroupModel() {
