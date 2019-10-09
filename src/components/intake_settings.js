@@ -1,30 +1,30 @@
 var intake_settings = {
     "CAP Detail": {
-        order: 1
+        order: 101
     },
     "Address": {
         display: false,
         required: false,
         validate: false,
-        order: 2
+        order: 102
     },
     "Parcel": {
         display: false,
         required: false,
         validate: false,
-        order: 3
+        order: 103
     },
     "Owner": {
         display: false,
         required: false,
         validate: false,
-        order: 4
+        order: 104
     },
     "Licensed Professional": {
         display: false,
         required: false,
         validate: false,
-        order: 5
+        order: 105
     },
     "Applicant": {
         display: false,
@@ -33,7 +33,7 @@ var intake_settings = {
         type: "",
         owner: false,
         lp: false,
-        order: 6
+        order: 106
     },
     "Contact 1": {
         display: false,
@@ -42,7 +42,7 @@ var intake_settings = {
         type: "",
         owner: false,
         lp: false,
-        order: 7
+        order: 107
     },
     "Contact 2": {
         display: false,
@@ -51,7 +51,7 @@ var intake_settings = {
         type: "",
         owner: false,
         lp: false,
-        order: 8
+        order: 108
     },
     "Contact 3": {
         display: false,
@@ -60,7 +60,7 @@ var intake_settings = {
         type: "",
         owner: false,
         lp: false,
-        order: 9
+        order: 109
     },
     "Multiple Contacts": {
         display: false,
@@ -69,82 +69,82 @@ var intake_settings = {
         type: "Update within Accela",
         owner: false,
         lp: false,
-        order: 10
+        order: 110
     },
     "Complainant Info": {
         display: false,
         required: false,
-        order: 11
+        order: 111
     },
     "Complaint Info": {
         display: false,
         required: false,
-        order: 12
+        order: 112
     },
     "Additional Information": {
         display: false,
-        order: 13
+        order: 113
     },
     "Application Status": {
         display: false,
-        order: 14
+        order: 114
     },
     "Custom Fields": {
         display: false,
-        order: 15
+        order: 115
     },
     "Associated GIS Features": {
         display: false,
         required: false,
-        order: 16
+        order: 116
     },
     "Structure": {
         display: false,
         type: "",
-        order: 17
+        order: 117
     },
     "Establishment": {
         display: false,
-        order: 18
+        order: 118
     },
     "Event": {
         display: false,
         required: false,
-        order: 19
+        order: 119
     },
     "Asset": {
         display: false,
         required: false,
-        order: 20
+        order: 120
     },
     "Custom Lists": {
         display: false,
-        order: 21
+        order: 121
     },
     "Documents": {
         display: false,
         required: false,
-        order: 22
+        order: 122
     },
     "Education": {
         display: false,
         required: false,
-        order: 23
+        order: 123
     },
     "Continuing Education": {
         display: false,
         required: false,
-        order: 24
+        order: 124
     },
     "Examination": {
         display: false,
         required: false,
-        order: 25
+        order: 125
     },
     "Comments": {
         display: false,
         required: false,
-        order: 26
+        order: 126
     },
 }
 

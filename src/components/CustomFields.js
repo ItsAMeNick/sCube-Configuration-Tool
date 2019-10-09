@@ -138,7 +138,7 @@ class CF extends Component {
                 <div style={{"width":"20%","float":"right"}}>
                     <Card.Body>
                     <Row> <Col>
-                    <Button onClick={this.props.addSubgroup}>Add Subgroup</Button>
+                        <Button onClick={this.props.addSubgroup}>Add Subgroup</Button>
                     </Col> </Row>
                     </Card.Body>
                 </div>

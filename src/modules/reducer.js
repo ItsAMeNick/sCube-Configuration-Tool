@@ -91,6 +91,27 @@ const sCubeReducer = (state = initialState, action) => {
             return newState;
         }
 
+        case "add_IF_setting": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.IF.settings[id] = {
+                id: id,
+                label: "",
+            };
+            return newState;
+        }
+
+        case "update_IF_code": {
+            let newState = _.cloneDeep(state);
+            newState.IF.group_code = action.payload;
+            return newState;
+        }
+        case "update_IF_setting": {
+            let newState = _.cloneDeep(state);
+            newState.IF.settings[action.payload.id] = action.payload.value;
+            return newState;
+        }
+
         default: return state;
     }
 };
