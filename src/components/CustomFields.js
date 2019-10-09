@@ -30,8 +30,8 @@ class CF extends Component {
     }
     handleChangeCHECKED(event, subgroup, field) {
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.checked);
-
     };
+
     handleDelete(event) {
         this.props.deleteSubgroup(event.target.id);
     }
@@ -101,19 +101,19 @@ class CF extends Component {
                 <tr key={f.id}>
                     <td><Form.Control id={"label"} value={this.props.page_data.subgroups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
                     <td><Form.Control id={"type"}  as ="select" value={this.props.page_data.subgroups[id].fields[f.id].type} onChange={e => this.handleChangeField(e, f.id, id)}>
-                    <option label="Select" value = "0"/>
-                    <option label="Text" value = "1"/>
-                    <option label="Date" value = "2"/>
-                    <option label="Yes/No" value = "3"/>
-                    <option label="Number" value = "4"/>
-                    <option label="TextArea" value = "6"/>
-                    <option label="Time" value = "7"/>
-                    <option label="Money" value = "8"/>
-                    <option label="Checkbox" value = "9"/>
+                        <option label="Select" value = "0"/>
+                        <option label="Text" value = "1"/>
+                        <option label="Date" value = "2"/>
+                        <option label="Yes/No" value = "3"/>
+                        <option label="Number" value = "4"/>
+                        <option label="TextArea" value = "6"/>
+                        <option label="Time" value = "7"/>
+                        <option label="Money" value = "8"/>
+                        <option label="Checkbox" value = "9"/>
                     </Form.Control></td>
                     <td><Form.Control id={"disp_order"} value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="number" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
-                    <td><Form.Control id={"required"} value={this.props.page_data.subgroups[id].fields[f.id].required} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
-                    <td><Form.Control id={"aca_disp"} value={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
+                    <td><Form.Control id={"required"} checked={this.props.page_data.subgroups[id].fields[f.id].required} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
+                    <td><Form.Control id={"aca_disp"} checked={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
                     <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>
                 </tr>
             );

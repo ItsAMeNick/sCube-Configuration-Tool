@@ -3,7 +3,7 @@ import uuidv1 from "uuid/v1";
 
 const initialState = {
     id: uuidv1(),
-    page: 0,
+    page: 5,
     GRD: {
         svp: "",
         alias: "",

@@ -21,6 +21,15 @@ class FIN extends Component {
         zip.file("ASIGroupModel.xml", asiGroupModel);
         console.log(asiGroupModel);
 
+        //Genereate ASIGroupModel
+        let smartChoice = this.genSmartChoice();
+        zip.file("SmartChoiceGroupModel.xml", smartChoice);
+        console.log(smartChoice);
+
+
+        //Create XML files and then package those into a jszip
+        //Create a placeholder link element to download the zip and then
+        // force the application to click this link
         zip.generateAsync({type: "blob"}).then(content => {
             console.log(content);
             const element = document.createElement("a");
@@ -31,15 +40,37 @@ class FIN extends Component {
         })
     }
 
-    genASIGroupModel() {
+    genTopBlurb() {
         let text = "";
+        let today = new Date();
 
         //Add some static header stuff
         text += '<?xml version="1.0" encoding="UTF-8" standalone="true"?>\n';
         text += '<list  version="9.0.0" minorVersion="26" exportUser="ADMIN" exportDateTime="';
         //Fill in date here
-        text += '08/16/2019 11:56 AM';
+        let month = (1 + today.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        let day = today.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        let year = today.getFullYear();
+        let hours = today.getHours();
+        let min = today.getMinutes();
+        min = min.length > 1 ? min : '0' + min;
+
+        text += month + '/' + day + '/' + year + " ";
+        text += (hours > 12) ? hours-12 : hours;
+        text += ":" + min + " ";
+        text += (hours > 12) ? "PM" : "AM";
         text += '" description="null">\n';
+
+        return text;
+    }
+
+    genASIGroupModel() {
+        let text = "";
+
+        text += this.genTopBlurb();
+
         text += '<asiGroup>';
         text += '<appSpecInfoGroupCode>';
         text += this.props.data.CF.group_code;
@@ -123,6 +154,17 @@ class FIN extends Component {
         text += '</asiModels>';
         text += '</asiGroup>';
         text += '</list>';
+        return text;
+    }
+
+    genSmartChoice() {
+        let text = "";
+        text += this.genTopBlurb();
+
+        text += '<smartChoiceGroup refId="1@SmartChoiceGroupModel">';
+
+
+
         return text;
     }
 
