@@ -3,7 +3,7 @@ import uuidv1 from "uuid/v1";
 
 const initialState = {
     id: uuidv1(),
-    page: 5,
+    page: 3,
     GRD: {
         svp: "",
         alias: "",
@@ -19,6 +19,10 @@ const initialState = {
     IF: {
         group_code: "",
         settings: {},
+    },
+    FEE: {
+        code: "",
+        fees: {},
     }
 };
 
@@ -109,6 +113,34 @@ const sCubeReducer = (state = initialState, action) => {
         case "update_IF_setting": {
             let newState = _.cloneDeep(state);
             newState.IF.settings[action.payload.id] = action.payload.value;
+            return newState;
+        }
+
+        case "add_Fee": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.FEE.fees[id] = {
+                id: id,
+                code: "",
+                version: "",
+                amount: "",
+                ai: true,
+                aa: true,
+                order: "",
+                calc: "",
+                aca: "",
+            };
+            return newState;
+        }
+
+        case "update_Fee_schedule": {
+            let newState = _.cloneDeep(state);
+            newState.FEE.code = action.payload;
+            return newState;
+        }
+        case "update_Fee": {
+            let newState = _.cloneDeep(state);
+            newState.FEE.fees[action.payload.id] = action.payload.value;
             return newState;
         }
 
