@@ -84,37 +84,37 @@ class INTK extends Component {
                 </Form.Control></td>
                 <td>
                     {fields.includes("display") ?
-                        <Form.Control id={"display"} checked={this.props.page_data.settings[s].display} type="checkbox" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"display"} checked={this.props.page_data.settings[s].display} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("required") ?
-                        <Form.Control id={"required"} checked={this.props.page_data.settings[s].required} type="checkbox" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"required"} checked={this.props.page_data.settings[s].required} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("validate") ?
-                        <Form.Control id={"validate"} checked={this.props.page_data.settings[s].validate} type="checkbox" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"validate"} checked={this.props.page_data.settings[s].validate} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("type") ?
-                        <Form.Control id={"type"} value={this.props.page_data.settings[s].type} type="text" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"type"} value={this.props.page_data.settings[s].type} type="text" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("owner") ?
-                        <Form.Control id={"owner"} checked={this.props.page_data.settings[s].owner} type="checkbox" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"owner"} checked={this.props.page_data.settings[s].owner} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("lp") ?
-                        <Form.Control id={"lp"} checked={this.props.page_data.settings[s].lp} type="checkbox" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"lp"} checked={this.props.page_data.settings[s].lp} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
                 <td>
                     {fields.includes("order") ?
-                        <Form.Control id={"order"} value={this.props.page_data.settings[s].order} type="number" onChange={e => this.handleChange(e, s)}/>
+                        <Form.Control id={"order"} value={this.props.page_data.settings[s].order} type="number" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
             </tr>);
