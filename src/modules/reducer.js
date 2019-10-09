@@ -15,6 +15,10 @@ const initialState = {
     CF: {
         group_code: "",
         subgroups: {},
+    },
+    IF: {
+        group_code: "",
+        settings: {},
     }
 };
 
