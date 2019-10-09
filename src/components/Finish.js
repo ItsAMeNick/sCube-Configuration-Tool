@@ -5,6 +5,9 @@ import jszip from "jszip";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+import intake_settings_raw from "./intake_settings.js";
+let intake_settings = intake_settings_raw.intake_settings;
+
 class FIN extends Component {
     constructor(props) {
         super(props);
@@ -64,6 +67,11 @@ class FIN extends Component {
         text += '" description="null">\n';
 
         return text;
+    }
+
+    //This function is used to fill in the audit model
+    genAuditModel() {
+        return '<auditModel><auditDate>2016-02-19T00:58:30-05:00</auditDate><auditID>ADMIN</auditID><auditStatus>A</auditStatus></auditModel>'
     }
 
     genASIGroupModel() {
@@ -137,14 +145,7 @@ class FIN extends Component {
                 text +='<recStatus>A</recStatus>';
                 text +='<refAppSpecInfoFieldI18NModels/>';
                 text +='<vchDispFlag>'
-                if(field.aca_disp === true)
-                {
-                    text += 'Y';
-                }
-                else
-                {
-                    text += 'N';
-                }
+                text += (field.aca_disp === true) ? "Y" : "N";
                 text += '</vchDispFlag>';
                 text += '</asiModel>';
 
@@ -162,9 +163,191 @@ class FIN extends Component {
         text += this.genTopBlurb();
 
         text += '<smartChoiceGroup refId="1@SmartChoiceGroupModel">';
+        text += '<groupCode>'+this.props.data.IF.group_code.replace(/\W/g, '_')+'</groupCode>';
+        text += '<serviceProviderCode>'+this.props.data.GRD.svp+'</serviceProviderCode>';
+        text += '<smartChoiceModels>';
+
+        let fields = Object.keys(intake_settings);
+        let settings = this.props.data.IF.settings;
+        let modified_fields = Object.keys(settings).map(s => {
+            return settings[s].label;
+        });
+        for (let f in fields) {
+            text += '<smartChoice>';
+            text += '<functionName>';
+            //Change the names to accela names :/
+            switch (fields[f]) {
+                case "Additional Information": {
+                    text += "ADDITIONAL INFO";
+                    break;
+                }
+                case "Address": {
+                    text += "ADDRESS";
+                    break;
+                }
+                case "Applicant": {
+                    text += "APPLICANT";
+                    break;
+                }
+                case "Custom Fields": {
+                    text += "APPLICATION SPECIFIC INFO";
+                    break;
+                }
+                case "Application Status": {
+                    text += "APPLICATION STATUS";
+                    break;
+                }
+                case "Asset": {
+                    text += "ASSET";
+                    break;
+                }
+                case "Associated GIS Features": {
+                    text += "ASSOCIATED GIS FEATURES";
+                    break;
+                }
+                case "Custom Lists": {
+                    text += "ATTACHED TABLES";
+                    break;
+                }
+                case "CAP Detail": {
+                    text += "CAPDETAIL";
+                    break;
+                }
+                case "Comments": {
+                    text += "COMMENTS";
+                    break;
+                }
+                case "Complainant Info": {
+                    text += "COMPLAINANT INFO";
+                    break;
+                }
+                case "Complaint Info": {
+                    text += "COMPLAINT INFO";
+                    break;
+                }
+                case "Contact 1": {
+                    text += "CONTACT1";
+                    break;
+                }
+                case "Contact 2": {
+                    text += "CONTACT2";
+                    break;
+                }
+                case "Contact 3": {
+                    text += "CONTACT3";
+                    break;
+                }
+                case "Continuing Education": {
+                    text += "CONTINUINGEDUCATION";
+                    break;
+                }
+                case "Documents": {
+                    text += "DOCUMENT";
+                    break;
+                }
+                case "Education": {
+                    text += "EDUCATION";
+                    break;
+                }
+                case "Establishment": {
+                    text += "ESTABLISHMENT INFO";
+                    break;
+                }
+                case "Event": {
+                    text += "EVENT";
+                    break;
+                }
+                case "Examination": {
+                    text += "EXAMINATION";
+                    break;
+                }
+                case "Licensed Professional": {
+                    text += "LICENSED PROFESSIONAL";
+                    break;
+                }
+                case "Multiple Contacts": {
+                    text += "MULTIPLE_CONTACTS";
+                    break;
+                }
+                case "Owner": {
+                    text += "OWNER";
+                    break;
+                }
+                case "Parcel": {
+                    text += "PARCEL";
+                    break;
+                }
+                case "Structure": {
+                    text += "STRUCTURE INFO";
+                    break;
+                }
+                default: break;
+            }
+            text += '</functionName>';
+            text += '<groupName>'+this.props.data.IF.group_code.replace(/\W/g, '_')+'</groupName>';
+            text += '<serviceProviderCode>'+this.props.data.GRD.svp+'</serviceProviderCode>';
+            text += this.genAuditModel();
+
+            let tags;
+            if (modified_fields.includes(fields[f])) {
+                //I am so sorry for anyone who has to try and real this line of Code...
+                //Basically its cross referencing the two lists to find the tags
+                tags = settings[Object.keys(settings).filter(item => {
+                    return settings[item].label === fields[f];
+                })[0]];
+            } else {
+                tags = intake_settings[fields[f]];
+            }
+            for (let t in tags) {
+                console.log(t);
+                switch (t) {
+                    case "display": {
+                        text += '<displayFlg>';
+                        text += (tags[t] === true) ? "Y" : "N";
+                        text += '</displayFlg>';
+                        break;
+                    }
+                    case "required": {
+                        text += '<requiredFlg>';
+                        text += (tags[t] === true) ? "Y" : "N";
+                        text += '</requiredFlg>';
+                        break;
+                    }
+                    case "validate": {
+                        text += '<validateFlg>';
+                        text += (tags[t] === true) ? "Y" : "N";
+                        text += '</validateFlg>';
+                        break;
+                    }
+                    case "order": {
+                        text += '<displayOrder>';
+                        text += tags[t];
+                        text += '</displayOrder>';
+                        break;
+                    }
+                    case "type": {
+                        text += '<defaultValue>';
+                        text += tags[t];
+                        text += '</defaultValue>';
+                        break;
+                    }
+                    default: break;
+                }
+            }
+            //handle display buttons!
+            //if lp and owner: 11
+            // if owner only: 10
+            // if lp only: 01
+            // if neither: 00
+            // I think this is how this works,
+            //I did not have enough example to know completly
+
+            text += '<smartChoiceOptionModels/>';
+            text += '</smartChoice>';
+        }
 
 
-
+        text += '<structureTypeModels/></smartChoiceGroup>';
         return text;
     }
 
