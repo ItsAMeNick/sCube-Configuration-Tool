@@ -63,17 +63,17 @@ class FIN extends Component {
                 text += '<asiDropdownModels/>';
                 //Display length; assume not hanlded in initial implementation.
                 text += '<displayLength>0</displayLength>';
-                //No clue what this does: 
+                //No clue what this does:
                 text += '<locationQueryFlag>N</locationQueryFlag>';
                 //max length; assume not handled in iniital implementation
                 text += '<maxLength>0</maxLength>';
-                text += '<r1AttributeValueReqFlag>'; 
-                if(field.required == true)
+                text += '<r1AttributeValueReqFlag>';
+                if(field.required === true)
                 {
                     text += 'Y';
 
                 }
-                else 
+                else
                 {
                     text += 'N';
                 }
@@ -82,7 +82,7 @@ class FIN extends Component {
                 text += field.type;
                 text += '</r1CheckboxInd>';
                 //Display Order
-                text += '<r1DisplayOrder>'; 
+                text += '<r1DisplayOrder>';
                 text += field.disp_order;
                 text += '</r1DisplayOrder>';
                 //rest of this i don't think i care about for now.
@@ -95,18 +95,18 @@ class FIN extends Component {
                 text +='<recStatus>A</recStatus>';
                 text +='<refAppSpecInfoFieldI18NModels/>';
                 text +='<vchDispFlag>'
-                if(field.aca_disp == true)
+                if(field.aca_disp === true)
                 {
                     text += 'Y';
                 }
-                else 
+                else
                 {
                     text += 'N';
                 }
                 text += '</vchDispFlag>';
                 text += '</asiModel>';
 
-                //YOU LEFT OFF HERE NICK! jk i finished it up 
+                //YOU LEFT OFF HERE NICK! jk i finished it up
             }
         }
         text += '</asiModels>';

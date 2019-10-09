@@ -2,7 +2,7 @@ import _ from "lodash";
 import uuidv1 from "uuid/v1";
 
 const initialState = {
-    page: 2,
+    page: 0,
     GRD: {
         svp: "",
         alias: "",
