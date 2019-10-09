@@ -71,6 +71,7 @@ class FIN extends Component {
 
     //This function is used to fill in the audit model
     genAuditModel() {
+        //$$$ZACH$$$
         return '<auditModel><auditDate>2016-02-19T00:58:30-05:00</auditDate><auditID>ADMIN</auditID><auditStatus>A</auditStatus></auditModel>'
     }
 
@@ -341,6 +342,7 @@ class FIN extends Component {
             // if neither: 00
             // I think this is how this works,
             //I did not have enough example to know completly
+            //$$$ZACH$$$
 
             text += '<smartChoiceOptionModels/>';
             text += '</smartChoice>';
