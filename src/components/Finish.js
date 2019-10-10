@@ -28,7 +28,8 @@ class FIN extends Component {
         let smartChoice = this.genSmartChoice();
         zip.file("SmartChoiceGroupModel.xml", smartChoice);
         console.log(smartChoice);
-
+        let statusGroup = this.genStatusModel(); 
+        zip.file("ApplicationStatusGroupModel.xml", statusGroup);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
@@ -72,9 +73,68 @@ class FIN extends Component {
     //This function is used to fill in the audit model
     genAuditModel() {
         //$$$ZACH$$$
-        return '<auditModel><auditDate>2016-02-19T00:58:30-05:00</auditDate><auditID>ADMIN</auditID><auditStatus>A</auditStatus></auditModel>'
+        //Handled 10-10-2019
+        let text = "";
+        let today = new Date();
+        text += '<auditModel><auditDate>';
+        text += today.toISOString();
+        text += '</auditDate><auditID>ADMIN</auditID><auditStatus>A</auditStatus></auditModel>';
+        return text
     }
+    genServProvCode()
+    {
+        let text ="";
+        text += '<serviceProviderCode>';
+        text += this.props.data.GRD.svp;
+        text += '</serviceProviderCode>';
+        return text;
+    }
+    //this function will fill out the Status Model
+    genStatusModel()
+    {
+        let text = "";
+        text += this.genTopBlurb();
+        text += '<applicationStatusGroup>';
+        text += '<appStatusGroupCode>';
+        text += this.props.data.STAT.group_code;
+        text += '</appStatusGroupCode>';
+        text += this.genServProvCode();
+        text += '<appStatusGroupModels>';
+        //start our WOOPY DOOPYING
+        //i'll come back to this $$Zachary$$
+        let counter = 0; 
+        for  (let i in this.props.data.STAT.statuses) 
+        {
+            let sg = this.props.data.STAT.statuses[i].subgroup; 
+            console.log("LOG: " + sg);
+                counter ++;
+                let field = this.props.data.STAT.statuses[i];
+                text += '<appStatusGroupModel refId="';
+                text += counter;
+                text += 'AppStatusGroupModel">';
+                text += this.genServProvCode();
+                text += '<appStatusGroupCode>';
+                text += this.props.data.STAT.group_code;
+                text += '</appStatusGroupCode>';
+                text += '<status>';
+                text += field.status;
+                text += '</status>';
+                text += '<appStatusGroupI18Ns/>';
+                text += this.genAuditModel();
+                text += '<statusType>'; 
+                text += field.backendStatus;
+                text += '</statusType>';
+                text += '</appStatusGroupModel>';
+            
+           
+        }
+        text += '</appStatusGroupModels>';
+        text += '<pageStatusModels><pageStatus><importSubItemDisableFlag>false</importSubItemDisableFlag><modelProperty>class</modelProperty> <propertyName>appStatusGroupCode</propertyName><selectFlag>true</selectFlag><skipFlag>false</skipFlag></pageStatus></pageStatusModels>';
+        text += '</applicationStatusGroup>';
+        text += '</list>';
 
+        return text
+    }
     genASIGroupModel() {
         let text = "";
 
@@ -119,15 +179,7 @@ class FIN extends Component {
                 //max length; assume not handled in iniital implementation
                 text += '<maxLength>0</maxLength>';
                 text += '<r1AttributeValueReqFlag>';
-                if(field.required === true)
-                {
-                    text += 'Y';
-
-                }
-                else
-                {
-                    text += 'N';
-                }
+                text += (field.required === true) ? "Y" : "N";
                 text += '</r1AttributeValueReqFlag>';
                 text += '<r1CheckboxInd>'
                 text += field.type;
