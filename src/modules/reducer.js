@@ -149,6 +149,7 @@ const sCubeReducer = (state = initialState, action) => {
             return newState;
         }
         case "add_Status": {
+            console.log("HEY WE HIT THIS.");
             let newState = _.cloneDeep(state);
             let id = uuidv1();
             newState.STAT.statuses[id] = {
@@ -166,6 +167,7 @@ const sCubeReducer = (state = initialState, action) => {
         }
         case "update_status": {
             let newState = _.cloneDeep(state);
+            console.log("action.payload.value: " + action.payload.value);
             newState.STAT.statuses[action.payload.id] = action.payload.value;
             return newState;
         }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import _ from "lodash";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
+
 class STAT extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,10 @@ class STAT extends Component {
     }
 
     handleChangeStatus(event, id) {
-        this.props.updateStatus(id, event.target.value);
+        let newStatus = _.cloneDeep(this.props.page_data.statuses[id])
+        newStatus[event.target.id] = event.target.value;
+     //   console.log("Event: "+  event + " Id: " + id  + " value: " + event.target.value + " ||");
+        this.props.updateStatus(id, newStatus);
 
     }
 
@@ -29,10 +34,10 @@ class STAT extends Component {
         for (let s in this.props.page_data.statuses) {
             rows.push(<tr key={s}>
                 <td>
-                    <Form.Control id={"Status"} value={this.props.page_data.statuses[s].status} type="text" onChange={e => this.handleChangeStatus(e, s)}/>
+                    <Form.Control id={"status"} value={this.props.page_data.statuses[s].status} type="text" onChange={e => this.handleChangeStatus(e, s)}/>
                 </td>
                 <td>
-                    <Form.Control id={"backendStat"} value={this.props.page_data.statuses[s].backendStatus} as="select" onChange={e => this.handleChangeStatus(e, s)}>
+                    <Form.Control id={"backendStatus"} value={this.props.page_data.statuses[s].backendStatus} as="select" onChange={e => this.handleChangeStatus(e, s)}>
                         <option/>
                         <option label="APPROVED" value="APPROVED"/>
                         <option label="CLOSED" value="CLOSED"/>
@@ -86,7 +91,7 @@ class STAT extends Component {
                     </tbody>
                 </Table>
                 <div>
-                    <div style={{"width":"25%","float":"righ"}}>
+                    <div style={{"width":"25%","float":"right"}}>
                         <Card.Body>
                         <Row> <Col>
                             <Button onClick={this.props.addStatus}>Add Status</Button>
@@ -116,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
             value: value,
         },
     }),
+    
     updateID: (code) => dispatch({
         type: "update_Status_Group",
         payload: code,

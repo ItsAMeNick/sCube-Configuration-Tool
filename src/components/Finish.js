@@ -89,6 +89,14 @@ class FIN extends Component {
         text += '</serviceProviderCode>';
         return text;
     }
+    debugObject(object) {
+        var output = '';
+        for (let property in object) {
+            output += property + ': ' + object[property];
+        }
+        console.log(output);
+    }
+    
     //this function will fill out the Status Model
     genStatusModel()
     {
@@ -109,8 +117,9 @@ class FIN extends Component {
             console.log("LOG: " + sg);
                 counter ++;
                 let field = this.props.data.STAT.statuses[i];
+                this.debugObject(this.props.data.STAT);
                 text += '<appStatusGroupModel refId="';
-                text += counter;
+                text += counter + "@";
                 text += 'AppStatusGroupModel">';
                 text += this.genServProvCode();
                 text += '<appStatusGroupCode>';
