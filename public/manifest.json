@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "sCube Configuration Builder",
+  "name": "Create sCube Configuration Builder Sample",
   "icons": [
     {
       "src": "favicon.ico",
