@@ -25,8 +25,13 @@ class FIN extends Component {
         //Genereate ASIGroupModel
         let smartChoice = this.genSmartChoice();
         zip.file("SmartChoiceGroupModel.xml", smartChoice);
+
         let statusGroup = this.genStatusModel();
         zip.file("ApplicationStatusGroupModel.xml", statusGroup);
+
+        let feeSchedule = this.genFeeSchedule();
+        console.log(feeSchedule)
+        zip.file("RefFeeScheduleModel.xml", feeSchedule);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
@@ -91,6 +96,107 @@ class FIN extends Component {
             output += property + ': ' + object[property];
         }
         console.log(output);
+    }
+
+    //Generate the fee schedule xml
+    genFeeSchedule() {
+        let text = "";
+        let counter = 1;
+        let PAYMENT_DONE_FLAG = 0;
+
+        text += this.genTopBlurb();
+        text += '<refFeeSchedule refId="';
+        text += counter + "@";
+        counter++;
+        text += 'RefFeeScheduleModel">';
+        text += this.genServProvCode();
+        text += "<feeScheduleName>" + this.props.data.FEE.code + "</feeScheduleName>";
+        text += "<feeScheduleVersion>" + this.props.data.FEE.version + "</feeScheduleVersion>";
+        text += this.genAuditModel();
+        let ed = new Date(this.props.data.FEE.effective);
+        text += "<effDate>" + ed.toISOString() + "</effDate>";
+        text += "<refFeeItemModels>";
+        for (let f in this.props.data.FEE.fees) {
+            let fee = this.props.data.FEE.fees[f];
+            text += '<refFeeItem refId="';
+            text += counter + "@";
+            counter++;
+            text += 'RefFeeItemModel">';
+            text += this.genServProvCode();
+            text += "<feeScheduleName>" + this.props.data.FEE.code + "</feeScheduleName>";
+            text += "<feeScheduleVersion>" + this.props.data.FEE.version + "</feeScheduleVersion>";
+
+            text += "<feeCod>" + fee.code + "</feeCod>";
+            text += "<paymentPeriod>FINAL</paymentPeriod>";
+            text += "<acaRequiredFlag>N</acaRequiredFlag>";
+            text += this.genAuditModel();
+            text += "<autoAssessFlag>" + (fee.aa ? 'Y': 'N') + "</autoAssessFlag>";
+            text += "<autoInvoicedFlag>" + (fee.ai ? 'Y': 'N') + "</autoInvoicedFlag>";
+            text += "<calProc>CONSTANT</calProc>";
+            text += "<comments></comments>";
+            //NOT SURE WHAT THIS IS
+            text += "<crDr>D</crDr>";
+
+            //This the ACA flag
+            text += "<defaultFlag>" + fee.aca + "</defaultFlag>";
+
+            text += "<display>"+ fee.order +"</display>";
+            text += "<displayOrder>"+ fee.order +"</displayOrder>";
+            text += "<feeACAParticalPayment>N</feeACAParticalPayment>";
+            text += "<feeAllocationType>NONE</feeAllocationType>";
+            text += "<feeDecisionModel/>";
+            text += "<feeDes></feeDes>";
+            text += "<refFeeItemI18NModels/>";
+            text += "<formula>"+fee.amount+"</formula>";
+            text += "<negativeFeeFlag>N</negativeFeeFlag>";
+            text += "<netFeeFlag>N</netFeeFlag>";
+            text += "<refFeeCalcModels/>";
+            if (!PAYMENT_DONE_FLAG) {
+                PAYMENT_DONE_FLAG = counter;
+                text += '<refPaymentPeriodModel refId="';
+                text += counter + "@";
+                counter++;
+                text += 'RefPaymentPeriodModel">';
+                text += "<gfFeePeriod>FINAL</gfFeePeriod>";
+                text += this.genServProvCode();
+                text += this.genAuditModel();
+                text += "<displayOrder>"+ fee.order +"</displayOrder>";
+                //Not sure if these next two lines are necessary
+                text += "<refPaymentPeriodI18NModels/>";
+                text += "<resId>136</resId>";
+
+                text += "</refPaymentPeriodModel>";
+            } else {
+                text += '<refPaymentPeriodModel refFlag="Y" refId="'+PAYMENT_DONE_FLAG+'@RefPaymentPeriodModel"/>';
+            }
+            text += "<roundFeeFlag>N</roundFeeFlag>";
+            text += "<roundFeeType>UP</roundFeeType>";
+            text += "<udes>Each</udes>";
+            text += "</refFeeItem>";
+        }
+        text += "</refFeeItemModels>";
+        //The next 4 lines are filler
+        text += "<feeScheduleAlias></feeScheduleAlias>";
+        text += "<feeScheduleComment></feeScheduleComment>";
+        text += "<refFeeScheduleI18NModels/>";
+        text += "<feeScheduleModuleModels/>";
+        //This is just taken form a sample XML file
+        text += "<pageStatusModels>";
+        text += "<pageStatus>";
+        text += "<importSubItemDisableFlag>false</importSubItemDisableFlag>";
+        text += "<modelProperty>class</modelProperty>";
+        text += "<propertyName>feeScheduleName</propertyName>";
+        text += "<selectFlag>true</selectFlag>";
+        text += "<skipFlag>false</skipFlag>";
+        text += "</pageStatus>";
+        text += "</pageStatusModels>";
+        text += "<refFeeItemgroups/>";
+
+        //This closes the remainingtags from up top
+        text += "</refFeeSchedule>";
+        text += "</list>";
+
+        return text;
     }
 
     //this function will fill out the Status Model

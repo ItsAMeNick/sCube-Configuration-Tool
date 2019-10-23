@@ -17,7 +17,7 @@ class FEE extends Component {
     }
 
     handleChange(event) {
-        this.props.updateID(event.target.value)
+        this.props.updateSchedule(event.target.id, event.target.value)
     }
 
     handleChangeItem(event, id) {
@@ -36,9 +36,6 @@ class FEE extends Component {
             rows.push(<tr key={s}>
                 <td>
                     <Form.Control id={"code"} value={this.props.page_data.fees[s].code} type="text" onChange={e => this.handleChangeItem(e, s)}/>
-                </td>
-                <td>
-                    <Form.Control id={"version"} value={this.props.page_data.fees[s].version} type="text" onChange={e => this.handleChangeItem(e, s)}/>
                 </td>
                 <td>
                     <Form.Control id={"amount"} value={this.props.page_data.fees[s].amount} type="number" onChange={e => this.handleChangeItem(e, s)}/>
@@ -60,7 +57,7 @@ class FEE extends Component {
                         <option/>
                         <option label="Yes" value="Y"/>
                         <option label="No" value="N"/>
-                        <option label="Read-Only" value="Read-Only"/>
+                        <option label="Read-Only" value="R"/>
                     </Form.Control>
                 </td>
             </tr>);
@@ -74,22 +71,29 @@ class FEE extends Component {
                 <Card.Header>
                     <strong>{this.props.title}</strong>
                 </Card.Header>
-                <div>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
                             <Row>
                                 <Col>Fee Schedule</Col>
                                 <Col><Form.Control id="code" value={this.props.page_data.code} type="text" onChange={this.handleChange}/></Col>
                             </Row>
+                            <br/>
+                            <Row>
+                                <Col>Version</Col>
+                                <Col><Form.Control id="version" value={this.props.page_data.version} type="text" onChange={this.handleChange}/></Col>
+                            </Row>
+                            <br/>
+                            <Row>
+                                <Col>Effective Date</Col>
+                                <Col><Form.Control id="effective" value={this.props.page_data.effective} type="date" onChange={this.handleChange}/></Col>
+                            </Row>
                         </Card.Body>
                     </div>
-                </div>
                 <div><Card.Body>
                 <Table striped bordered responsive>
                     <thead>
                         <tr>
                             <th>Fee Code</th>
-                            <th>Version</th>
                             <th>Amount</th>
                             <th>Auto-Invoice</th>
                             <th>Auto-Assess</th>
@@ -133,9 +137,12 @@ const mapDispatchToProps = dispatch => ({
             value: value,
         },
     }),
-    updateID: (code) => dispatch({
+    updateSchedule: (id, value) => dispatch({
         type: "update_Fee_schedule",
-        payload: code,
+        payload: {
+            id: id,
+            value: value,
+        },
     }),
 });
 

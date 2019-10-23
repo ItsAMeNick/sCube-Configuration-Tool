@@ -3,7 +3,7 @@ import uuidv1 from "uuid/v1";
 
 const initialState = {
     id: uuidv1(),
-    page: 0,
+    page: 3,
     GRD: {
         svp: "",
         alias: "",
@@ -23,6 +23,8 @@ const initialState = {
     },
     FEE: {
         code: "",
+        version: "",
+        effective: "",
         fees: {},
     },
     STAT: {
@@ -148,7 +150,6 @@ const sCubeReducer = (state = initialState, action) => {
             newState.FEE.fees[id] = {
                 id: id,
                 code: "",
-                version: "",
                 amount: "",
                 ai: true,
                 aa: true,
@@ -161,7 +162,7 @@ const sCubeReducer = (state = initialState, action) => {
 
         case "update_Fee_schedule": {
             let newState = _.cloneDeep(state);
-            newState.FEE.code = action.payload;
+            newState.FEE[action.payload.id] = action.payload.value;
             return newState;
         }
         case "update_Fee": {
