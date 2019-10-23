@@ -3,7 +3,8 @@ import uuidv1 from "uuid/v1";
 
 const initialState = {
     id: uuidv1(),
-    page: 3,
+    version: "1-1",
+    page: 0,
     GRD: {
         svp: "",
         alias: "",
@@ -11,7 +12,6 @@ const initialState = {
         type: "",
         sub_type: "",
         category: "",
-        version: 0
     },
     CF: {
         group_code: "",
@@ -59,6 +59,13 @@ const sCubeReducer = (state = initialState, action) => {
             // If commented out, loading a save will return a user to the page that
             // the app was saved on
             newState.page = 1;
+
+            // Generate a new ID for the version
+            newState.id = uuidv1();
+
+            //Update version
+            let current = newState.version.split("-");
+            newState.version = current[0] + "-" + (parseInt(current[1])+1);
             return newState;
         }
 

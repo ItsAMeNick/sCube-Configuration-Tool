@@ -146,7 +146,7 @@ class App extends Component {
         }
         //Iterate the version somehow - Using date/time instead
         let today = new Date();
-        let version = ""+today.getFullYear()+(today.getMonth()+1)+today.getDate()+today.getHours()+today.getMinutes();
+        let version = this.props.version//""+today.getFullYear()+(today.getMonth()+1)+today.getDate()+today.getHours()+today.getMinutes();
         let display = "SVP: " + this.props.GRD.svp + "\n" +
                       "Alias: " + this.props.GRD.alias + "\n" +
                       "Version: " + version + "\n" +
@@ -191,7 +191,8 @@ class App extends Component {
 const mapStateToProps = state => ({
     page: state.page,
     GRD: state.GRD,
-    id: state.id
+    id: state.id,
+    version: state.version
 });
 
 const mapDispatchToProps = dispatch => ({
