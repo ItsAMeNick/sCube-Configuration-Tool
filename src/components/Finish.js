@@ -110,6 +110,7 @@ class FIN extends Component {
         text += '<appStatusGroupModels>';
         //start our WOOPY DOOPYING
         //i'll come back to this $$Zachary$$
+        //I FIXED YAY
         let counter = 0; 
         for  (let i in this.props.data.STAT.statuses) 
         {

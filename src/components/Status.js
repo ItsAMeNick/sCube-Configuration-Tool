@@ -65,7 +65,7 @@ class STAT extends Component {
                 </Card.Header>
                 <div>
                     <div style={{"width":"70%","float":"left"}}>
-                         Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands. 
+                        Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands. 
                         Status Groups allow us to assign a list of pre-defined statuses to a record. 
                         Below: 'Status' related to the actual public-facing verbiage
                         'Back-End Status' is what the database sees for a particular status; try to match your status to whichever back-end status that makes sense.   
