@@ -202,7 +202,7 @@ const sCubeReducer = (state = initialState, action) => {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
             newState.SDL[id] = {
-                name: "",
+                name: "PLACEHOLDER",
                 link: (action.payload ? action.payload : ""),
                 items: {}
             }

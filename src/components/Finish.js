@@ -18,6 +18,9 @@ class FIN extends Component {
     bigRedButton() {
         let zip = new jszip();
 
+        // $$Zachary$$ We need to add validation to make sure that specific
+        // files are supposed to generate an output file
+
         //Genereate ASIGroupModel
         let asiGroupModel = this.genASIGroupModel();
         zip.file("ASIGroupModel.xml", asiGroupModel);
@@ -30,8 +33,10 @@ class FIN extends Component {
         zip.file("ApplicationStatusGroupModel.xml", statusGroup);
 
         let feeSchedule = this.genFeeSchedule();
-        console.log(feeSchedule)
         zip.file("RefFeeScheduleModel.xml", feeSchedule);
+
+        let sharedDropDownList = this.genSharedDropdwnLists();
+        zip.file("SharedDropDownListModel.xml", sharedDropDownList);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
@@ -98,6 +103,46 @@ class FIN extends Component {
         console.log(output);
     }
 
+    //Generate the shared Dropdown Lists
+    genSharedDropdwnLists() {
+        let text = "";
+        let counter = 12746;
+
+        text += this.genTopBlurb();
+        for (let s in this.props.data.SDL) {
+            let list = this.props.data.SDL[s];
+            text += "<sharedDropDownListModel>";
+            text += "<name>";
+            text += list.name;
+            text += "</name>";
+            text += this.genServProvCode();
+            text += this.genAuditModel();
+            text += "<description></description>";
+            text += "<sharedDropDownList>";
+            let order = 0;
+            for (let i in list.items) {
+                let item = list.items[i];
+                text += "<sharedDropDownValue>";
+                text += "<bdvSeqNbr>"+counter+"</bdvSeqNbr>";
+                counter++;
+                text += this.genServProvCode();
+                text += this.genAuditModel();
+                text += "<bizdomain>"+ list.name +"</bizdomain>";
+                text += "<bizdomainValue>"+item+"</bizdomainValue>";
+                text += "<sortOrder>"+order+"</sortOrder>";
+                order += 10;
+                text += "<standardChoiceValueI18NModels/>";
+                text += "<valueDesc></valueDesc>";
+                text += "</sharedDropDownValue>";
+            }
+            text += "</sharedDropDownList>";
+            text += "<type>ShareDropDown</type>";
+            text += "</sharedDropDownListModel>";
+        }
+        text += "</list>";
+        return text;
+    }
+
     //Generate the fee schedule xml
     genFeeSchedule() {
         let text = "";
@@ -113,7 +158,7 @@ class FIN extends Component {
         text += "<feeScheduleName>" + this.props.data.FEE.code + "</feeScheduleName>";
         text += "<feeScheduleVersion>" + this.props.data.FEE.version + "</feeScheduleVersion>";
         text += this.genAuditModel();
-        let ed = new Date(this.props.data.FEE.effective);
+        let ed = this.props.data.FEE.effective ? new Date(this.props.data.FEE.effective): new Date();
         text += "<effDate>" + ed.toISOString() + "</effDate>";
         text += "<refFeeItemModels>";
         for (let f in this.props.data.FEE.fees) {
@@ -315,6 +360,52 @@ class FIN extends Component {
             }
         }
         text += '</asiModels>';
+
+        //Now add shared Dropdowns
+        let lists = [];
+        for (let s in this.props.data.SDL) {
+            let list = this.props.data.SDL[s];
+            if (list.link) lists.push(s);
+        }
+        if (lists.length > 0) {
+            let counter = 1;
+            text += "<sharedDropDownModels>";
+            for (let l in lists) {
+                let list = this.props.data.SDL[lists[l]];
+                let cf_group = "";
+                let cf_field = "";
+                for (let g in this.props.data.CF.subgroups) {
+                    let group = this.props.data.CF.subgroups[g];
+                    for (let f in group.fields) {
+                        if (f === list.link) {
+                            cf_group = group;
+                            cf_field = group.fields[f];
+                        }
+                    }
+                }
+
+                console.log(list)
+                console.log(cf_group);
+                console.log(cf_field);
+
+                text += '<sharedDropDownModel refId="';
+                text += counter;
+                counter++;
+                text += '@SharedDropDownModel">';
+                text += "<sequenceNbr>255</sequenceNbr>";
+                text += this.genServProvCode();
+                text += this.genAuditModel();
+                text += "<level1>"+this.props.data.CF.group_code+"</level1>";
+                text += "<level2>"+cf_group.subgroup+"</level2>";
+                text += "<level3>APPLICATION</level3>";
+                text += "<level4>"+cf_field.label+"</level4>";
+                text += "<relationType>APPLICATION_SPECIFIC_INFO</relationType>";
+                text += "<standardChoiceName>"+list.name+"</standardChoiceName>";
+                text += "</sharedDropDownModel>";
+            }
+            text += "</sharedDropDownModels>";
+        }
+
         text += '</asiGroup>';
         text += '</list>';
         return text;
