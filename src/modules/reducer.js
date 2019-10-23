@@ -3,7 +3,7 @@ import uuidv1 from "uuid/v1";
 
 const initialState = {
     id: uuidv1(),
-    page: 8,
+    page: 0,
     GRD: {
         svp: "",
         alias: "",
@@ -11,6 +11,7 @@ const initialState = {
         type: "",
         sub_type: "",
         category: "",
+        version: 0
     },
     CF: {
         group_code: "",
@@ -36,6 +37,24 @@ const sCubeReducer = (state = initialState, action) => {
         case "dump_store": {
             console.log(state);
             return state;
+        }
+
+        case "save_state": {
+            let newState = _.cloneDeep(state);
+            newState.GRD.version = action.payload.version;
+            console.log("Saving...");
+            let element = document.createElement("a");
+            let file = new Blob([JSON.stringify(newState)], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = action.payload.filename + ".sCube";
+            document.body.appendChild(element); // Required for this to work in FireFox
+            element.click();
+            return newState;
+        }
+
+        case "load_state": {
+            let newState = JSON.parse(action.payload)
+            return newState;
         }
 
         case "update_page_number": {

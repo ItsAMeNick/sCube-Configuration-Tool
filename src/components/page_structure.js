@@ -1,6 +1,6 @@
 //Please make sure that the key and the order match, otherwise enexpected
 // results may occur.  Pages will be reordered to match this order!
-//Do not change the page ID when rearranging
+//Do not change the page ID when rearranging (key)
 
 var pages = {
     0: {

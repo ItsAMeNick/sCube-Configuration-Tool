@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Pagination from "react-bootstrap/Pagination";
+import Button from "react-bootstrap/Button";
 
 import STRT from "./components/Start.js";
 import GRD from "./components/GeneralRecordDetails.js";
@@ -132,6 +133,33 @@ class App extends Component {
         }
     }
 
+    handleSave(event) {
+        //Check if minimum requirements to save are met
+        //For now this is just a SVP
+        if (!this.props.GRD.svp) {
+            window.alert("You have not met the minimum requirements to save, please specify a 'Service Provider Code.'");
+            return -1;
+        }
+        if (!this.props.GRD.alias) {
+            window.alert("You have not met the minimum requirements to save, please specify a 'Record Type Alias'.");
+            return -1;
+        }
+        //Iterate the version somehow - Using date/time instead
+        let today = new Date();
+        let version = ""+today.getFullYear()+(today.getMonth()+1)+today.getDate()+today.getHours()+today.getMinutes();
+        let display = "SVP: " + this.props.GRD.svp + "\n" +
+                      "Alias: " + this.props.GRD.alias + "\n" +
+                      "Version: " + version + "\n" +
+                      "Id: " + this.props.id + "\n"
+        if (window.confirm("Create Save:\n" + display)) {
+            let filename = this.props.GRD.svp + "_" +
+                            this.props.GRD.alias + "_" +
+                            version + "_" +
+                            this.props.id;
+            this.props.save(filename, version);
+        }
+    }
+
     render() {
         return (
         <div className="App">
@@ -144,10 +172,13 @@ class App extends Component {
             <Card>
                 {this.handlePageBody()}
                 <Card.Footer>
-                <div style={{"alignItems":"center", "display":"flex"}}>
+                <div style={{"alignItems":"center", "display":"flex", "float":"center"}}>
                 <Pagination onClick={(e) => this.handlePagination(e)} style={{"margin":"auto"}}>
                     {this.handlePageFooter()}
                 </Pagination>
+                    <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
+                        Save
+                    </Button>
                 </div>
                 </Card.Footer>
             </Card>
@@ -159,12 +190,18 @@ class App extends Component {
 
 const mapStateToProps = state => ({
     page: state.page,
+    GRD: state.GRD,
+    id: state.id
 });
 
 const mapDispatchToProps = dispatch => ({
     updatePageNum: p => dispatch({
         type: "update_page_number",
         payload: p
+    }),
+    save: (filename, version) => dispatch({
+        type: "save_state",
+        payload: {filename: filename, version: version}
     })
 });
 
