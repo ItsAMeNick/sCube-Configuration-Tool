@@ -79,7 +79,7 @@ class FEE extends Component {
                         <Card.Body>
                             <Row>
                                 <Col>Fee Schedule</Col>
-                                <Col><Form.Control id="group_code" value={this.props.page_data.group_code} type="text" onChange={this.handleChange}/></Col>
+                                <Col><Form.Control id="code" value={this.props.page_data.code} type="text" onChange={this.handleChange}/></Col>
                             </Row>
                         </Card.Body>
                     </div>
