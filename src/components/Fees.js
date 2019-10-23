@@ -50,9 +50,6 @@ class FEE extends Component {
                     <Form.Control id={"order"} value={this.props.page_data.fees[s].order} type="number" onChange={e => this.handleChangeItem(e, s)}/>
                 </td>
                 <td>
-                    <Form.Control id={"calc"} value={this.props.page_data.fees[s].calc} type="number" onChange={e => this.handleChangeItem(e, s)}/>
-                </td>
-                <td>
                     <Form.Control id={"aca"} value={this.props.page_data.fees[s].aca} as="select" onChange={e => this.handleChangeItem(e, s)}>
                         <option/>
                         <option label="Yes" value="Y"/>
@@ -98,7 +95,6 @@ class FEE extends Component {
                             <th>Auto-Invoice</th>
                             <th>Auto-Assess</th>
                             <th>Display Order</th>
-                            <th>Calculation Order</th>
                             <th>Display ACA</th>
                         </tr>
                     </thead>
