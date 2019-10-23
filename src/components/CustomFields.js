@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 
+import DDL from "./CustomFields_DDL.js";
+
 class CF extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +28,14 @@ class CF extends Component {
     }
 
     handleChangeField(event, subgroup, field) {
+        //NOTE: The subgroup and field are switched by accident
+
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.value);
+        //DropdownList has a value of 5 (5th item)
+        if (event.target.id === "type" && event.target.value === "5") {
+            console.log(subgroup)
+            this.props.addDDL(subgroup);
+        }
     }
     handleChangeCHECKED(event, subgroup, field) {
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.checked);
@@ -97,15 +106,17 @@ class CF extends Component {
     genFields(id) {
         let fields = [];
         fields = Object.values(this.props.page_data.subgroups[id].fields).map(f => {
-            return (
-                <tr key={f.id}>
+            console.log(f.id);
+            let row = (
+                <tr>
                     <td><Form.Control id={"label"} value={this.props.page_data.subgroups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
                     <td><Form.Control id={"type"}  as ="select" value={this.props.page_data.subgroups[id].fields[f.id].type} onChange={e => this.handleChangeField(e, f.id, id)}>
-                        <option label="Select" value = "0"/>
+                        <option label="--Select--" value = "0"/>
                         <option label="Text" value = "1"/>
                         <option label="Date" value = "2"/>
                         <option label="Yes/No" value = "3"/>
                         <option label="Number" value = "4"/>
+                        <option label="DropdownList" value = "5"/>
                         <option label="TextArea" value = "6"/>
                         <option label="Time" value = "7"/>
                         <option label="Money" value = "8"/>
@@ -117,6 +128,13 @@ class CF extends Component {
                     <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>
                 </tr>
             );
+            let link = "";
+            if (f.type === "5") {
+                for (let s in this.props.SDL) {
+                    if (this.props.SDL[s].link === f.id) link = s;
+                }
+            }
+            return <React.Fragment key={f.id}>{row}{(link ? <DDL link={link}/> : null)}</React.Fragment>;
         })
         return fields;
     }
@@ -150,7 +168,8 @@ class CF extends Component {
 }
 
 const mapStateToProps = state => ({
-    page_data: state.CF
+    page_data: state.CF,
+    SDL: state.SDL
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -169,6 +188,10 @@ const mapDispatchToProps = dispatch => ({
     addSubgroupField: (id) => dispatch({
         type: "add_CF_subgroup_field",
         payload: id,
+    }),
+    addDDL: (link) => dispatch({
+        type: "add_shared_ddl",
+        payload: link,
     }),
     deleteSubgroup: (id) => dispatch({
         type: "del_CF_subgroup",

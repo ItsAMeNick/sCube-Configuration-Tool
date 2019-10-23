@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 0,
+    page: 2,
     GRD: {
         svp: "",
         alias: "",
@@ -30,8 +30,8 @@ const initialState = {
     STAT: {
         group_code: "",
         statuses: {},
-
-    }
+    },
+    SDL: {}
 };
 
 const sCubeReducer = (state = initialState, action) => {
@@ -161,7 +161,6 @@ const sCubeReducer = (state = initialState, action) => {
                 ai: true,
                 aa: true,
                 order: "",
-                calc: "",
                 aca: "",
             };
             return newState;
@@ -198,6 +197,36 @@ const sCubeReducer = (state = initialState, action) => {
             newState.STAT.statuses[action.payload.id] = action.payload.value;
             return newState;
         }
+
+        case "add_shared_ddl": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.SDL[id] = {
+                name: "",
+                link: (action.payload ? action.payload : ""),
+                items: {}
+            }
+            newState.SDL[id].items[uuidv1()] = "";
+            return newState;
+        }
+
+        case "add_ddl_item": {
+            let newState = _.cloneDeep(state);
+            newState.SDL[action.payload].items[uuidv1()] = "";
+            return newState;
+        }
+        case "delete_ddl_item": {
+            let newState = _.cloneDeep(state);
+            delete newState.SDL[action.payload.list].items[action.payload.item];
+            return newState;
+        }
+        case "update_ddl_item": {
+            let newState = _.cloneDeep(state);
+            newState.SDL[action.payload.list].items[action.payload.item] = action.payload.value;
+            return newState;
+        }
+
+
         default: return state;
     }
 };
