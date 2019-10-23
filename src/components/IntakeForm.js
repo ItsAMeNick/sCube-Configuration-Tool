@@ -118,6 +118,15 @@ class INTK extends Component {
                 </td>
             </tr>);
             used.push(this.props.page_data.settings[s].label);
+            //Check if/how contacts are being Handled
+            if (used.includes("Multiple Contacts")) {
+                used.push("Applicant")
+                used.push("Contact 1");
+                used.push("Contact 2");
+                used.push("Contact 3");
+            } else if (used.includes("Applicant") || used.includes("Contact 1") || used.includes("Contact 2") || used.includes("Contact 3")) {
+                used.push("Multiple Contacts")
+            }
         }
         return rows;
     }
