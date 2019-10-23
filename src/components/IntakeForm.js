@@ -29,7 +29,6 @@ class INTK extends Component {
         switch (event.target.id) {
             case "label": {
                 newSetting = {id: newSetting.id, label: event.target.value, ...settings[event.target.value]};
-                console.log(this.props.page_data.settings);
                 newSetting.order = Object.keys(this.props.page_data.settings).length;
                 if (Object.keys(newSetting).includes("display")) newSetting.display = true;
                 break;

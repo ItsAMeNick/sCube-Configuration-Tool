@@ -16,26 +16,22 @@ class FIN extends Component {
     }
 
     bigRedButton() {
-        console.log("Starting Generation");
         let zip = new jszip();
 
         //Genereate ASIGroupModel
         let asiGroupModel = this.genASIGroupModel();
         zip.file("ASIGroupModel.xml", asiGroupModel);
-        console.log(asiGroupModel);
 
         //Genereate ASIGroupModel
         let smartChoice = this.genSmartChoice();
         zip.file("SmartChoiceGroupModel.xml", smartChoice);
-        console.log(smartChoice);
-        let statusGroup = this.genStatusModel(); 
+        let statusGroup = this.genStatusModel();
         zip.file("ApplicationStatusGroupModel.xml", statusGroup);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
         zip.generateAsync({type: "blob"}).then(content => {
-            console.log(content);
             const element = document.createElement("a");
             element.href = URL.createObjectURL(content);
             element.download = "sCube_"+this.props.data.id+".zip";
@@ -96,7 +92,7 @@ class FIN extends Component {
         }
         console.log(output);
     }
-    
+
     //this function will fill out the Status Model
     genStatusModel()
     {
@@ -111,32 +107,29 @@ class FIN extends Component {
         //start our WOOPY DOOPYING
         //i'll come back to this $$Zachary$$
         //I FIXED YAY
-        let counter = 0; 
-        for  (let i in this.props.data.STAT.statuses) 
+        let counter = 0;
+        for  (let i in this.props.data.STAT.statuses)
         {
-            let sg = this.props.data.STAT.statuses[i].subgroup; 
-            console.log("LOG: " + sg);
-                counter ++;
-                let field = this.props.data.STAT.statuses[i];
-                this.debugObject(this.props.data.STAT);
-                text += '<appStatusGroupModel refId="';
-                text += counter + "@";
-                text += 'AppStatusGroupModel">';
-                text += this.genServProvCode();
-                text += '<appStatusGroupCode>';
-                text += this.props.data.STAT.group_code;
-                text += '</appStatusGroupCode>';
-                text += '<status>';
-                text += field.status;
-                text += '</status>';
-                text += '<appStatusGroupI18Ns/>';
-                text += this.genAuditModel();
-                text += '<statusType>'; 
-                text += field.backendStatus;
-                text += '</statusType>';
-                text += '</appStatusGroupModel>';
-            
-           
+            let sg = this.props.data.STAT.statuses[i].subgroup;
+            counter ++;
+            let field = this.props.data.STAT.statuses[i];
+            this.debugObject(this.props.data.STAT);
+            text += '<appStatusGroupModel refId="';
+            text += counter + "@";
+            text += 'AppStatusGroupModel">';
+            text += this.genServProvCode();
+            text += '<appStatusGroupCode>';
+            text += this.props.data.STAT.group_code;
+            text += '</appStatusGroupCode>';
+            text += '<status>';
+            text += field.status;
+            text += '</status>';
+            text += '<appStatusGroupI18Ns/>';
+            text += this.genAuditModel();
+            text += '<statusType>';
+            text += field.backendStatus;
+            text += '</statusType>';
+            text += '</appStatusGroupModel>';
         }
         text += '</appStatusGroupModels>';
         text += '<pageStatusModels><pageStatus><importSubItemDisableFlag>false</importSubItemDisableFlag><modelProperty>class</modelProperty> <propertyName>appStatusGroupCode</propertyName><selectFlag>true</selectFlag><skipFlag>false</skipFlag></pageStatus></pageStatusModels>';
@@ -362,7 +355,6 @@ class FIN extends Component {
                 tags = intake_settings[fields[f]];
             }
             for (let t in tags) {
-                console.log(t);
                 switch (t) {
                     case "display": {
                         text += '<displayFlg>';

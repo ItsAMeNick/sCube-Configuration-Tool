@@ -42,7 +42,6 @@ const sCubeReducer = (state = initialState, action) => {
         case "save_state": {
             let newState = _.cloneDeep(state);
             newState.GRD.version = action.payload.version;
-            console.log("Saving...");
             let element = document.createElement("a");
             let file = new Blob([JSON.stringify(newState)], {type: 'text/plain'});
             element.href = URL.createObjectURL(file);
@@ -54,6 +53,10 @@ const sCubeReducer = (state = initialState, action) => {
 
         case "load_state": {
             let newState = JSON.parse(action.payload)
+            // Optional Page override, this line can be commented output
+            // If commented out, loading a save will return a user to the page that
+            // the app was saved on
+            newState.page = 1;
             return newState;
         }
 
@@ -114,7 +117,6 @@ const sCubeReducer = (state = initialState, action) => {
 
         case "del_CF_subgroup_field": {
             let newState = _.cloneDeep(state);
-            console.log(action.payload)
             delete newState.CF.subgroups[action.payload.subgroup].fields[action.payload.field];
             return newState;
         }
