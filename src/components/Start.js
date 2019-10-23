@@ -17,7 +17,12 @@ class STRT extends Component {
         reader.onload = (event) => {
             this.props.load(event.target.result);
         };
-        reader.readAsText(file)
+        if (window.confirm("Loading a save will overwrite any changes that have been made during the current session.  Please make sure to save your work.  Would you like to continue?")) {
+            reader.readAsText(file);
+        } else {
+            document.getElementById("file_loadsave").value = "";
+            return -1;
+        }
     }
 
     render() {
@@ -32,7 +37,8 @@ class STRT extends Component {
                     </Card.Text>
                 </Card.Body>
                 <Card.Body>
-                    <input type="file" name="file" onChange={(e) => this.handleChange(e)}/>
+                    <p>Load File: </p>
+                    <input type="file" name="file" id="file_loadsave" onChange={(e) => this.handleChange(e)}/>
                 </Card.Body>
             </React.Fragment>
         );
