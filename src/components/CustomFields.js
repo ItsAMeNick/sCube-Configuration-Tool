@@ -122,7 +122,7 @@ class CF extends Component {
                         <option label="Money" value = "8"/>
                         <option label="Checkbox" value = "9"/>
                     </Form.Control></td>
-                    <td><Form.Control id={"disp_order"} value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="number" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
+                    <td><Form.Control id={"disp_order"} required  value={this.props.page_data.subgroups[id].fields[f.id].disp_order} type="number" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
                     <td><Form.Control id={"required"} checked={this.props.page_data.subgroups[id].fields[f.id].required} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
                     <td><Form.Control id={"aca_disp"} checked={this.props.page_data.subgroups[id].fields[f.id].aca_disp} type="checkbox" onChange={e => this.handleChangeCHECKED(e, f.id, id)}/></td>
                     <td><Button id={f.id} variant="light" onClick={(e) => this.deleteSubgroupFieldHelper(e, id)}>Delete</Button></td>

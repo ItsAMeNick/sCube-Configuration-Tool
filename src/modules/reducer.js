@@ -232,3 +232,4 @@ const sCubeReducer = (state = initialState, action) => {
 };
 
 export default sCubeReducer;
+

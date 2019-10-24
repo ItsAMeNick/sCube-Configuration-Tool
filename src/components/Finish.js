@@ -76,6 +76,7 @@ class FIN extends Component {
         return text;
     }
 
+
     //This function is used to fill in the audit model
     genAuditModel() {
         //$$$ZACH$$$
@@ -87,6 +88,16 @@ class FIN extends Component {
         text += '</auditDate><auditID>ADMIN</auditID><auditStatus>A</auditStatus></auditModel>';
         return text
     }
+    makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
+     
     genServProvCode()
     {
         let text ="";
@@ -111,9 +122,10 @@ class FIN extends Component {
         text += this.genTopBlurb();
         for (let s in this.props.data.SDL) {
             let list = this.props.data.SDL[s];
+            let newNamey = this.makeid(6);
             text += "<sharedDropDownListModel>";
             text += "<name>";
-            text += list.name;
+            text += newNamey;
             text += "</name>";
             text += this.genServProvCode();
             text += this.genAuditModel();
@@ -127,7 +139,7 @@ class FIN extends Component {
                 counter++;
                 text += this.genServProvCode();
                 text += this.genAuditModel();
-                text += "<bizdomain>"+ list.name +"</bizdomain>";
+                text += "<bizdomain>"+ newNamey +"</bizdomain>";
                 text += "<bizdomainValue>"+item+"</bizdomainValue>";
                 text += "<sortOrder>"+order+"</sortOrder>";
                 order += 10;
@@ -293,7 +305,7 @@ class FIN extends Component {
         let text = "";
 
         text += this.genTopBlurb();
-
+        let counterOopsy = 0;
         text += '<asiGroup>';
         text += '<appSpecInfoGroupCode>';
         text += this.props.data.CF.group_code;
@@ -307,6 +319,8 @@ class FIN extends Component {
         for (let i in this.props.data.CF.subgroups) {
             let sg = this.props.data.CF.subgroups[i].subgroup;
             for (let f in this.props.data.CF.subgroups[i].fields) {
+                //ZPM put this in cause if user's didn't fill that field out we'd get mad errors: 
+                counterOopsy ++;
                 //ZPM: I made some updates here; specifically with how checkboxCode is called again in the XML for individual ASI Models.
                 //ZPM: I also adjusted to close out /asiModel.
                 let field = this.props.data.CF.subgroups[i].fields[f];
@@ -340,7 +354,7 @@ class FIN extends Component {
                 text += '</r1CheckboxInd>';
                 //Display Order
                 text += '<r1DisplayOrder>';
-                text += field.disp_order;
+                text += (field.disp_order) ? field.disp_order : counterOopsy;
                 text += '</r1DisplayOrder>';
                 //rest of this i don't think i care about for now.
                 text +='<r1ReqFeeCalc>N</r1ReqFeeCalc>';
@@ -599,8 +613,9 @@ class FIN extends Component {
             text += '</smartChoice>';
         }
 
-
+        text += '</smartChoiceModels>';
         text += '<structureTypeModels/></smartChoiceGroup>';
+        text += '</list>';
         return text;
     }
 
