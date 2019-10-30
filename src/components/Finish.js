@@ -18,9 +18,6 @@ class FIN extends Component {
     bigRedButton() {
         let zip = new jszip();
 
-        // $$Zachary$$ We need to add validation to make sure that specific
-        // files are supposed to generate an output file
-
         //Genereate ASIGroupModel
         let asiGroupModel = this.genASIGroupModel();
         zip.file("ASIGroupModel.xml", asiGroupModel);
@@ -29,14 +26,21 @@ class FIN extends Component {
         let smartChoice = this.genSmartChoice();
         zip.file("SmartChoiceGroupModel.xml", smartChoice);
 
+        //Genereate StatusGroupModel
         let statusGroup = this.genStatusModel();
         zip.file("ApplicationStatusGroupModel.xml", statusGroup);
 
+        //Gen Fee Schedule XML
         let feeSchedule = this.genFeeSchedule();
         zip.file("RefFeeScheduleModel.xml", feeSchedule);
 
+        //Gen SDD lists
         let sharedDropDownList = this.genSharedDropdwnLists();
         zip.file("SharedDropDownListModel.xml", sharedDropDownList);
+
+        //Gen CapTypeModel
+        let capTypeModel = this.genCapType();
+        zip.file("CapTypeModel.xml", capTypeModel);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
@@ -112,6 +116,138 @@ class FIN extends Component {
             output += property + ': ' + object[property];
         }
         console.log(output);
+    }
+
+    //Generate the cap type model
+    genCapType() {
+        let text = "";
+        let counter = 1;
+
+        text += this.genTopBlurb();
+        text += '<capType refId="'+counter+'@CapTypeModel">';
+        counter++;
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<group>"+this.props.data.GRD.module+"</group>";
+        text += "<type>"+this.props.data.GRD.type+"</type>";
+        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+        text += "<category>"+this.props.data.GRD.category+"</category>";
+        text += "<alias>"+this.props.data.GRD.alias+"</alias>";
+        //Moved link to status' later
+        text += "<asChildOnly>N</asChildOnly>";
+        text += this.genAuditModel();
+
+        //These are some lines about ACA, GIS, and Asset models
+        text += "<capTypeACAModel>";
+        text += "<feeCalcFactor>H</feeCalcFactor>";
+        text += "<isIssue>N</isIssue>";
+        text += "<isRenewal>N</isRenewal>";
+        text += "<searchableInACA>Y</searchableInACA>";
+        text += "</capTypeACAModel>";
+        text += "<capTypeAssetModel>";
+        text += "<estProdUnits>0.0</estProdUnits>";
+        text += "<valueRequired>N</valueRequired>";
+        text += "</capTypeAssetModel>";
+        text += "<capTypeGISModel>";
+        text += "<copyAllAssociatedAPO>N</copyAllAssociatedAPO>";
+        text += "</capTypeGISModel>";
+
+        //CapType Mask Model (UPDATE ONCE MASK IS ADDED!)
+        text += "<capTypeMaskModel>";
+        text += "<capMaskName>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</capMaskName>";
+        text += "<capkeyMaskName>Default</capkeyMaskName>";
+        text += "<partialAltIdMask>Default</partialAltIdMask>";
+        text += "<temporaryAltIdMask>Default</temporaryAltIdMask>";
+        text += "</capTypeMaskModel>";
+
+        //Some more Static text?
+        text += "<expirationCode>NONE</expirationCode>";
+        text += "<feeScheduleName>NONE</feeScheduleName>";
+        text += "<isRenewalOverride>N</isRenewalOverride>";
+        text += "<isSearchable>Y</isSearchable>";
+
+        text += "<moduleName>"+this.props.data.GRD.module+"</moduleName>"
+
+        text += "<resId>59952</resId>";
+        text += "<udCode3>APNANANA</udCode3>";
+        text += "<capTypeI18NModels/>";
+        text += "<capTypeRelationList/>";
+
+        text += "<capTypeRelationModel>";
+        text += "<capTypeRelations/>";
+        text += "<category>"+this.props.data.GRD.category+"</category>";
+        text += "<group>"+this.props.data.GRD.module+"</group>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+        text += "<type>"+this.props.data.GRD.type+"</type>";
+        text += "</capTypeRelationModel>";
+
+        text += "<capTypeSecurityModel>";
+        text += "<capTypeSecurityPolicyModels/>";
+        text += "<capTypeSecurityStatusPolicyModels/>";
+        text += "<category>"+this.props.data.GRD.category+"</category>";
+        text += "<group>"+this.props.data.GRD.module+"</group>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+        text += "<type>"+this.props.data.GRD.type+"</type>";
+        text += "</capTypeSecurityModel>";
+
+        //Trying to omit this tag buy using an empty attribute
+        text += "<captypeStandardComment/>";
+        // <captypeStandardComment>
+        //     <auditModel>
+        //         <auditDate>2019-05-31T12:49:20-04:00</auditDate>
+        //         <auditID>ADMIN</auditID>
+        //         <auditStatus>A</auditStatus>
+        //     </auditModel>
+        //     <category>NA</category>
+        //     <entityData4CapType>Buildingu266BExemption Requestu266BNAu266BNA</entityData4CapType>
+        //     <group>Building</group>
+        //     <serviceProviderCode>PARTNER</serviceProviderCode>
+        //     <subType>NA</subType>
+        //     <type>Exemption Request</type>
+        //     <xcommentGroupEntitys/>
+        // </captypeStandardComment>
+
+        text += '<citizenAccessModel refId="'+counter+'@CapTypeCitizenAccessModel">';
+        counter++;
+        text += "<category>"+this.props.data.GRD.category+"</category>";
+        text += "<group>"+this.props.data.GRD.module+"</group>";
+        text += "<refXEntityPermissionModels/>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+        text += "<type>"+this.props.data.GRD.type+"</type>";
+        text += "</citizenAccessModel>";
+
+        text += "<isCheckedLiscenedVerification>Y</isCheckedLiscenedVerification>";
+        text += "<isCloneOptionSelected>Y</isCloneOptionSelected>";
+        text += "<refLookupTables/>";
+
+        text += "<postSubmission4ACAModels/>";
+        text += "<recordTypeString>"+this.props.data.GRD.module+"/"+this.props.data.GRD.type+"/"+this.props.data.GRD.sub_type+"/"+this.props.data.GRD.category+"</recordTypeString>";
+        text += "<refAuditFrequencyModels/>";
+        text += "<referenceLicenseVerificationModels/>";
+        text += "<stdConditionCapTypes/>";
+
+        if (this.props.data.STAT.group_code) {
+            text += "<appStatusGroupCode>"+this.props.data.STAT.group_code+"</appStatusGroupCode>";
+        }
+        if (this.props.data.IF.group_code) {
+            text += "<smartChoiceCode>"+this.props.data.IF.group_code+"</smartChoiceCode>";
+        }
+        if (this.props.data.CF.group_code) {
+            text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
+        }
+        //Process Code?  This is the name of something (I assume workflow)
+        text += "<processCode>NONE</processCode>";
+
+        text += "</capType>";
+        text += "</list>";
+
+        return text;
     }
 
     //Generate the shared Dropdown Lists

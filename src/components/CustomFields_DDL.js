@@ -13,7 +13,6 @@ class DDL extends Component {
     genRows() {
         let rows = [];
         for (let i in this.props.SDL[this.props.link].items) {
-            console.log(i)
             rows.push(
                 <tr key={i}>
                     <td></td>
