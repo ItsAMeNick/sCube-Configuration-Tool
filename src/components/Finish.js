@@ -241,8 +241,17 @@ class FIN extends Component {
         if (this.props.data.CF.group_code) {
             text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
         }
+        if (this.props.data.CF.group_code) {
+            text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
+        }
+        if (this.props.data.FEE.code) {
+            text += "<feeScheduleName>"+this.props.data.FEE.code+"</feeScheduleName>";
+        }
+        
         //Process Code?  This is the name of something (I assume workflow)
+        //This is workflow, set to NONE, MUST BE DONE IN ACCELA
         text += "<processCode>NONE</processCode>";
+        text += "<inspectionGroupCode>NONE</inspectionGroupCode>";
 
         text += "</capType>";
         text += "</list>";
