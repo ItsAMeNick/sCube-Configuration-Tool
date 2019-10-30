@@ -55,7 +55,7 @@ class Notes extends Component {
             <Card>
                 <Card.Header>
                     <strong>Notes</strong>
-                    <Button id={1} variant="warning" style={{"float":"right"}} onClick={(e) => this.addNote(e)}>Add Node</Button>
+                    <Button id={1} variant="warning" style={{"float":"right"}} onClick={(e) => this.addNote(e)}>Add Note</Button>
                 </Card.Header>
                 <Card.Body>
                     <Table bordered striped>
@@ -72,7 +72,7 @@ class Notes extends Component {
                     </Table>
                 </Card.Body>
                 <Card.Footer>
-                    <Button id={1} variant="warning" style={{"float":"right"}} onClick={(e) => this.addNote(e)}>Add Node</Button>
+                    <Button id={1} variant="warning" style={{"float":"right"}} onClick={(e) => this.addNote(e)}>Add Note</Button>
                 </Card.Footer>
             </Card>
         );
