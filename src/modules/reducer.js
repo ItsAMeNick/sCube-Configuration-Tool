@@ -233,7 +233,6 @@ const sCubeReducer = (state = initialState, action) => {
         }
         case "update_DDL_name": {
             let newState = _.cloneDeep(state);
-            console.log(action.payload)
             let list_to_update = "";
             for (let i in newState.SDL) {
                 if (newState.SDL[i].link === action.payload.link) {
