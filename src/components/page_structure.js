@@ -1,4 +1,4 @@
-//Please make sure that the key and the order match, otherwise enexpected
+//Please make sure that the key and the order match, otherwise unexpected
 // results may occur.  Pages will be reordered to match this order!
 //Do not change the page ID when rearranging (key)
 

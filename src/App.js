@@ -21,6 +21,8 @@ import DDL from "./components/SharedDropdownLists.js";
 import COND from "./components/Conditions.js";
 import FIN from "./components/Finish.js";
 
+import Notes from "./components/Notes.js";
+
 import TestDump from "./components/TEST_DUMP.js";
 
 import "./App.css";
@@ -182,6 +184,9 @@ class App extends Component {
                 </div>
                 </Card.Footer>
             </Card>
+            <br/>
+            <Notes/>
+            <br/>
             <TestDump/>
         </div>
         );

@@ -5,6 +5,7 @@ const initialState = {
     id: uuidv1(),
     version: "1-1",
     page: 2,
+    notes: {},
     GRD: {
         svp: "",
         alias: "",
@@ -244,6 +245,27 @@ const sCubeReducer = (state = initialState, action) => {
             return newState;
         }
 
+        case "add_note": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.notes[id] = {
+                id: id,
+                page: action.payload,
+                value: "",
+                comment: ""
+            };
+            return newState;
+        }
+        case "update_note": {
+            let newState = _.cloneDeep(state);
+            newState.notes[action.payload.note][action.payload.field] = action.payload.value;
+            return newState;
+        }
+        case "delete_note": {
+            let newState = _.cloneDeep(state);
+            delete newState.notes[action.payload];
+            return newState;
+        }
 
         default: return state;
     }

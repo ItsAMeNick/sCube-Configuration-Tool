@@ -247,7 +247,7 @@ class FIN extends Component {
         if (this.props.data.FEE.code) {
             text += "<feeScheduleName>"+this.props.data.FEE.code+"</feeScheduleName>";
         }
-        
+
         //Process Code?  This is the name of something (I assume workflow)
         //This is workflow, set to NONE, MUST BE DONE IN ACCELA
         text += "<processCode>NONE</processCode>";
@@ -417,7 +417,7 @@ class FIN extends Component {
         let counter = 0;
         for  (let i in this.props.data.STAT.statuses)
         {
-            let sg = this.props.data.STAT.statuses[i].subgroup;
+            //let sg = this.props.data.STAT.statuses[i].subgroup;
             counter ++;
             let field = this.props.data.STAT.statuses[i];
             this.debugObject(this.props.data.STAT);
