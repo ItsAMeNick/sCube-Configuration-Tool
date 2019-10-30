@@ -280,56 +280,6 @@ class FIN extends Component {
     genMaskModel() {
         let text = "";
         text += this.genTopBlurb();
-        //So I just discovered multi-line string and im kinda pressed...
-        text += `<mask>
-            <name>Default</name>
-            <serviceProviderCode>PARTNER</serviceProviderCode>
-            <type>Cap Key</type>
-            <auditModel>
-                <auditDate>2017-04-05T10:23:01-04:00</auditDate>
-                <auditID>SYSTEM</auditID>
-                <auditStatus>A</auditStatus>
-            </auditModel>
-            <description></description>
-            <maxLength>17</maxLength>
-            <minLength>17</minLength>
-            <pattern>$$yy$$CAP-00000-$$SEQ05$$</pattern>
-            <radixValue>36</radixValue>
-            <seqName>Default</seqName>
-        </mask>
-        <mask>
-            <name>Default</name>
-            <serviceProviderCode>PARTNER</serviceProviderCode>
-            <type>Partial CAP ID</type>
-            <auditModel>
-                <auditDate>2017-01-12T11:55:45-05:00</auditDate>
-                <auditID>ADMIN</auditID>
-                <auditStatus>A</auditStatus>
-            </auditModel>
-            <description>Mask Definition for Partial CAP ID</description>
-            <maxLength>30</maxLength>
-            <minLength>1</minLength>
-            <pattern>$$yy$$EST-$$SEQ06$$</pattern>
-            <radixValue>10</radixValue>
-            <seqName>Default</seqName>
-        </mask>
-        <mask>
-            <name>Default</name>
-            <serviceProviderCode>PARTNER</serviceProviderCode>
-            <type>Temporary CAP ID</type>
-            <auditModel>
-                <auditDate>2017-01-12T11:55:45-05:00</auditDate>
-                <auditID>ADMIN</auditID>
-                <auditStatus>A</auditStatus>
-            </auditModel>
-            <description>Mask Definition for Temporary CAP ID</description>
-            <maxLength>30</maxLength>
-            <minLength>1</minLength>
-            <pattern>$$yy$$TMP-$$SEQ06$$</pattern>
-            <radixValue>10</radixValue>
-            <seqName>Default</seqName>
-        </mask>`;
-
         text += "<mask>";
         text += "<name>"+
                 this.props.data.GRD.module +"/"+
@@ -929,6 +879,10 @@ class FIN extends Component {
         text += '<td>Record Alias: </td>';
         text += '<td>'+this.props.data.GRD.alias+'</td>';
         text += '</tr>';
+        text += '<tr>';
+        text += '<td>Service Provider Code: </td>';
+        text += '<td>'+this.props.data.GRD.svp+'</td>';
+        text += '</tr>';
         text += '<tr><td>&nbsp;</td></tr>';
         text += '<tr>';
         text += '<td>Module: </td>';
@@ -966,6 +920,8 @@ class FIN extends Component {
         text += '</div>';
         //End of GRD
 
+        text += this.addNotes(1);
+
         //Custom Fields
         text += '<hr/>';
         text += '<div style="padding:0 0 10px 10px">';
@@ -973,7 +929,7 @@ class FIN extends Component {
         text += '<p>This is the custom information that this record is able to track.</p>';
         for (let c in this.props.data.CF.subgroups) {
             text += '<h3>'+this.props.data.CF.group_code+' - '+this.props.data.CF.subgroups[c].subgroup+'</h3>';
-            text += '<table style="width:100%">';
+            text += '<table style="width:100%" border="1">';
             text += '<tr>';
             text += '<td style="width:20%"><Strong>Field Name</Strong></td>';
             text += '<td style="width:20%"><Strong>Type</Strong></td>';
@@ -1006,8 +962,9 @@ class FIN extends Component {
             }
             text += '</table>';
         }
-
+        text += this.addNotes(2);
         text += '</div>';
+
         text += '<hr/>';
 
         //Fees
@@ -1017,7 +974,7 @@ class FIN extends Component {
         text += '<h3 style="margin:0 0 10 0">'+this.props.data.FEE.code+'</h3>';
         text += '<h4 style="margin:0">Version: '+this.props.data.FEE.version+'</h4>';
         text += '<h4 style="margin:0 0 15 0">Effective: '+this.props.data.FEE.effective+'</h4>';
-        text += '<table style="width:100%">';
+        text += '<table style="width:100%" border="1">';
         text += '<tr>';
         text += '<td style="width:16.66%"><Strong>Fee Code</Strong></td>';
         text += '<td style="width:16.66%"><Strong>Amount</Strong></td>';
@@ -1038,6 +995,7 @@ class FIN extends Component {
             text += '</tr>';
         }
         text += '</table>';
+        text += this.addNotes(3);
         text += '</div>';
 
         text += '<hr/>';
@@ -1047,7 +1005,7 @@ class FIN extends Component {
         text += '<h2>Statuses</h2>';
         text += "<p>Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands. Status Groups allow us to assign a list of pre-defined statuses to a record. Below: 'Status' related to the actual public-facing verbiage 'Back-End Status' is what the database sees for a particular status; try to match your status to whichever back-end status that makes sense.</p>";
         text += '<h3 style="margin:0 0 10 0">'+this.props.data.STAT.group_code+'</h3>';
-        text += '<table style="width:100%">';
+        text += '<table style="width:100%" border="1">';
         text += '<tr>';
         text += '<td style="width:16.66%"><Strong>Status</Strong></td>';
         text += '<td style="width:16.66%"><Strong>Back-End Status</Strong></td>';
@@ -1061,10 +1019,14 @@ class FIN extends Component {
         }
         text += '</table>';
         text += '</div>';
+        text += this.addNotes(8);
 
         //Footer
         text += '<hr/>';
-        text += '<table style="width:100%">';
+        text += this.addNotes(0, false);
+        text += this.addNotes(12, false);
+
+        text += '<table style="width:100%" border="1">';
         text += '<tr>';
         text += '<td>'+(new Date()).toUTCString()+'</td>';
         text += '<td>'+this.props.data.id+'</td>';
@@ -1072,10 +1034,28 @@ class FIN extends Component {
         text += '</tr>';
         text += '</table>';
 
-
         text += '</body>';
         text += '</html>';
 
+        return text;
+    }
+
+    addNotes(page, opt=true) {
+        let text = "";
+        let notes = Object.keys(this.props.data.notes).filter(item => {
+            return this.props.data.notes[item].page === page;
+        })
+        if (notes) {
+            if (opt) text += "<p>Notes:</p>";
+            text += "<table border='1'>";
+            for (let n in notes) {
+                text += '<tr>';
+                text += '<td>'+this.props.data.notes[notes[n]].value+'</td>';
+                text += '<td>'+this.props.data.notes[notes[n]].comment+'</td>';
+                text += '</tr>';
+            }
+            text += "</table>";
+        }
         return text;
     }
 
