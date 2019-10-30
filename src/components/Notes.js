@@ -6,10 +6,12 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+//The labels can be about 15 characters
 const options = [
     <option value="" label="" key="0"/> //DO NOT REMOVE
     , <option value="Automation" label="Automation" key="1"/>
-    , <option value="BizRule" label="BizRule" key="2"/>
+    , <option value="BizRule" label="Business Rule" key="2"/>
+    , <option value="Reminder" label="Reminder" key="3"/>
 ];
 
 class Notes extends Component {
@@ -27,8 +29,6 @@ class Notes extends Component {
     }
 
     handleChange(event) {
-        console.log(event.target.id)
-        console.log(event.target.value)
         let id = event.target.id.split("|");
         this.props.updateNote(id[1], id[0], event.target.value)
     }
@@ -61,8 +61,9 @@ class Notes extends Component {
                     <Table bordered striped>
                         <thead>
                             <tr>
-                                <th>Type</th>
+                                <th style={{"width":"185px"}}>Type</th>
                                 <th>Comment</th>
+                                <td style={{"width":"100px"}}/>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,9 @@ class Notes extends Component {
                         </tbody>
                     </Table>
                 </Card.Body>
+                <Card.Footer>
+                    <Button id={1} variant="warning" style={{"float":"right"}} onClick={(e) => this.addNote(e)}>Add Node</Button>
+                </Card.Footer>
             </Card>
         );
     }
