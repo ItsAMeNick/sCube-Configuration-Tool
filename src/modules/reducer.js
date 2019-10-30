@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 2,
+    page: 1,
     notes: {},
     GRD: {
         svp: "",
@@ -13,6 +13,7 @@ const initialState = {
         type: "",
         sub_type: "",
         category: "",
+        pattern: "",
     },
     CF: {
         group_code: "",

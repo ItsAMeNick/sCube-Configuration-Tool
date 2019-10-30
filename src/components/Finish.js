@@ -42,6 +42,10 @@ class FIN extends Component {
         let capTypeModel = this.genCapType();
         zip.file("CapTypeModel.xml", capTypeModel);
 
+        //Gen Mask Model
+        let maskModel = this.genMaskModel();
+        zip.file("ReferenceMaskModel.xml", maskModel);
+
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
@@ -256,6 +260,84 @@ class FIN extends Component {
         text += "</capType>";
         text += "</list>";
 
+        return text;
+    }
+
+    genMaskModel() {
+        let text = "";
+        text += this.genTopBlurb();
+        //So I just discovered multi-line string and im kinda pressed...
+        text += `<mask>
+            <name>Default</name>
+            <serviceProviderCode>PARTNER</serviceProviderCode>
+            <type>Cap Key</type>
+            <auditModel>
+                <auditDate>2017-04-05T10:23:01-04:00</auditDate>
+                <auditID>SYSTEM</auditID>
+                <auditStatus>A</auditStatus>
+            </auditModel>
+            <description></description>
+            <maxLength>17</maxLength>
+            <minLength>17</minLength>
+            <pattern>$$yy$$CAP-00000-$$SEQ05$$</pattern>
+            <radixValue>36</radixValue>
+            <seqName>Default</seqName>
+        </mask>
+        <mask>
+            <name>Default</name>
+            <serviceProviderCode>PARTNER</serviceProviderCode>
+            <type>Partial CAP ID</type>
+            <auditModel>
+                <auditDate>2017-01-12T11:55:45-05:00</auditDate>
+                <auditID>ADMIN</auditID>
+                <auditStatus>A</auditStatus>
+            </auditModel>
+            <description>Mask Definition for Partial CAP ID</description>
+            <maxLength>30</maxLength>
+            <minLength>1</minLength>
+            <pattern>$$yy$$EST-$$SEQ06$$</pattern>
+            <radixValue>10</radixValue>
+            <seqName>Default</seqName>
+        </mask>
+        <mask>
+            <name>Default</name>
+            <serviceProviderCode>PARTNER</serviceProviderCode>
+            <type>Temporary CAP ID</type>
+            <auditModel>
+                <auditDate>2017-01-12T11:55:45-05:00</auditDate>
+                <auditID>ADMIN</auditID>
+                <auditStatus>A</auditStatus>
+            </auditModel>
+            <description>Mask Definition for Temporary CAP ID</description>
+            <maxLength>30</maxLength>
+            <minLength>1</minLength>
+            <pattern>$$yy$$TMP-$$SEQ06$$</pattern>
+            <radixValue>10</radixValue>
+            <seqName>Default</seqName>
+        </mask>`;
+
+        text += "<mask>";
+        text += "<name>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</name>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<type>Cap ID</type>";
+        text += this.genAuditModel();
+        text += "<description></description>";
+        text += "<maxLength>30</maxLength>";
+        text += "<minLength>1</minLength>";
+        text += "<pattern>"+this.props.data.GRD.pattern+"</pattern>";
+        text += "<radixValue>10</radixValue>";
+        text += "<seqName>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</seqName>";
+        text += "</mask>";
+
+        text += "</list>"
         return text;
     }
 
