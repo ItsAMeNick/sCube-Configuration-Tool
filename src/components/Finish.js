@@ -46,6 +46,10 @@ class FIN extends Component {
         let maskModel = this.genMaskModel();
         zip.file("ReferenceMaskModel.xml", maskModel);
 
+        //Gen Sequence Model
+        let sequenceModel = this.genSequenceModel();
+        zip.file("SequenceModel.xml", sequenceModel);
+
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
@@ -338,6 +342,53 @@ class FIN extends Component {
         text += "</mask>";
 
         text += "</list>"
+        return text;
+    }
+
+    genSequenceModel() {
+        let text = "";
+
+        text += this.genTopBlurb();
+        text += '<sequence refId="1@SequenceModel">';
+        text += "<name>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</name>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += "<type>Cap ID</type>";
+        text += this.genAuditModel();
+        text += `<cacheSize>1</cacheSize>
+                <description></description>
+                <increaseValue>1</increaseValue>
+                <intervalType>CY</intervalType>
+                <minValue>1</minValue>
+                <resetAction>E</resetAction>`;
+        let pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
+        if (!pattern_size) pattern_size = 5;
+        text += "<resetValue>"+"9".repeat(pattern_size)+"</resetValue>";
+
+        text += "<sequenceIntervalModels>";
+        text += "<sequenceInterval>";
+        text += "<intervalName>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</intervalName>";
+        text += "<sequenceName>"+
+                this.props.data.GRD.module +"/"+
+                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
+                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
+                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</sequenceName>";
+        text += "<sequenceType>Cap ID</sequenceType>";
+        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        text += this.genAuditModel();
+        text += "<lastSequenceNbr>0</lastSequenceNbr>";
+        text += "</sequenceInterval>";
+        text += "</sequenceIntervalModels>";
+        text += "</sequence>";
+        text += "</list>";
+
         return text;
     }
 
@@ -842,6 +893,13 @@ class FIN extends Component {
         text += '</smartChoiceModels>';
         text += '<structureTypeModels/></smartChoiceGroup>';
         text += '</list>';
+        return text;
+    }
+
+    genRecordSummary() {
+        text = "";
+        text = `
+        `;
         return text;
     }
 
