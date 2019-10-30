@@ -201,9 +201,15 @@ const sCubeReducer = (state = initialState, action) => {
         case "add_shared_ddl": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
+            let field_name;
+            if (action.payload.link && action.payload.parent) {
+                field_name = newState.CF.subgroups[action.payload.parent].fields[action.payload.link].label;
+            } else {
+                field_name = action.payload.name ? action.payload.name : "";
+            }
             newState.SDL[id] = {
-                name: "PLACEHOLDER",
-                link: (action.payload ? action.payload : ""),
+                name: field_name,
+                link: (action.payload.link ? action.payload.link : ""),
                 items: {}
             }
             newState.SDL[id].items[uuidv1()] = "";
@@ -225,6 +231,19 @@ const sCubeReducer = (state = initialState, action) => {
             newState.SDL[action.payload.list].items[action.payload.item] = action.payload.value;
             return newState;
         }
+        case "update_DDL_name": {
+            let newState = _.cloneDeep(state);
+            console.log(action.payload)
+            let list_to_update = "";
+            for (let i in newState.SDL) {
+                if (newState.SDL[i].link === action.payload.link) {
+                    list_to_update = i;
+                    newState.SDL[list_to_update].name = action.payload.name;
+                    break;
+                }
+            }
+            return newState;
+        }
 
 
         default: return state;
@@ -232,4 +251,3 @@ const sCubeReducer = (state = initialState, action) => {
 };
 
 export default sCubeReducer;
-

@@ -29,12 +29,16 @@ class CF extends Component {
 
     handleChangeField(event, subgroup, field) {
         //NOTE: The subgroup and field are switched by accident
+        //Just the labels, not logically later on
 
         this.props.updateSubgroupField(subgroup, field, event.target.id, event.target.value);
         //DropdownList has a value of 5 (5th item)
         if (event.target.id === "type" && event.target.value === "5") {
-            console.log(subgroup)
-            this.props.addDDL(subgroup);
+            this.props.addDDL(subgroup, field);
+        }
+
+        if (event.target.id === "label") {
+            this.props.updateDDLName(event.target.value, subgroup)
         }
     }
     handleChangeCHECKED(event, subgroup, field) {
@@ -106,7 +110,6 @@ class CF extends Component {
     genFields(id) {
         let fields = [];
         fields = Object.values(this.props.page_data.subgroups[id].fields).map(f => {
-            console.log(f.id);
             let row = (
                 <tr>
                     <td><Form.Control id={"label"} value={this.props.page_data.subgroups[id].fields[f.id].label} type="text" onChange={e => this.handleChangeField(e, f.id, id)}/></td>
@@ -189,9 +192,9 @@ const mapDispatchToProps = dispatch => ({
         type: "add_CF_subgroup_field",
         payload: id,
     }),
-    addDDL: (link) => dispatch({
+    addDDL: (link, parent) => dispatch({
         type: "add_shared_ddl",
-        payload: link,
+        payload: {link: link, parent: parent},
     }),
     deleteSubgroup: (id) => dispatch({
         type: "del_CF_subgroup",
@@ -211,6 +214,13 @@ const mapDispatchToProps = dispatch => ({
             field: f,
             label: l,
             value: v
+        }
+    }),
+    updateDDLName: (name, link) => dispatch({
+        type: "update_DDL_name",
+        payload: {
+            name: name,
+            link: link,
         }
     }),
     deleteSubgroupField: (sg, f) => dispatch({

@@ -97,7 +97,7 @@ class FIN extends Component {
         }
         return result;
      }
-     
+
     genServProvCode()
     {
         let text ="";
@@ -122,10 +122,9 @@ class FIN extends Component {
         text += this.genTopBlurb();
         for (let s in this.props.data.SDL) {
             let list = this.props.data.SDL[s];
-            let newNamey = this.makeid(6);
             text += "<sharedDropDownListModel>";
             text += "<name>";
-            text += newNamey;
+            text += list.name;
             text += "</name>";
             text += this.genServProvCode();
             text += this.genAuditModel();
@@ -139,7 +138,7 @@ class FIN extends Component {
                 counter++;
                 text += this.genServProvCode();
                 text += this.genAuditModel();
-                text += "<bizdomain>"+ newNamey +"</bizdomain>";
+                text += "<bizdomain>"+ list.name +"</bizdomain>";
                 text += "<bizdomainValue>"+item+"</bizdomainValue>";
                 text += "<sortOrder>"+order+"</sortOrder>";
                 order += 10;
@@ -319,7 +318,7 @@ class FIN extends Component {
         for (let i in this.props.data.CF.subgroups) {
             let sg = this.props.data.CF.subgroups[i].subgroup;
             for (let f in this.props.data.CF.subgroups[i].fields) {
-                //ZPM put this in cause if user's didn't fill that field out we'd get mad errors: 
+                //ZPM put this in cause if user's didn't fill that field out we'd get mad errors:
                 counterOopsy ++;
                 //ZPM: I made some updates here; specifically with how checkboxCode is called again in the XML for individual ASI Models.
                 //ZPM: I also adjusted to close out /asiModel.
