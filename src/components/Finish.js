@@ -915,9 +915,12 @@ class FIN extends Component {
         text += "</title>";
         text += "</head>";
         text += '<body style="width:8in">';
-        text += '<h1>';
-        text += this.props.data.GRD.alias+' - Record Summary';
+        text += '<div>'
+        text += '<img src="https://www.scubeenterprise.com/images/logo.png" alt="[s]Cube" style="vertical-align:middle;">';
+        text += '<h1 style="vertical-align:middle; display:inline;">';
+        text += '&nbsp;&nbsp;&nbsp;'+this.props.data.GRD.alias+' - Record Summary';
         text += '</h1>';
+        text += '</div>';
         text += '<hr/>';
         text += '<div style="padding:0 0 10px 10px">';
         text += '<h2>General Record Information</h2>';
@@ -1036,6 +1039,40 @@ class FIN extends Component {
         }
         text += '</table>';
         text += '</div>';
+
+        text += '<hr/>';
+
+        //Statuses
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Statuses</h2>';
+        text += "<p>Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands. Status Groups allow us to assign a list of pre-defined statuses to a record. Below: 'Status' related to the actual public-facing verbiage 'Back-End Status' is what the database sees for a particular status; try to match your status to whichever back-end status that makes sense.</p>";
+        text += '<h3 style="margin:0 0 10 0">'+this.props.data.STAT.group_code+'</h3>';
+        text += '<table style="width:100%">';
+        text += '<tr>';
+        text += '<td style="width:16.66%"><Strong>Status</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>Back-End Status</Strong></td>';
+        text += '</tr>';
+        for (let s in this.props.data.STAT.statuses) {
+            let status = this.props.data.STAT.statuses[s];
+            text += '<tr>';
+            text += '<td>'+status.status+'</td>';
+            text += '<td>'+status.backendStatus+'</td>';
+            text += '</tr>';
+        }
+        text += '</table>';
+        text += '</div>';
+
+        //Footer
+        text += '<hr/>';
+        text += '<table style="width:100%">';
+        text += '<tr>';
+        text += '<td>'+(new Date()).toUTCString()+'</td>';
+        text += '<td>'+this.props.data.id+'</td>';
+        text += '<td>Version: '+this.props.data.version+'</td>';
+        text += '</tr>';
+        text += '</table>';
+
+
         text += '</body>';
         text += '</html>';
 
