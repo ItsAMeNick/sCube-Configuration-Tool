@@ -24,6 +24,8 @@ class CF extends Component {
     }
 
     handleChangeSubgroup(event, subgroup) {
+        // $$Zachary$$ Here is how you stop a value from becoming too long
+        if (event.target.value.length > 10) return -1;
         this.props.updateSubgroup(subgroup, event.target.value);
     }
 
