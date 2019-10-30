@@ -54,12 +54,22 @@ class FIN extends Component {
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
         zip.generateAsync({type: "blob"}).then(content => {
-            const element = document.createElement("a");
+            let element = document.createElement("a");
             element.href = URL.createObjectURL(content);
             element.download = "sCube_"+this.props.data.id+".zip";
             document.body.appendChild(element); // Required for this to work in FireFox
             element.click();
         })
+
+        //Gen Record Summary
+        let summary = this.genRecordSummary();
+        let element = document.createElement("a");
+        let file = new Blob([summary], {type: "text/plain"});
+        element.href = URL.createObjectURL(file);
+        element.download = this.props.data.GRD.alias + "_Summary.html";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+
     }
 
     genTopBlurb() {
@@ -897,9 +907,138 @@ class FIN extends Component {
     }
 
     genRecordSummary() {
-        text = "";
-        text = `
-        `;
+        let text = "";
+        text += "<html>";
+        text += "<head>";
+        text += "<title>";
+        text += this.props.data.GRD.alias+" - Record Summary";
+        text += "</title>";
+        text += "</head>";
+        text += '<body style="width:8in">';
+        text += '<h1>';
+        text += this.props.data.GRD.alias+' - Record Summary';
+        text += '</h1>';
+        text += '<hr/>';
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>General Record Information</h2>';
+        text += '<table>';
+        text += '<tr>';
+        text += '<td>Record Alias: </td>';
+        text += '<td>'+this.props.data.GRD.alias+'</td>';
+        text += '</tr>';
+        text += '<tr><td>&nbsp;</td></tr>';
+        text += '<tr>';
+        text += '<td>Module: </td>';
+        text += '<td>'+this.props.data.GRD.module+'</td>';
+        text += '</tr>';
+        text += '<tr>';
+        text += '<td>Type: </td>';
+        text += '<td>'+this.props.data.GRD.type+'</td>';
+        text += '</tr>';
+        text += '<tr>';
+        text += '<td>SubType: </td>';
+        text += '<td>'+this.props.data.GRD.sub_type+'</td>';
+        text += '</tr>';
+        text += '<tr>';
+        text += '<td>Category: </td>';
+        text += '<td>'+this.props.data.GRD.category+'</td>';
+        text += '</tr>';
+        text += '<tr><td>&nbsp;</td></tr>';
+        text += '<tr>';
+        text += '<td>Record Structure:&nbsp;&nbsp;</td>';
+        text += '<td>'+this.props.data.GRD.module+'/'+this.props.data.GRD.type+'/'+this.props.data.GRD.sub_type+'/'+this.props.data.GRD.category+'</td>';
+        text += '</tr>';
+        text += '<tr><td>&nbsp;</td></tr>';
+        text += '<tr>';
+        text += '<td>Mask: </td>';
+        text += '<td>'+this.props.data.GRD.pattern+'</td>';
+        text += '</tr>';
+        text += '<tr>';
+        text += '<td>Example Mask: </td>';
+        let pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
+        if (!pattern_size) pattern_size = 5;
+        text += '<td>'+this.props.data.GRD.pattern.replace(/\$\$SEQ(\d+)\$\$/, "0".repeat(pattern_size))+'</td>';
+        text += '</tr>';
+        text += '</table>';
+        text += '</div>';
+        //End of GRD
+
+        //Custom Fields
+        text += '<hr/>';
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Application Specific Information</h2>';
+        text += '<p>This is the custom information that this record is able to track.</p>';
+        for (let c in this.props.data.CF.subgroups) {
+            text += '<h3>'+this.props.data.CF.group_code+' - '+this.props.data.CF.subgroups[c].subgroup+'</h3>';
+            text += '<table style="width:100%">';
+            text += '<tr>';
+            text += '<td style="width:20%"><Strong>Field Name</Strong></td>';
+            text += '<td style="width:20%"><Strong>Type</Strong></td>';
+            text += '<td style="width:20%"><Strong>Required</Strong></td>';
+            text += '<td style="width:20%"><Strong>ACA Mode</Strong></td>';
+            text += '<td style="width:20%"><Strong>Display Order</Strong></td>';
+            text += '</tr>';
+            for (let f in this.props.data.CF.subgroups[c].fields) {
+                let field = this.props.data.CF.subgroups[c].fields[f];
+                let type = "";
+                switch (field.type) {
+                    case "1": {type = "Text"; break;}
+                    case "2": {type = "Date"; break;}
+                    case "3": {type = "Yes/No"; break;}
+                    case "4": {type = "Number"; break;}
+                    case "5": {type = "Dropdown List"; break;}
+                    case "6": {type = "Text Area"; break;}
+                    case "7": {type = "Time"; break;}
+                    case "8": {type = "Money"; break;}
+                    case "9": {type = "Checkbox"; break;}
+                    default: break;
+                }
+                text += '<tr>';
+                text += '<td>'+field.label+'</td>';
+                text += '<td>'+type+'</td>';
+                text += '<td>'+(field.requried ? "Y" : "N")+'</td>';
+                text += '<td>'+(field.aca_disp ? "Y" : "N")+'</td>';
+                text += '<td>'+field.disp_order+'</td>';
+                text += '</tr>';
+            }
+            text += '</table>';
+        }
+
+        text += '</div>';
+        text += '<hr/>';
+
+        //Fees
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Fees</h2>';
+        text += '<p>These are the fees that will be applicable from this record.</p>';
+        text += '<h3 style="margin:0 0 10 0">'+this.props.data.FEE.code+'</h3>';
+        text += '<h4 style="margin:0">Version: '+this.props.data.FEE.version+'</h4>';
+        text += '<h4 style="margin:0 0 15 0">Effective: '+this.props.data.FEE.effective+'</h4>';
+        text += '<table style="width:100%">';
+        text += '<tr>';
+        text += '<td style="width:16.66%"><Strong>Fee Code</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>Amount</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>Auto-Invoice</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>Auto-Assess</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>ACA Mode</Strong></td>';
+        text += '<td style="width:16.66%"><Strong>Display Order</Strong></td>';
+        text += '</tr>';
+        for (let f in this.props.data.FEE.fees) {
+            let fee = this.props.data.FEE.fees[f];
+            text += '<tr>';
+            text += '<td>'+fee.code+'</td>';
+            text += '<td>'+fee.amount+'</td>';
+            text += '<td>'+(fee.ai ? "Y" : "N")+'</td>';
+            text += '<td>'+(fee.aa ? "Y" : "N")+'</td>';
+            text += '<td>'+fee.aca+'</td>';
+            text += '<td>'+fee.order+'</td>';
+            text += '</tr>';
+        }
+        text += '</table>';
+        text += '</div>';
+        text += '</body>';
+        text += '</html>';
+
         return text;
     }
 
