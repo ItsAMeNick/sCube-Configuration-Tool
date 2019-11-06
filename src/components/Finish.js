@@ -50,6 +50,10 @@ class FIN extends Component {
         let sequenceModel = this.genSequenceModel();
         zip.file("SequenceModel.xml", sequenceModel);
 
+        //Notifications Template
+        let notificationTemplates = this.genNotificationTemplates();
+        zip.file("NotificationTemplateModel.xml", notificationTemplates);
+
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
@@ -324,7 +328,8 @@ class FIN extends Component {
                 <intervalType>CY</intervalType>
                 <minValue>1</minValue>
                 <resetAction>E</resetAction>`;
-        let pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
+        let pattern_size;
+        if (this.props.data.GRD.pattern) pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
         if (!pattern_size) pattern_size = 5;
         text += "<resetValue>"+"9".repeat(pattern_size)+"</resetValue>";
 
@@ -349,6 +354,59 @@ class FIN extends Component {
         text += "</sequence>";
         text += "</list>";
 
+        return text;
+    }
+
+    //Generate the shared Dropdown Lists
+    genNotificationTemplates() {
+        let text = "";
+        let counter = 17365;
+
+        text += this.genTopBlurb();
+        for (let n in this.props.data.NOTE) {
+            let note = this.props.data.NOTE[n];
+            text += "<notificationTemplate>";
+            text += "<resId>";
+            text += counter;
+            text += "</resId>";
+            text += this.genServProvCode();
+            text += this.genAuditModel();
+
+            text += "<emailTemplate>";
+            text += "<resId>";
+            text += counter;
+            counter++;
+            text += "</resId>";
+            text += this.genServProvCode();
+            text += this.genAuditModel();
+            text += "<contentText>"
+            text += note.content;
+            text += "</contentText>";
+            //Matbe these two should be options to select
+            text += "<displayAsAlert>N</displayAsAlert>";
+            text += "<displayInACA>N</displayInACA>";
+            //Document stuff
+            text += "<docCategory>"+note.doc_cat+"</docCategory>";
+            text += "<docGroup>"+note.doc_group+"</docGroup>";
+            text += "<edmsLocation>"+note.doc_name+"</edmsLocation>";
+            text += "<edmsObject>CAP</edmsObject>";
+            text += "<emailTemplateI18Ns/>";
+
+            text += "<from>"+note.from+"</from>";
+            text += "<priority>"+note.importance+"</priority>";
+            text += "<templateName>"+note.name+"</templateName>";
+            text += "<title>"+note.title+"</title>";
+            text += "</emailTemplate>";
+
+            text += "<isEmailSelected>Y</isEmailSelected>";
+            text += "<isReserved>N</isReserved>";
+            text += "<isSMSSelected>N</isSMSSelected>";
+            text += "<notificationTemplateI18NModels/>";
+
+            text += "<templateName>"+note.name+"</templateName>";
+            text += "</notificationTemplate>";
+        }
+        text += "</list>";
         return text;
     }
 
