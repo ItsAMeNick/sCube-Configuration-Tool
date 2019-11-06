@@ -11,7 +11,7 @@ import STRT from "./components/Start.js";
 import GRD from "./components/GeneralRecordDetails.js";
 import CF from "./components/CustomFields.js";
 import FEE from "./components/Fees.js";
-import CONT from "./components/ContactTypes.js";
+import NOTE from "./components/NotificationTemplates.js";
 import INTK from "./components/IntakeForm.js";
 import INSP from "./components/Inspections.js";
 import CHCK from "./components/Checklists.js";
@@ -50,7 +50,7 @@ class App extends Component {
             case "GRD": return <GRD title={page_map[this.props.page].title}/>;
             case "CF": return <CF title={page_map[this.props.page].title}/>;
             case "FEE": return <FEE title={page_map[this.props.page].title}/>;
-            case "CONT": return <CONT title={page_map[this.props.page].title}/>;
+            case "NOTE": return <NOTE title={page_map[this.props.page].title}/>;
             case "INTK": return <INTK title={page_map[this.props.page].title}/>;
             case "INSP": return <INSP title={page_map[this.props.page].title}/>;
             case "CHCK": return <CHCK title={page_map[this.props.page].title}/>;

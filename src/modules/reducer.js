@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 0,
+    page: 4,
     notes: {},
     GRD: {
         svp: "",
@@ -33,6 +33,7 @@ const initialState = {
         group_code: "",
         statuses: {},
     },
+    NOTE: {},
     SDL: {}
 };
 
@@ -243,6 +244,30 @@ const sCubeReducer = (state = initialState, action) => {
                     break;
                 }
             }
+            return newState;
+        }
+        case "add_notification": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.NOTE[id] = {
+                id: id,
+                name: "",
+                description: "",
+                from: "",
+                title: "",
+                importance: "", //Low, Normal, High
+                content: "",
+            };
+            return newState;
+        }
+        case "update_notification": {
+            let newState = _.cloneDeep(state);
+            newState.NOTE[action.payload.note][action.payload.field] = action.payload.value;
+            return newState;
+        }
+        case "delete_notification": {
+            let newState = _.cloneDeep(state);
+            delete newState.NOTE[action.payload];
             return newState;
         }
 

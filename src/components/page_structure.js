@@ -24,9 +24,9 @@ var pages = {
         id: "FEE"
     },
     4: {
-        title: "Contact Types",
+        title: "Notification Templates",
         order: 4,
-        id: "CONT"
+        id: "NOTE"
     },
     5: {
         title: "Intake Form",
@@ -57,11 +57,6 @@ var pages = {
         title: "Shared Dropdown Lists",
         order: 10,
         id: "DDL"
-    },
-    11: {
-        title: "Conditions",
-        order: 11,
-        id: "COND"
     },
     12: {
         title: "Generate XML - Finish",
