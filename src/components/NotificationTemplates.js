@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import Card from "react-bootstrap/Card";
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -84,6 +83,30 @@ class CONT extends Component {
                         </Row>
                         <Row>
                             <Col><Form.Control id="content" value={note.content} as="textarea" rows="5" onChange={e => this.handleChange(e, note.id)}/></Col>
+                        </Row>
+                    </Card.Body>
+                    </div>
+                    <div style={{"width":"50%","float":"left"}}>
+                    <Card.Body>
+                        <Row>
+                            <Col><Form.Label>Document Group: </Form.Label></Col>
+                            <Col><Form.Control id="doc_group" value={note.doc_group} type="text" onChange={e => this.handleChange(e, note.id)}/></Col>
+                        </Row>
+                    </Card.Body>
+                    </div>
+                    <div style={{"width":"50%","float":"left"}}>
+                    <Card.Body>
+                        <Row>
+                            <Col><Form.Label>Document Category: </Form.Label></Col>
+                            <Col><Form.Control id="doc_cat" value={note.doc_cat} type="text" onChange={e => this.handleChange(e, note.id)}/></Col>
+                        </Row>
+                    </Card.Body>
+                    </div>
+                    <div style={{"width":"50%","float":"left"}}>
+                    <Card.Body>
+                        <Row>
+                            <Col><Form.Label>EDMS Name: </Form.Label></Col>
+                            <Col><Form.Control id="doc_name" value={note.doc_name} type="text" onChange={e => this.handleChange(e, note.id)}/></Col>
                         </Row>
                     </Card.Body>
                     </div>
