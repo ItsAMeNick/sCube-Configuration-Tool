@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 4,
+    page: 6,
     notes: {},
     GRD: {
         svp: "",
@@ -34,6 +34,13 @@ const initialState = {
         statuses: {},
     },
     NOTE: {},
+    INSP: {
+        code: "",
+        name: "",
+        inspections: {},
+        checklists: {},
+        result_groups: {},
+    },
     SDL: {}
 };
 
@@ -269,6 +276,54 @@ const sCubeReducer = (state = initialState, action) => {
         case "delete_notification": {
             let newState = _.cloneDeep(state);
             delete newState.NOTE[action.payload];
+            return newState;
+        }
+
+        case "add_result_group": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            //8: {id: 8, name: "BLD_GEN", items: {result:"test", order: 1, type: "DENIED"}}
+            newState.INSP.result_groups[id] = {
+                id: id,
+                name: "",
+                items: {}
+            };
+            return newState;
+        }
+        case "add_result_group_item": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            //8: {id: 8, name: "BLD_GEN", items: {result:"test", order: 1, type: "DENIED"}}
+            newState.INSP.result_groups[action.payload].items[id] = {
+                id: id,
+                result: "",
+                type: "",
+                order: (Object.keys(newState.INSP.result_groups[action.payload].items) ? Object.keys(newState.INSP.result_groups[action.payload].items).length * 10 : 0),
+                min_score: "",
+                max_score: "",
+                min_vio: "",
+                max_vio: ""
+            };
+            return newState;
+        }
+        case "update_result_group": {
+            let newState = _.cloneDeep(state);
+            console.log(action.payload);
+            if (action.payload.field === "name") {
+                newState.INSP.result_groups[action.payload.id]["name"] = action.payload.value;
+            } else {
+                newState.INSP.result_groups[action.payload.id.split("|")[0]].items[action.payload.id.split("|")[1]][action.payload.field] = action.payload.value;
+            }
+            return newState;
+        }
+        case "delete_result_group": {
+            let newState = _.cloneDeep(state);
+            delete newState.INSP.result_groups[action.payload];
+            return newState;
+        }
+        case "delete_result_group_item": {
+            let newState = _.cloneDeep(state);
+            delete newState.INSP.result_groups[action.payload.split("|")[0]].items[action.payload.split("|")[1]];
             return newState;
         }
 
