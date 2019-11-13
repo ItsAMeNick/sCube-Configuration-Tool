@@ -257,9 +257,6 @@ const sCubeReducer = (state = initialState, action) => {
                 title: "",
                 importance: "", //Low, Normal, High
                 content: "",
-                doc_group: "",
-                doc_cat: "",
-                doc_name: "",
             };
             return newState;
         }

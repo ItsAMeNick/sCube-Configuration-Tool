@@ -385,10 +385,7 @@ class FIN extends Component {
             //Matbe these two should be options to select
             text += "<displayAsAlert>N</displayAsAlert>";
             text += "<displayInACA>N</displayInACA>";
-            //Document stuff
-            text += "<docCategory>"+note.doc_cat+"</docCategory>";
-            text += "<docGroup>"+note.doc_group+"</docGroup>";
-            text += "<edmsLocation>"+note.doc_name+"</edmsLocation>";
+
             text += "<edmsObject>CAP</edmsObject>";
             text += "<emailTemplateI18Ns/>";
 
