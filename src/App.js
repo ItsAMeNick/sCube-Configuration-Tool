@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Pagination from "react-bootstrap/Pagination";
 import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 
 import STRT from "./components/Start.js";
 import GRD from "./components/GeneralRecordDetails.js";
@@ -99,6 +100,19 @@ class App extends Component {
         return pages;
     }
 
+    getPages() {
+        let pages = [];
+        for (let p in page_map) {
+            console.log(p)
+            pages.push(
+                <ListGroup.Item action key={p} active={this.props.page === parseInt(p)} onClick={() => this.props.updatePageNum(parseInt(p))}>
+                    {page_map[p].title}
+                </ListGroup.Item>
+            )
+        }
+        return pages;
+    }
+
     handlePagination(event) {
         if (event.target.tagName === "A") {
             //Clicked on a link
@@ -173,22 +187,43 @@ class App extends Component {
                     <hr/>
                 </Col>
             </Row>
-            <Card>
-                {this.handlePageBody()}
-                <Card.Footer>
-                <div style={{"alignItems":"center", "display":"flex", "float":"center"}}>
-                <Pagination onClick={(e) => this.handlePagination(e)} style={{"margin":"auto"}}>
-                    {this.handlePageFooter()}
-                </Pagination>
-                    <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
-                        Save
-                    </Button>
-                </div>
-                </Card.Footer>
-            </Card>
-            <br/>
-            <Notes/>
-            <br/>
+            <div className="Sidebar">
+                <Card>
+                    <Card.Header>
+                    <strong>Navigation</strong>
+                    </Card.Header>
+                        <ListGroup>
+                            {this.getPages()}
+                        </ListGroup>
+                </Card>
+            </div>
+            <div className="Body">
+                <Card>
+                    <Card.Header>
+                        <strong>{page_map[this.props.page].title}</strong>
+                        <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
+                            Save
+                        </Button>
+                    </Card.Header>
+                    {this.handlePageBody()}
+                    {
+                    //Old Pagination
+                    // <Card.Footer>
+                    // <div style={{"alignItems":"center", "display":"flex", "float":"center"}}>
+                    // <Pagination onClick={(e) => this.handlePagination(e)} style={{"margin":"auto"}}>
+                    //     {this.handlePageFooter()}
+                    // </Pagination>
+                    //     <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
+                    //         Save
+                    //     </Button>
+                    // </div>
+                    // </Card.Footer>
+                    }
+                </Card>
+                <br/>
+                <Notes/>
+                <br/>
+            </div>
             <TestDump/>
         </div>
         );

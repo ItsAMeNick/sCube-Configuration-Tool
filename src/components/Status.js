@@ -61,6 +61,7 @@ class STAT extends Component {
 
                 <Card.Header>
                     <strong>{this.props.title}</strong>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addStatus}>Add Status</Button>
                 </Card.Header>
                 <Card.Body>
                     Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands.
@@ -72,7 +73,7 @@ class STAT extends Component {
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
                             <Row>
-                            <strong><Col>Status Group Name</Col></strong>
+                                <Col>Status Group Name</Col>
                                 <Col><Form.Control id="group_code" value={this.props.page_data.group_code} type="text" onChange={this.handleChange}/></Col>
                             </Row>
                         </Card.Body>
@@ -90,15 +91,6 @@ class STAT extends Component {
                         {this.genRows()}
                     </tbody>
                 </Table>
-                <div>
-                    <div style={{"width":"25%","float":"right"}}>
-                        <Card.Body>
-                        <Row> <Col>
-                            <Button onClick={this.props.addStatus}>Add Status</Button>
-                        </Col> </Row>
-                        </Card.Body>
-                    </div>
-                </div>
                 </Card.Body></div>
             </React.Fragment>
         );

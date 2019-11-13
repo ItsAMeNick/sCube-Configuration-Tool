@@ -1,6 +1,18 @@
 .App {
     margin: auto;
     padding: 25px;
-    max-width: 1500px;
+    max-width: 1920px;
     align-items: center;
+}
+
+.Body {
+    float: right;
+    max-width: 1500px;
+    width: 80%;
+    padding-bottom: 10px;
+}
+
+.Sidebar {
+    float: left;
+    width: 19%;
 }

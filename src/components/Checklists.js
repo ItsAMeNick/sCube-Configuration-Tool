@@ -41,7 +41,7 @@ class CHCK extends Component {
                         </Row>
                     </Card.Body>
                     </div>
-                    <div style={{"width":"25%","float":"right"}}>
+                    <div style={{"width":"30%","float":"right"}}>
                         <Card.Body>
                         <Row> <Col>
                         <Button id={chck.id} variant="secondary" onClick={(e) => this.props.addItem(e.target.id)}>Add Checklist Item</Button>

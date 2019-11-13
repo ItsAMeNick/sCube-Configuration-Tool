@@ -136,6 +136,7 @@ class INTK extends Component {
             <React.Fragment>
                 <Card.Header>
                     <strong>{this.props.title}</strong>
+                    <Button style={{"width":"30%","float":"right"}} onClick={this.props.add}>Add Smart Choice</Button>
                 </Card.Header>
                 <div>
                     <div style={{"width":"70%","float":"left"}}>
@@ -144,13 +145,6 @@ class INTK extends Component {
                                 <Col>Intake Form Configuration Group Code</Col>
                                 <Col><Form.Control id="group_code" value={this.props.page_data.group_code} type="text" onChange={this.handleChange}/></Col>
                             </Row>
-                        </Card.Body>
-                    </div>
-                    <div style={{"width":"25%","float":"right"}}>
-                        <Card.Body>
-                        <Row> <Col>
-                            <Button onClick={this.props.add}>Add Smart Choice</Button>
-                        </Col> </Row>
                         </Card.Body>
                     </div>
                 </div>
