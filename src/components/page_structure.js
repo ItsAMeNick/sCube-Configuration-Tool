@@ -34,28 +34,33 @@ var pages = {
         id: "INTK"
     },
     6: {
-        title: "Inspections",
+        title: "Inspection Result Groups",
         order: 6,
-        id: "INSP"
+        id: "RESG"
     },
     7: {
-        title: "Checklists",
+        title: "Inspection Checklists",
         order: 7,
         id: "CHCK"
     },
     8: {
-        title: "Statuses",
+        title: "Inspections",
         order: 8,
-        id: "STAT"
+        id: "INSP"
     },
     9: {
-        title: "Document Types",
+        title: "Statuses",
         order: 9,
-        id: "DOC"
+        id: "STAT"
     },
     10: {
-        title: "Shared Dropdown Lists",
+        title: "Document Types",
         order: 10,
+        id: "DOC"
+    },
+    11: {
+        title: "Shared Dropdown Lists",
+        order: 11,
         id: "DDL"
     },
     12: {

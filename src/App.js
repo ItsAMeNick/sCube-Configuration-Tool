@@ -13,6 +13,7 @@ import CF from "./components/CustomFields.js";
 import FEE from "./components/Fees.js";
 import NOTE from "./components/NotificationTemplates.js";
 import INTK from "./components/IntakeForm.js";
+import RESG from "./components/ResultGroups.js";
 import INSP from "./components/Inspections.js";
 import CHCK from "./components/Checklists.js";
 import STAT from "./components/Status.js";
@@ -52,6 +53,7 @@ class App extends Component {
             case "FEE": return <FEE title={page_map[this.props.page].title}/>;
             case "NOTE": return <NOTE title={page_map[this.props.page].title}/>;
             case "INTK": return <INTK title={page_map[this.props.page].title}/>;
+            case "RESG": return <RESG title={page_map[this.props.page].title}/>;
             case "INSP": return <INSP title={page_map[this.props.page].title}/>;
             case "CHCK": return <CHCK title={page_map[this.props.page].title}/>;
             case "STAT": return <STAT title={page_map[this.props.page].title}/>;
