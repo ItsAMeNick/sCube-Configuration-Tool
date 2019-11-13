@@ -380,7 +380,12 @@ class FIN extends Component {
             text += this.genServProvCode();
             text += this.genAuditModel();
             text += "<contentText>"
-            text += note.content;
+            let formatted_content = note.content.split("\n");
+            formatted_content.map(item => {
+                return ("&lt;p&gt;" + item.trim().replace(/&/g, '&amp;') + "&lt;/p&gt;");
+            });
+            formatted_content = formatted_content.join("&lt;br/&gt;");
+            text += formatted_content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
             text += "</contentText>";
             //Matbe these two should be options to select
             text += "<displayAsAlert>N</displayAsAlert>";

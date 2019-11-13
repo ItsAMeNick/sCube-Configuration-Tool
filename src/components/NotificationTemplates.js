@@ -14,14 +14,20 @@ class CONT extends Component {
     }
 
     handleChange(event, id) {
-        console.log(event.target.value);
-        this.props.updateNote(id, event.target.id, event.target.value)
+        this.props.updateNote(id, event.target.id, event.target.value);
+        // if (event.target.id === "content") {
+        //     let formatted_content = event.target.value.split("\n");
+        //     formatted_content.map(item => {
+        //         let trimmed_item = item.trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        //         return ("&lt;p&gt;" + trimmed_item + "&lt;/p&gt;");
+        //     });
+        //     console.log(formatted_content.join("&lt;br/&gt;"));
+        // }
     }
 
     genNotificationCards() {
         let cards = [];
         for (let n in this.props.page_data) {
-            console.log(n);
             let note = this.props.page_data[n];
             cards.push(
                 <div style={{"padding":"0px 10px 10px 10px","width":"100%","float":"left"}} key={note.id}>
