@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 8,
+    page: 6,
     notes: {},
     GRD: {
         svp: "",
@@ -282,7 +282,6 @@ const sCubeReducer = (state = initialState, action) => {
         case "add_result_group": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
-            //8: {id: 8, name: "BLD_GEN", items: {result:"test", order: 1, type: "DENIED"}}
             newState.INSP.result_groups[id] = {
                 id: id,
                 name: "",
@@ -293,7 +292,6 @@ const sCubeReducer = (state = initialState, action) => {
         case "add_result_group_item": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
-            //8: {id: 8, name: "BLD_GEN", items: {result:"test", order: 1, type: "DENIED"}}
             newState.INSP.result_groups[action.payload].items[id] = {
                 id: id,
                 result: "",
@@ -308,7 +306,6 @@ const sCubeReducer = (state = initialState, action) => {
         }
         case "update_result_group": {
             let newState = _.cloneDeep(state);
-            console.log(action.payload);
             if (action.payload.field === "name") {
                 newState.INSP.result_groups[action.payload.id]["name"] = action.payload.value;
             } else {
@@ -324,6 +321,47 @@ const sCubeReducer = (state = initialState, action) => {
         case "delete_result_group_item": {
             let newState = _.cloneDeep(state);
             delete newState.INSP.result_groups[action.payload.split("|")[0]].items[action.payload.split("|")[1]];
+            return newState;
+        }
+
+        case "add_checklist": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.INSP.checklists[id] = {
+                id: id,
+                name: "",
+                items: {}
+            };
+            return newState;
+        }
+        case "add_checklist_item": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.INSP.checklists[action.payload].items[id] = {
+                id: id,
+                type: "",
+                comment: "",
+                order: (Object.keys(newState.INSP.checklists[action.payload].items) ? Object.keys(newState.INSP.checklists[action.payload].items).length * 10 : 0),
+            };
+            return newState;
+        }
+        case "update_checklist": {
+            let newState = _.cloneDeep(state);
+            if (action.payload.field === "name") {
+                newState.INSP.checklists[action.payload.id]["name"] = action.payload.value;
+            } else {
+                newState.INSP.checklists[action.payload.id.split("|")[0]].items[action.payload.id.split("|")[1]][action.payload.field] = action.payload.value;
+            }
+            return newState;
+        }
+        case "delete_checklist": {
+            let newState = _.cloneDeep(state);
+            delete newState.INSP.checklists[action.payload];
+            return newState;
+        }
+        case "delete_checklist_item": {
+            let newState = _.cloneDeep(state);
+            delete newState.INSP.checklists[action.payload.split("|")[0]].items[action.payload.split("|")[1]];
             return newState;
         }
 
