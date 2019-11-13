@@ -54,6 +54,14 @@ class FIN extends Component {
         let notificationTemplates = this.genNotificationTemplates();
         zip.file("NotificationTemplateModel.xml", notificationTemplates);
 
+        //Inspections
+        //Result Groups
+        let resultGroups = this.genResultGroups();
+        zip.file("RefInspectionResultGroupModel.xml", resultGroups);
+        //Checklists
+        let checklists = this.genChecklists();
+        zip.file("GuideSheetModel.xml", checklists);
+
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
         // force the application to click this link
@@ -102,11 +110,8 @@ class FIN extends Component {
         return text;
     }
 
-
     //This function is used to fill in the audit model
     genAuditModel() {
-        //$$$ZACH$$$
-        //Handled 10-10-2019
         let text = "";
         let today = new Date();
         text += '<auditModel><auditDate>';
@@ -354,6 +359,141 @@ class FIN extends Component {
         text += "</sequence>";
         text += "</list>";
 
+        return text;
+    }
+
+    //Handle things related to Inspections
+    //Result resultGroups
+    genResultGroups() {
+        let text = "";
+        text += this.genTopBlurb();
+        for (let rg in this.props.data.INSP.result_groups) {
+            let group = this.props.data.INSP.result_groups[rg];
+            text += "<refInspResultGroup>";
+            text += "<inspResultGroup>"+group.name+"</inspResultGroup>";
+            text += "<resultCatrgory>RESULT</resultCatrgory>";
+            text += this.genServProvCode();
+
+            text += "<inspectionResultGroupModels>";
+            let counter = 0;
+            for (let i in group.items) {
+                let item = group.items[i];
+                text += '<inspectionResultGroupModel refId="'+counter+'@InspectionResultGroupModel">';
+                counter++;
+                text += this.genServProvCode();
+                text += "<inspResultGroup>"+group.name+"</inspResultGroup>";
+                text += "<inspResult>"+item.result+"</inspResult>";
+                text += "<resultCatrgory>RESULT</resultCatrgory>";
+                text += this.genAuditModel();
+                text += "<inspResultDisplayOrder>"+item.order+"</inspResultDisplayOrder>";
+                text += "<inspResultGroupI18Ns/>";
+                text += "<inspResultType>"+item.type+"</inspResultType>";
+
+                text += "</inspectionResultGroupModel>";
+            }
+
+            text+= "</inspectionResultGroupModels>"
+            text += "</refInspResultGroup>";
+        }
+        text += "</list>"
+        return text;
+    }
+    //Checklists
+    genChecklists() {
+        let text = "";
+        text += this.genTopBlurb();
+
+        let seq_number = 162;
+
+        for (let chck in this.props.data.INSP.checklists) {
+            let list = this.props.data.INSP.checklists[chck];
+
+            //The counter resets for each guidesheet, for some reason...
+            let counter = 1;
+            text += '<guideSheet refId="'+counter+'@GuideSheetModel">';
+            counter++;
+            text += this.genServProvCode();
+            text += "<guideType>"+list.name+"</guideType>";
+            text += this.genAuditModel();
+            text += "<guideSheetI18Ns/>";
+
+            text += "<GuideSheetItems>";
+            for (let i in list.items) {
+                let item = list.items[i];
+                text += '<GuideSheetItem refId="'+counter+'@GuideSheetItemModel">';
+                counter++;
+                text += this.genServProvCode();
+                text += "<guideItemSeqNbr>"+seq_number+"</guideItemSeqNbr>";
+                seq_number++;
+                text += this.genAuditModel();
+
+                text += "<guideItemCarryOverFlag>Y</guideItemCarryOverFlag>";
+                text += "<guideItemCommentVisible>Y</guideItemCommentVisible>";
+                text += "<guideItemDisplay_order>"+item.order+"</guideItemDisplay_order>";
+
+                text += "<guideItemStatus>N/A</guideItemStatus>";
+                text += "<guideItemStatusGroupName>STANDARD</guideItemStatusGroupName>";
+                text += "<guideItemStatusVisible>Y</guideItemStatusVisible>";
+                //Add Status Group Model?
+                // <statusGroupModels>
+                //     <statusGroup refId="3@GuideSheetItemStatusGroupModel">
+                //         <serviceProviderCode>PARTNER</serviceProviderCode>
+                //         <statusGroup>STANDARD</statusGroup>
+                //         <ststus>Fail</ststus>
+                //         <auditModel>
+                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
+                //             <auditID>ADMIN</auditID>
+                //             <auditStatus>A</auditStatus>
+                //         </auditModel>
+                //         <guideItemStatusDispOrder>2</guideItemStatusDispOrder>
+                //         <guideItemStatusResultType>DENIED</guideItemStatusResultType>
+                //         <guideSheetItemStatusGroupI18NModels/>
+                //         <majorViolation>N</majorViolation>
+                //     </statusGroup>
+                //     <statusGroup refId="4@GuideSheetItemStatusGroupModel">
+                //         <serviceProviderCode>PARTNER</serviceProviderCode>
+                //         <statusGroup>STANDARD</statusGroup>
+                //         <ststus>N/A</ststus>
+                //         <auditModel>
+                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
+                //             <auditID>ADMIN</auditID>
+                //             <auditStatus>A</auditStatus>
+                //         </auditModel>
+                //         <guideItemStatusDispOrder>3</guideItemStatusDispOrder>
+                //         <guideItemStatusResultType>INFORMATIONAL</guideItemStatusResultType>
+                //         <guideSheetItemStatusGroupI18NModels/>
+                //         <majorViolation>N</majorViolation>
+                //     </statusGroup>
+                //     <statusGroup refId="5@GuideSheetItemStatusGroupModel">
+                //         <serviceProviderCode>PARTNER</serviceProviderCode>
+                //         <statusGroup>STANDARD</statusGroup>
+                //         <ststus>Pass</ststus>
+                //         <auditModel>
+                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
+                //             <auditID>ADMIN</auditID>
+                //             <auditStatus>A</auditStatus>
+                //         </auditModel>
+                //         <guideItemStatusDispOrder>1</guideItemStatusDispOrder>
+                //         <guideItemStatusResultType>APPROVED</guideItemStatusResultType>
+                //         <guideSheetItemStatusGroupI18NModels/>
+                //         <majorViolation>N</majorViolation>
+                //     </statusGroup>
+                // </statusGroupModels>
+
+                text += "<guideItemText>"+item.type+"</guideItemText>";
+                text += "<guideItemTextVisible>Y</guideItemTextVisible>";
+                text += "<guideSheetItemI18N/>";
+                text += "<guideType>"+list.name+"</guideType>";
+                text += "<isCritical>N</isCritical>";
+                text += "<isRequired>N</isRequired>";
+
+                text += "</GuideSheetItem>";
+            }
+            text += "</GuideSheetItems>";
+            text += "</guideSheet>";
+        }
+
+        text += "</list>"
         return text;
     }
 

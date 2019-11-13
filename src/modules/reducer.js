@@ -295,7 +295,7 @@ const sCubeReducer = (state = initialState, action) => {
             newState.INSP.result_groups[action.payload].items[id] = {
                 id: id,
                 result: "",
-                type: "",
+                type: "APPROVED",
                 order: (Object.keys(newState.INSP.result_groups[action.payload].items) ? Object.keys(newState.INSP.result_groups[action.payload].items).length * 10 : 0),
                 min_score: "",
                 max_score: "",
