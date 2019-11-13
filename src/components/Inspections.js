@@ -40,7 +40,7 @@ class INSP extends Component {
                         <Row style={{"width":"100%","padding":"10px 0px 10px 0px"}}>
                             <Col><Form.Label>Checklist Group</Form.Label></Col>
                             <Col><Form.Control id="checklist" value={this.props.page_data[insp.id].checklist} as="select" onChange={e => this.props.update(insp.id, e.target.id, e.target.value)}>
-                                {this.genResultOptions()}
+                                {this.genChecklistOptions()}
                             </Form.Control></Col>
                             <Col><Form.Label>Result Group</Form.Label></Col>
                             <Col><Form.Control id="result_group" value={this.props.page_data[insp.id].result_group} as="select" onChange={e => this.props.update(insp.id, e.target.id, e.target.value)}>
@@ -81,6 +81,16 @@ class INSP extends Component {
         return options;
     }
 
+    genChecklistOptions() {
+        let options = [<option label="--Select--" value="" key="0"/>];
+        for (let chck in this.props.checklists) {
+            options.push(
+                <option key={chck} label={this.props.checklists[chck].name} value={this.props.checklists[chck].name}/>
+            )
+        }
+        return options;
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -89,7 +99,14 @@ class INSP extends Component {
                     <Button style={{"width":"25%","float":"right"}} onClick={this.props.addInspection}>Add Inspection</Button>
                 </Card.Header>
                 <div>
-                    {!Object.keys(this.props.page_data).length ? <br/> : null}
+                <Card.Body>
+                    <Row style={{"width":"100%"}}>
+                        <Col><Form.Label>Inspection Group Code</Form.Label></Col>
+                        <Col><Form.Control id="code" value={this.props.page_data.code} type="text" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
+                        <Col><Form.Label>Inspection Group Name</Form.Label></Col>
+                        <Col><Form.Control id="name" value={this.props.page_data.name} type="text" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
+                    </Row>
+                </Card.Body>
                     {this.genInspections()}
                 </div>
             </React.Fragment>

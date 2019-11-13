@@ -381,8 +381,11 @@ const sCubeReducer = (state = initialState, action) => {
         }
         case "update_inspection": {
             let newState = _.cloneDeep(state);
-            console.log(action.payload);
-            newState.INSP.inspections[action.payload.id][action.payload.field] = action.payload.value;
+            if (action.payload.id === 0) {
+                newState.INSP[action.payload.field] = action.payload.value;
+            } else {
+                newState.INSP.inspections[action.payload.id][action.payload.field] = action.payload.value;
+            }
             return newState;
         }
         case "delete_inspection": {
