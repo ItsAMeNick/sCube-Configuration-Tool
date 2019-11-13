@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 
-class INSP extends Component {
+class RESG extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -143,4 +143,4 @@ const mapDispatchToProps = dispatch => ({
     }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(INSP);
+export default connect(mapStateToProps, mapDispatchToProps)(RESG);

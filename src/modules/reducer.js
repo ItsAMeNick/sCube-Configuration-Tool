@@ -4,7 +4,7 @@ import uuidv1 from "uuid/v1";
 const initialState = {
     id: uuidv1(),
     version: "1-1",
-    page: 6,
+    page: 8,
     notes: {},
     GRD: {
         svp: "",
@@ -324,6 +324,32 @@ const sCubeReducer = (state = initialState, action) => {
         case "delete_result_group_item": {
             let newState = _.cloneDeep(state);
             delete newState.INSP.result_groups[action.payload.split("|")[0]].items[action.payload.split("|")[1]];
+            return newState;
+        }
+
+        case "add_inspection": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.INSP.inspections[id] = {
+                id: id,
+                type: "",
+                checklist: "",
+                result_group: "",
+                required: "N",
+                aca: "Y",
+                order: (Object.keys(newState.INSP.inspections) ? Object.keys(newState.INSP.inspections).length * 10 : 0),
+            };
+            return newState;
+        }
+        case "update_inspection": {
+            let newState = _.cloneDeep(state);
+            console.log(action.payload);
+            newState.INSP.inspections[action.payload.id][action.payload.field] = action.payload.value;
+            return newState;
+        }
+        case "delete_inspection": {
+            let newState = _.cloneDeep(state);
+            delete newState.INSP.inspections[action.payload];
             return newState;
         }
 
