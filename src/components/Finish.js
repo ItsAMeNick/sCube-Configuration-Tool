@@ -390,6 +390,7 @@ class FIN extends Component {
             text += "<emailTemplateI18Ns/>";
 
             text += "<from>"+note.from+"</from>";
+            text += "<CC>"+note.cc+"</CC>";
             text += "<priority>"+note.importance+"</priority>";
             text += "<templateName>"+note.name+"</templateName>";
             text += "<title>"+note.title+"</title>";
