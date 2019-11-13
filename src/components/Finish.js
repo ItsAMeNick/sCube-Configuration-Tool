@@ -61,6 +61,9 @@ class FIN extends Component {
         //Checklists
         let checklists = this.genChecklists();
         zip.file("GuideSheetModel.xml", checklists);
+        //Inspection Group
+        let inspectionGroup = this.genInspectionGroup();
+        zip.file("InspectionGroupModel.xml", inspectionGroup);
 
         //Create XML files and then package those into a jszip
         //Create a placeholder link element to download the zip and then
@@ -434,52 +437,8 @@ class FIN extends Component {
                 text += "<guideItemStatus>N/A</guideItemStatus>";
                 text += "<guideItemStatusGroupName>STANDARD</guideItemStatusGroupName>";
                 text += "<guideItemStatusVisible>Y</guideItemStatusVisible>";
-                //Add Status Group Model?
-                // <statusGroupModels>
-                //     <statusGroup refId="3@GuideSheetItemStatusGroupModel">
-                //         <serviceProviderCode>PARTNER</serviceProviderCode>
-                //         <statusGroup>STANDARD</statusGroup>
-                //         <ststus>Fail</ststus>
-                //         <auditModel>
-                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
-                //             <auditID>ADMIN</auditID>
-                //             <auditStatus>A</auditStatus>
-                //         </auditModel>
-                //         <guideItemStatusDispOrder>2</guideItemStatusDispOrder>
-                //         <guideItemStatusResultType>DENIED</guideItemStatusResultType>
-                //         <guideSheetItemStatusGroupI18NModels/>
-                //         <majorViolation>N</majorViolation>
-                //     </statusGroup>
-                //     <statusGroup refId="4@GuideSheetItemStatusGroupModel">
-                //         <serviceProviderCode>PARTNER</serviceProviderCode>
-                //         <statusGroup>STANDARD</statusGroup>
-                //         <ststus>N/A</ststus>
-                //         <auditModel>
-                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
-                //             <auditID>ADMIN</auditID>
-                //             <auditStatus>A</auditStatus>
-                //         </auditModel>
-                //         <guideItemStatusDispOrder>3</guideItemStatusDispOrder>
-                //         <guideItemStatusResultType>INFORMATIONAL</guideItemStatusResultType>
-                //         <guideSheetItemStatusGroupI18NModels/>
-                //         <majorViolation>N</majorViolation>
-                //     </statusGroup>
-                //     <statusGroup refId="5@GuideSheetItemStatusGroupModel">
-                //         <serviceProviderCode>PARTNER</serviceProviderCode>
-                //         <statusGroup>STANDARD</statusGroup>
-                //         <ststus>Pass</ststus>
-                //         <auditModel>
-                //             <auditDate>2018-06-18T07:57:42-04:00</auditDate>
-                //             <auditID>ADMIN</auditID>
-                //             <auditStatus>A</auditStatus>
-                //         </auditModel>
-                //         <guideItemStatusDispOrder>1</guideItemStatusDispOrder>
-                //         <guideItemStatusResultType>APPROVED</guideItemStatusResultType>
-                //         <guideSheetItemStatusGroupI18NModels/>
-                //         <majorViolation>N</majorViolation>
-                //     </statusGroup>
-                // </statusGroupModels>
-
+                // Add Status Group Model?
+                // The XML uploaded and didnt appear to have any errors without it
                 text += "<guideItemText>"+item.type+"</guideItemText>";
                 text += "<guideItemTextVisible>Y</guideItemTextVisible>";
                 text += "<guideSheetItemI18N/>";
@@ -493,6 +452,67 @@ class FIN extends Component {
             text += "</guideSheet>";
         }
 
+        text += "</list>"
+        return text;
+    }
+    //General Inspection Groups
+    //NOTE! Inspections use the servProvCode instead of serviceProviderCode
+    genInspectionGroup() {
+        let text = "";
+        text += this.genTopBlurb();
+        text += "<inspectionGroup>";
+        text += "<inspCode>"+this.props.data.INSP.code+"</inspCode>";
+        text += '<servProvCode>';
+        text += this.props.data.GRD.svp;
+        text += '</servProvCode>';
+        text += "<inspGroupName>"+this.props.data.INSP.name+"</inspGroupName>";
+        text += "<inspectionSec>"+this.props.data.INSP.code+"/%</inspectionSec>";
+
+        let seq_number = 192;
+        text += "<inspectionTypeModels>";
+        for (let i in this.props.data.INSP.inspections) {
+            let insp = this.props.data.INSP.inspections[i];
+            text += "<inspectionTypeModel>";
+            text += "<inspSeqNbr>"+seq_number+"</inspSeqNbr>";
+            seq_number++;
+            text += '<servProvCode>';
+            text += this.props.data.GRD.svp;
+            text += '</servProvCode>';
+
+            text += "<allowFailedGuidesheet>Y</allowFailedGuidesheet>";
+            text += "<allowMultiInspInAca>N</allowMultiInspInAca>";
+            text += "<autoAssign>N</autoAssign>";
+            text += "<displayInAca>"+insp.aca+"</displayInAca>";
+            text += "<flowEnabled>N</flowEnabled>";
+            if (insp.checklist) text += "<guideGroup>"+insp.checklist+"</guideGroup>";
+            text += "<inspCode>"+this.props.data.INSP.code+"</inspCode>";
+            text += "<inspEditable>Y</inspEditable>";
+            text += "<inspGroupName>"+this.props.data.INSP.name+"</inspGroupName>";
+            text += "<inspRequired>"+insp.required+"</inspRequired>";
+            text += "<inspResultGroup>"+insp.result_group+"</inspResultGroup>";
+            text += "<inspType>"+insp.type+"</inspType>";
+            text += "<inspectionRequiredCheckListModels/>";
+            text += "<inspectionTypeI18ns/>";
+            text += "<recDate>2019-04-21T19:47:31-04:00</recDate>";
+            text += "<recFulNam>ADMIN</recFulNam>";
+            text += "<recStatus>A</recStatus>";
+            text += "<refInspectionDisciplines/>";
+            text += "<totalScoreOption>SUM(list)</totalScoreOption>";
+            text += "<xinspectionTypeCategorys/>";
+
+            text += "</inspectionTypeModel>";
+        }
+        text += "</inspectionTypeModels>";
+
+        text += "<inspectionTypeSecurityModels/>";
+        text += "<isDepartmentSelected>Y</isDepartmentSelected>";
+        text += "<isGradeGroupSelected>Y</isGradeGroupSelected>";
+        text += "<isGuideSheetSelected>Y</isGuideSheetSelected>";
+        text += "<isRelatedInspSelected>Y</isRelatedInspSelected>";
+        text += "<isResultGroupSelected>Y</isResultGroupSelected>";
+        text += "<isSecutirySelected>Y</isSecutirySelected>";
+
+        text += "</inspectionGroup>";
         text += "</list>"
         return text;
     }
