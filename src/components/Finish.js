@@ -1284,12 +1284,10 @@ class FIN extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                </Card.Header>
                 <Card.Body>
                     <Button onClick={() => this.bigRedButton()}>Generate & Download</Button>
                 </Card.Body>
+                <Card.Footer/>
             </React.Fragment>
         );
     }

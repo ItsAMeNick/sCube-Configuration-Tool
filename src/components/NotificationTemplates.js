@@ -110,10 +110,6 @@ class CONT extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"20%","float":"right"}} onClick={this.props.addNote}>Add Template</Button>
-                </Card.Header>
                 <div>
                 <div style={{"width":"70%","float":"left","margin":"20px"}}>
                 <p>
@@ -126,6 +122,9 @@ class CONT extends Component {
                 </div>
                 {this.genNotificationCards()}
                 </div>
+                <Card.Footer>
+                    <Button style={{"width":"20%","float":"right"}} onClick={this.props.addNote}>Add Template</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

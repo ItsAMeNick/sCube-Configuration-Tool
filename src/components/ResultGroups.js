@@ -99,14 +99,13 @@ class RESG extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addGroup}>Add Result Group</Button>
-                </Card.Header>
                 <div>
                     {!Object.keys(this.props.page_data).length ? <br/> : null}
                     {this.genResultGroups()}
                 </div>
+                <Card.Footer>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addGroup}>Add Result Group</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

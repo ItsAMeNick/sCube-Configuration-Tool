@@ -20,9 +20,6 @@ class GRD extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                </Card.Header>
                 <Card.Body>
                 <div style={{"width":"50%","padding":"10px","float":"left"}}>
                     <Row>
@@ -68,6 +65,7 @@ class GRD extends Component {
                     </Row>
                 </div>
                 </Card.Body>
+                <Card.Footer/>
             </React.Fragment>
         );
     }

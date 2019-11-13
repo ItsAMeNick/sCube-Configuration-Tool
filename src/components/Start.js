@@ -28,9 +28,6 @@ class STRT extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                </Card.Header>
                 <Card.Body>
                     <Card.Text>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac semper tellus, quis hendrerit eros. Quisque id commodo metus. Etiam consequat lectus est, nec finibus lectus dapibus sed. Sed neque felis, dictum euismod luctus vel, gravida molestie ex. Nulla quis enim eget lorem sodales ornare vel vel orci. Integer porttitor nunc at bibendum tempor. Quisque libero erat, condimentum eget massa eget, suscipit pretium sem. Maecenas libero ligula, aliquam id purus vitae, tincidunt aliquam velit. Sed sodales, urna vitae cursus vulputate, risus odio venenatis odio, in pellentesque est eros id lectus. Sed eu velit non turpis dapibus commodo et et eros. Pellentesque pellentesque neque eget neque venenatis, id pharetra ipsum elementum.
@@ -40,6 +37,7 @@ class STRT extends Component {
                     <p>Load File: </p>
                     <input type="file" name="file" id="file_loadsave" onChange={(e) => this.handleChange(e)}/>
                 </Card.Body>
+                <Card.Footer/>
             </React.Fragment>
         );
     }

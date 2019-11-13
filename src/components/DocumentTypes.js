@@ -13,14 +13,12 @@ class DOC extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                </Card.Header>
                 <Card.Body>
                     <Card.Text>
                         Field Stuffs
                     </Card.Text>
                 </Card.Body>
+                <Card.Footer/>
             </React.Fragment>
         );
     }

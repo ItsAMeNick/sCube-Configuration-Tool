@@ -87,14 +87,13 @@ class CHCK extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addChecklist}>Add Checklist</Button>
-                </Card.Header>
                 <div>
                     {!Object.keys(this.props.page_data).length ? <br/> : null}
                     {this.genChecklists()}
                 </div>
+                <Card.Footer>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addChecklist}>Add Checklist</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

@@ -94,10 +94,6 @@ class INSP extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addInspection}>Add Inspection</Button>
-                </Card.Header>
                 <div>
                 <Card.Body>
                     <Row style={{"width":"100%"}}>
@@ -109,6 +105,9 @@ class INSP extends Component {
                 </Card.Body>
                     {this.genInspections()}
                 </div>
+                <Card.Footer>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addInspection}>Add Inspection</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

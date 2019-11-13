@@ -58,11 +58,6 @@ class STAT extends Component {
         return (
 
             <React.Fragment>
-
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addStatus}>Add Status</Button>
-                </Card.Header>
                 <Card.Body>
                     Statuses are public facing entities that give a clear and concise answer as to where in the lifecycle a particular Accela Record stands.
                     Status Groups allow us to assign a list of pre-defined statuses to a record.
@@ -92,6 +87,9 @@ class STAT extends Component {
                     </tbody>
                 </Table>
                 </Card.Body></div>
+                <Card.Footer>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.addStatus}>Add Status</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

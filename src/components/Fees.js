@@ -65,10 +65,6 @@ class FEE extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.add}>Add Fee</Button>
-                </Card.Header>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
                             <Row>
@@ -104,6 +100,9 @@ class FEE extends Component {
                     </tbody>
                 </Table>
                 </Card.Body></div>
+                <Card.Footer>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.add}>Add Fee</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

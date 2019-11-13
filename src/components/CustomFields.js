@@ -147,9 +147,6 @@ class CF extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                </Card.Header>
                 <div>
                 <div style={{"width":"70%","float":"left"}}>
                     <Card.Body>
@@ -168,6 +165,7 @@ class CF extends Component {
                 </div>
                 {this.generateSubgroupCards()}
                 </div>
+                <Card.Footer/>
             </React.Fragment>
         );
     }

@@ -134,10 +134,6 @@ class INTK extends Component {
     render() {
         return (
             <React.Fragment>
-                <Card.Header>
-                    <strong>{this.props.title}</strong>
-                    <Button style={{"width":"30%","float":"right"}} onClick={this.props.add}>Add Smart Choice</Button>
-                </Card.Header>
                 <div>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
@@ -170,6 +166,9 @@ class INTK extends Component {
 
                 </div>
                 </Card.Body></div>
+                <Card.Footer>
+                    <Button style={{"width":"30%","float":"right"}} onClick={this.props.add}>Add Smart Choice</Button>
+                </Card.Footer>
             </React.Fragment>
         );
     }

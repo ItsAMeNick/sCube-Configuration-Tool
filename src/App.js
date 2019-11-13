@@ -20,7 +20,6 @@ import CHCK from "./components/Checklists.js";
 import STAT from "./components/Status.js";
 import DOC from "./components/DocumentTypes.js";
 import DDL from "./components/SharedDropdownLists.js";
-import COND from "./components/Conditions.js";
 import FIN from "./components/Finish.js";
 
 import Notes from "./components/Notes.js";
@@ -60,7 +59,6 @@ class App extends Component {
             case "STAT": return <STAT title={page_map[this.props.page].title}/>;
             case "DOC": return <DOC title={page_map[this.props.page].title}/>;
             case "DDL": return <DDL title={page_map[this.props.page].title}/>;
-            case "COND": return <COND title={page_map[this.props.page].title}/>;
             case "FIN": return <FIN title={page_map[this.props.page].title}/>;
             default: return null;
         }
