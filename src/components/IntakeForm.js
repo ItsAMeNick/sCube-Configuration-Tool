@@ -146,6 +146,13 @@ class INTK extends Component {
                             </Row>
                         </Card.Body>
                     </div>
+                    <div style={{"width":"25%","float":"right"}}>
+                        <Card.Body>
+                        <Row> <Col>
+                            <Button onClick={this.props.add}>Add Smart Choice</Button>
+                        </Col> </Row>
+                        </Card.Body>
+                    </div>
                 </div>
                 <div><Card.Body>
                 <Table striped bordered responsive>
@@ -166,13 +173,7 @@ class INTK extends Component {
                     </tbody>
                 </Table>
                 <div>
-                    <div style={{"width":"25%","float":"right"}}>
-                        <Card.Body>
-                        <Row> <Col>
-                            <Button onClick={this.props.add}>Add Smart Choice</Button>
-                        </Col> </Row>
-                        </Card.Body>
-                    </div>
+
                 </div>
                 </Card.Body></div>
             </React.Fragment>

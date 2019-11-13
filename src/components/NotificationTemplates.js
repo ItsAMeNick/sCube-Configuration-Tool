@@ -112,6 +112,7 @@ class CONT extends Component {
             <React.Fragment>
                 <Card.Header>
                     <strong>{this.props.title}</strong>
+                    <Button style={{"width":"20%","float":"right"}} onClick={this.props.addNote}>Add Template</Button>
                 </Card.Header>
                 <div>
                 <div style={{"width":"70%","float":"left","margin":"20px"}}>
@@ -122,13 +123,6 @@ class CONT extends Component {
                 <p>
                 Ex. $$VARIABLE$$
                 </p>
-                </div>
-                <div style={{"width":"20%","float":"right"}}>
-                    <Card.Body>
-                    <Row><Col>
-                        <Button onClick={this.props.addNote}>Add Template</Button>
-                    </Col></Row>
-                    </Card.Body>
                 </div>
                 {this.genNotificationCards()}
                 </div>

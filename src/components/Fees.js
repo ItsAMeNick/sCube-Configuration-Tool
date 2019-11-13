@@ -67,6 +67,7 @@ class FEE extends Component {
             <React.Fragment>
                 <Card.Header>
                     <strong>{this.props.title}</strong>
+                    <Button style={{"width":"25%","float":"right"}} onClick={this.props.add}>Add Fee</Button>
                 </Card.Header>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
@@ -102,15 +103,6 @@ class FEE extends Component {
                         {this.genRows()}
                     </tbody>
                 </Table>
-                <div>
-                    <div style={{"width":"25%","float":"right"}}>
-                        <Card.Body>
-                        <Row> <Col>
-                            <Button onClick={this.props.add}>Add Fee</Button>
-                        </Col> </Row>
-                        </Card.Body>
-                    </div>
-                </div>
                 </Card.Body></div>
             </React.Fragment>
         );
