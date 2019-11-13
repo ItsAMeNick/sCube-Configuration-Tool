@@ -1133,7 +1133,8 @@ class FIN extends Component {
         text += '</tr>';
         text += '<tr>';
         text += '<td>Example Mask: </td>';
-        let pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
+        let pattern_size;
+        if (this.props.data.GRD.pattern) pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
         if (!pattern_size) pattern_size = 5;
         text += '<td>'+this.props.data.GRD.pattern.replace(/\$\$SEQ(\d+)\$\$/, "0".repeat(pattern_size))+'</td>';
         text += '</tr>';
