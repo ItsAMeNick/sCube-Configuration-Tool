@@ -34,14 +34,14 @@ var pages = {
         id: "INTK"
     },
     6: {
-        title: "Inspection Result Groups",
+        title: "Inspection Checklists",
         order: 6,
-        id: "RESG"
+        id: "CHCK"
     },
     7: {
-        title: "Inspection Checklists",
+        title: "Inspection Result Groups",
         order: 7,
-        id: "CHCK"
+        id: "RESG"
     },
     8: {
         title: "Inspections",
