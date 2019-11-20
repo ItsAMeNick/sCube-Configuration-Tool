@@ -393,6 +393,11 @@ class FIN extends Component {
                 text += "<inspResultGroupI18Ns/>";
                 text += "<inspResultType>"+item.type+"</inspResultType>";
 
+                text += "<lowerMajorViolation>"+item.min_vio+"</lowerMajorViolation>";
+                text += "<lowerScore>"+item.min_score+"</lowerScore>";
+                text += "<upperMajorViolation>"+item.max_vio+"</upperMajorViolation>";
+                text += "<upperScore>"+item.max_score+"</upperScore>";
+
                 text += "</inspectionResultGroupModel>";
             }
 
