@@ -164,7 +164,11 @@ class FIN extends Component {
         text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
         text += "<category>"+this.props.data.GRD.category+"</category>";
         text += "<alias>"+this.props.data.GRD.alias+"</alias>";
-        //Moved link to status' later
+
+        if (this.props.data.STAT.group_code) {
+            text += "<appStatusGroupCode>"+this.props.data.STAT.group_code+"</appStatusGroupCode>";
+        }
+
         text += "<asChildOnly>N</asChildOnly>";
         text += this.genAuditModel();
 
@@ -187,23 +191,39 @@ class FIN extends Component {
         text += "<capTypeMaskModel>";
         text += "<capMaskName>"+
                 this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</capMaskName>";
+                (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+                (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+                (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</capMaskName>";
         text += "<capkeyMaskName>Default</capkeyMaskName>";
         text += "<partialAltIdMask>Default</partialAltIdMask>";
         text += "<temporaryAltIdMask>Default</temporaryAltIdMask>";
         text += "</capTypeMaskModel>";
 
-        //Some more Static text?
         text += "<expirationCode>NONE</expirationCode>";
-        text += "<feeScheduleName>NONE</feeScheduleName>";
+        if (this.props.data.FEE.code) {
+            text += "<feeScheduleName>"+this.props.data.FEE.code+"</feeScheduleName>";
+        }
+        if (this.props.data.INSP.code) {
+            text += "<inspectionGroupCode>"+this.props.data.INSP.code+"</inspectionGroupCode>";
+        }
         text += "<isRenewalOverride>N</isRenewalOverride>";
         text += "<isSearchable>Y</isSearchable>";
 
         text += "<moduleName>"+this.props.data.GRD.module+"</moduleName>"
 
+        //Process Code?  This is the name of something (I assume workflow)
+        //This is workflow, set to NONE, MUST BE DONE IN ACCELA
+        text += "<processCode>NONE</processCode>";
+
         text += "<resId>59952</resId>";
+
+        if (this.props.data.IF.group_code) {
+            text += "<smartChoiceCode>"+this.props.data.IF.group_code+"</smartChoiceCode>";
+        }
+        if (this.props.data.CF.group_code) {
+            text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
+        }
+
         text += "<udCode3>APNANANA</udCode3>";
         text += "<capTypeI18NModels/>";
         text += "<capTypeRelationList/>";
@@ -227,8 +247,7 @@ class FIN extends Component {
         text += "<type>"+this.props.data.GRD.type+"</type>";
         text += "</capTypeSecurityModel>";
 
-        //Trying to omit this tag buy using an empty attribute
-        text += "<captypeStandardComment/>";
+        //Trying to omit this
         // <captypeStandardComment>
         //     <auditModel>
         //         <auditDate>2019-05-31T12:49:20-04:00</auditDate>
@@ -264,26 +283,6 @@ class FIN extends Component {
         text += "<referenceLicenseVerificationModels/>";
         text += "<stdConditionCapTypes/>";
 
-        if (this.props.data.STAT.group_code) {
-            text += "<appStatusGroupCode>"+this.props.data.STAT.group_code+"</appStatusGroupCode>";
-        }
-        if (this.props.data.IF.group_code) {
-            text += "<smartChoiceCode>"+this.props.data.IF.group_code+"</smartChoiceCode>";
-        }
-        if (this.props.data.CF.group_code) {
-            text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
-        }
-        if (this.props.data.CF.group_code) {
-            text += "<specInfoCode>"+this.props.data.CF.group_code+"</specInfoCode>";
-        }
-        if (this.props.data.FEE.code) {
-            text += "<feeScheduleName>"+this.props.data.FEE.code+"</feeScheduleName>";
-        }
-
-        //Process Code?  This is the name of something (I assume workflow)
-        //This is workflow, set to NONE, MUST BE DONE IN ACCELA
-        text += "<processCode>NONE</processCode>";
-        text += "<inspectionGroupCode>NONE</inspectionGroupCode>";
 
         text += "</capType>";
         text += "</list>";
