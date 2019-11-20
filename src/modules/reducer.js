@@ -330,6 +330,7 @@ const sCubeReducer = (state = initialState, action) => {
             newState.INSP.checklists[id] = {
                 id: id,
                 name: "",
+                group: "",
                 items: {}
             };
             return newState;
@@ -349,6 +350,8 @@ const sCubeReducer = (state = initialState, action) => {
             let newState = _.cloneDeep(state);
             if (action.payload.field === "name") {
                 newState.INSP.checklists[action.payload.id]["name"] = action.payload.value;
+            } else if (action.payload.field === "group") {
+                newState.INSP.checklists[action.payload.id]["group"] = action.payload.value;
             } else {
                 newState.INSP.checklists[action.payload.id.split("|")[0]].items[action.payload.id.split("|")[1]][action.payload.field] = action.payload.value;
             }

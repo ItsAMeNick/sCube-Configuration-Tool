@@ -83,10 +83,14 @@ class INSP extends Component {
 
     genChecklistOptions() {
         let options = [<option label="--Select--" value="" key="0"/>];
+        let used = [];
         for (let chck in this.props.checklists) {
-            options.push(
-                <option key={chck} label={this.props.checklists[chck].name} value={this.props.checklists[chck].name}/>
-            )
+            if (!used.includes(this.props.checklists[chck].group)) {
+                used.push(this.props.checklists[chck].group);
+                options.push(
+                    <option key={chck} label={this.props.checklists[chck].group} value={this.props.checklists[chck].group}/>
+                )
+            }
         }
         return options;
     }

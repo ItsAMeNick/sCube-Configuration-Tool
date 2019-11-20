@@ -61,6 +61,8 @@ class FIN extends Component {
         //Checklists
         let checklists = this.genChecklists();
         zip.file("GuideSheetModel.xml", checklists);
+        let checklistsGroup = this.genChecklistGroup();
+        zip.file("CheckListGroupModel.xml", checklistsGroup);
         //Inspection Group
         let inspectionGroup = this.genInspectionGroup();
         zip.file("InspectionGroupModel.xml", inspectionGroup);
@@ -431,6 +433,7 @@ class FIN extends Component {
                 text += this.genAuditModel();
 
                 text += "<guideItemCarryOverFlag>Y</guideItemCarryOverFlag>";
+                text += "<guideItemComment>"+item.comment+"</guideItemComment>";
                 text += "<guideItemCommentVisible>Y</guideItemCommentVisible>";
                 text += "<guideItemDisplay_order>"+item.order+"</guideItemDisplay_order>";
 
@@ -453,6 +456,48 @@ class FIN extends Component {
         }
 
         text += "</list>"
+        return text;
+    }
+    //CheckListGroup
+    genChecklistGroup() {
+        let text = "";
+        text += this.genTopBlurb();
+        let groups = {};
+        let keys = Object.keys(this.props.data.INSP.checklists);
+        for (let i in keys) {
+            let id = keys[i];
+            let item = this.props.data.INSP.checklists[id];
+            if (groups[item.group]) {
+                groups[item.group].push(item.id);
+            } else {
+                groups[item.group] = [item.id];
+            }
+        }
+
+        for (let group in groups) {
+            text += "<checklistGroup>";
+            text += "<guideGroup>"+group+"</guideGroup>";
+            text += this.genServProvCode();
+            text += "<guideSheetGroupModels>";
+
+            let counter = 1;
+            for (let item in groups[group]) {
+                text += "<guideSheetGroupModel>";
+                text += this.genServProvCode();
+                text += "<guideGroup>"+group+"</guideGroup>";
+                text += "<guideType>"+this.props.data.INSP.checklists[groups[group][item]].name+"</guideType>";
+                text += this.genAuditModel();
+                text += "<guideAutoCreate>N</guideAutoCreate>";
+                text += "<guideItemDisplayOrder>"+counter+"</guideItemDisplayOrder>";
+                counter++;
+                text += "<guideSheetGroupI18ns/>";
+                text += "</guideSheetGroupModel>";
+            }
+            text += "</guideSheetGroupModels>";
+            text += "</checklistGroup>";
+        }
+        text += "</list>";
+
         return text;
     }
     //General Inspection Groups
@@ -855,10 +900,6 @@ class FIN extends Component {
                         }
                     }
                 }
-
-                console.log(list)
-                console.log(cf_group);
-                console.log(cf_field);
 
                 text += '<sharedDropDownModel refId="';
                 text += counter;

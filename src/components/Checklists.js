@@ -36,6 +36,14 @@ class CHCK extends Component {
                     <div style={{"width":"70%","float":"left"}}>
                     <Card.Body>
                         <Row>
+                            <Col><Form.Label>Checklist Group</Form.Label></Col>
+                            <Col><Form.Control id="group" value={this.props.page_data[chck.id].group} type="text" onChange={e => this.props.update(chck.id, e.target.id, e.target.value)}/></Col>
+                        </Row>
+                    </Card.Body>
+                    </div>
+                    <div style={{"width":"70%","float":"left"}}>
+                    <Card.Body>
+                        <Row>
                             <Col><Form.Label>Checklist Name</Form.Label></Col>
                             <Col><Form.Control id="name" value={this.props.page_data[chck.id].name} type="text" onChange={e => this.props.update(chck.id, e.target.id, e.target.value)}/></Col>
                         </Row>

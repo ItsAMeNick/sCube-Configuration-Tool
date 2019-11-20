@@ -41,7 +41,7 @@ class RESG extends Component {
                         </Row>
                     </Card.Body>
                     </div>
-                    <div style={{"width":"20%","float":"right"}}>
+                    <div style={{"width":"25%","float":"right"}}>
                         <Card.Body>
                         <Row> <Col>
                         <Button id={rg.id} variant="secondary" onClick={(e) => this.props.addResult(e.target.id)}>Add Result</Button>
