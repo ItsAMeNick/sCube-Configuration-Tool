@@ -709,6 +709,7 @@ class FIN extends Component {
             text += "<formula>"+fee.amount+"</formula>";
             text += "<negativeFeeFlag>N</negativeFeeFlag>";
             text += "<netFeeFlag>N</netFeeFlag>";
+            text += "<quantity>1.0</quantity>";
             text += "<refFeeCalcModels/>";
             if (!PAYMENT_DONE_FLAG) {
                 PAYMENT_DONE_FLAG = counter;
@@ -1103,9 +1104,14 @@ class FIN extends Component {
             // if owner only: 10
             // if lp only: 01
             // if neither: 00
-            // I think this is how this works,
-            //I did not have enough example to know completly
-            //$$$ZACH$$$
+            // 11/20 - This has been verified
+            console.log(tags);
+            if (tags.owner || tags.lp) {
+                text += "<displayBtnFlag>";
+                text += (tag.owner ? "1" : "0");
+                text += (tag.lp ? "1" : "0");
+                text += "</displayBtnFlag>";
+            }
 
             text += '<smartChoiceOptionModels/>';
             text += '</smartChoice>';
