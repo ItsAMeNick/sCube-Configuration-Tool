@@ -102,9 +102,9 @@ class INSP extends Component {
                 <Card.Body>
                     <Row style={{"width":"100%"}}>
                         <Col><Form.Label>Inspection Group Code</Form.Label></Col>
-                        <Col><Form.Control id="code" value={this.props.page_data.code} type="text" maxLength="12" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
+                        <Col><Form.Control id="code" value={this.props.INSP_code} type="text" maxLength="12" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
                         <Col><Form.Label>Inspection Group Name</Form.Label></Col>
-                        <Col><Form.Control id="name" value={this.props.page_data.name} type="text" maxLength="12" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
+                        <Col><Form.Control id="name" value={this.props.INSP_name} type="text" maxLength="12" onChange={e => this.props.update(0, e.target.id, e.target.value)}/></Col>
                     </Row>
                 </Card.Body>
                     {this.genInspections()}
@@ -118,6 +118,8 @@ class INSP extends Component {
 }
 
 const mapStateToProps = state => ({
+    INSP_code: state.INSP.code,
+    INSP_name: state.INSP.name,
     page_data: state.INSP.inspections,
     result_groups: state.INSP.result_groups,
     checklists: state.INSP.checklists
