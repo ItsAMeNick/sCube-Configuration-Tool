@@ -43,6 +43,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handlePageBody() {
@@ -101,7 +102,6 @@ class App extends Component {
     getPages() {
         let pages = [];
         for (let p in page_map) {
-            console.log(p)
             pages.push(
                 <ListGroup.Item action key={p} active={this.props.page === parseInt(p)} onClick={() => this.props.updatePageNum(parseInt(p))}>
                     {page_map[p].title}
@@ -174,6 +174,41 @@ class App extends Component {
                             this.props.id;
             this.props.save(filename, version);
         }
+    }
+
+    handleKeyPress(event) {
+        switch (event.keyCode) {
+            case 37: {
+                //Left
+                if (this.props.page >= 1) this.props.updatePageNum(this.props.page-1);
+                break;
+            }
+            case 39: {
+                //Right
+                if (this.props.page < page_map.length-1) this.props.updatePageNum(this.props.page+1);
+                break;
+            }
+            case 38: {
+                //Up
+                break;
+            }
+            case 40: {
+                //Down
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyPress);
+        console.log("Added Key")
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyPress);
     }
 
     render() {
