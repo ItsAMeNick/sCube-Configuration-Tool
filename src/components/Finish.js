@@ -94,7 +94,7 @@ class FIN extends Component {
         let today = new Date();
 
         //Add some static header stuff
-        text += '<?xml version="1.0" encoding="UTF-8" standalone="true"?>\n';
+        text += '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
         text += '<list  version="9.0.0" minorVersion="26" exportUser="ADMIN" exportDateTime="';
         //Fill in date here
         let month = (1 + today.getMonth()).toString();
@@ -296,9 +296,9 @@ class FIN extends Component {
         text += "<mask>";
         text += "<name>"+
                 this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</name>";
+                (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+                (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+                (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</name>";
         text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
         text += "<type>Cap ID</type>";
         text += this.genAuditModel();
@@ -309,9 +309,9 @@ class FIN extends Component {
         text += "<radixValue>10</radixValue>";
         text += "<seqName>"+
                 this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</seqName>";
+                (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+                (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+                (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</seqName>";
         text += "</mask>";
 
         text += "</list>"
@@ -325,9 +325,9 @@ class FIN extends Component {
         text += '<sequence refId="1@SequenceModel">';
         text += "<name>"+
                 this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</name>";
+                (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+                (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+                (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</name>";
         text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
         text += "<type>Cap ID</type>";
         text += this.genAuditModel();
@@ -342,24 +342,25 @@ class FIN extends Component {
         if (!pattern_size) pattern_size = 5;
         text += "<resetValue>"+"9".repeat(pattern_size)+"</resetValue>";
 
-        text += "<sequenceIntervalModels>";
-        text += "<sequenceInterval>";
-        text += "<intervalName>"+
-                this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</intervalName>";
-        text += "<sequenceName>"+
-                this.props.data.GRD.module +"/"+
-                (this.props.data.GRD.type === "NA" ? "*" : this.props.data.GRD.type) +"/"+
-                (this.props.data.GRD.sub_type === "NA" ? "*" : this.props.data.GRD.sub_type) +"/"+
-                (this.props.data.GRD.category === "NA" ? "*" : this.props.data.GRD.category) +"</sequenceName>";
-        text += "<sequenceType>Cap ID</sequenceType>";
-        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
-        text += this.genAuditModel();
-        text += "<lastSequenceNbr>0</lastSequenceNbr>";
-        text += "</sequenceInterval>";
-        text += "</sequenceIntervalModels>";
+        text += "<sequenceIntervalModels/>";
+        // text += "<sequenceIntervalModels>";
+        // text += "<sequenceInterval>";
+        // text += "<intervalName>"+
+        //         this.props.data.GRD.module +"/"+
+        //         (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+        //         (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+        //         (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</intervalName>";
+        // text += "<sequenceName>"+
+        //         this.props.data.GRD.module +"/"+
+        //         (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+        //         (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+        //         (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</sequenceName>";
+        // text += "<sequenceType>Cap ID</sequenceType>";
+        // text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+        // text += this.genAuditModel();
+        // text += "<lastSequenceNbr>0</lastSequenceNbr>";
+        // text += "</sequenceInterval>";
+        // text += "</sequenceIntervalModels>";
         text += "</sequence>";
         text += "</list>";
 
@@ -1110,11 +1111,10 @@ class FIN extends Component {
             // if lp only: 01
             // if neither: 00
             // 11/20 - This has been verified
-            console.log(tags);
             if (tags.owner || tags.lp) {
                 text += "<displayBtnFlag>";
-                text += (tag.owner ? "1" : "0");
-                text += (tag.lp ? "1" : "0");
+                text += (tags.owner ? "1" : "0");
+                text += (tags.lp ? "1" : "0");
                 text += "</displayBtnFlag>";
             }
 
@@ -1135,6 +1135,23 @@ class FIN extends Component {
         text += "<title>";
         text += this.props.data.GRD.alias+" - Record Summary";
         text += "</title>";
+        text += '<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">';
+        //This is a preformatted section so it looks a little weird
+        text +=  `<style>
+    body {
+        font-family: "Lato";
+    }
+    table {
+        border-collapse: collapse;
+    }
+    th {
+        padding: 10px;
+    }
+    td {
+        padding: 5px 10px 5px 10px;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2;}
+</style>`;
         text += "</head>";
         text += '<body style="width:8in">';
         text += '<div>'
@@ -1144,56 +1161,61 @@ class FIN extends Component {
         text += '</h1>';
         text += '</div>';
         text += '<hr/>';
-        text += '<div style="padding:0 0 10px 10px">';
+        text += '<div style="padding:0 0 10px 10px; width: 100%; min-height: 225px">';
         text += '<h2>General Record Information</h2>';
-        text += '<table>';
-        text += '<tr>';
-        text += '<td>Record Alias: </td>';
+
+        text += '<table style="width:50%; float:left">';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Record Alias: </strong></td>';
         text += '<td>'+this.props.data.GRD.alias+'</td>';
         text += '</tr>';
-        text += '<tr>';
-        text += '<td>Service Provider Code: </td>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Service Provider Code: </strong></td>';
         text += '<td>'+this.props.data.GRD.svp+'</td>';
         text += '</tr>';
-        text += '<tr><td>&nbsp;</td></tr>';
-        text += '<tr>';
-        text += '<td>Module: </td>';
-        text += '<td>'+this.props.data.GRD.module+'</td>';
-        text += '</tr>';
-        text += '<tr>';
-        text += '<td>Type: </td>';
-        text += '<td>'+this.props.data.GRD.type+'</td>';
-        text += '</tr>';
-        text += '<tr>';
-        text += '<td>SubType: </td>';
-        text += '<td>'+this.props.data.GRD.sub_type+'</td>';
-        text += '</tr>';
-        text += '<tr>';
-        text += '<td>Category: </td>';
-        text += '<td>'+this.props.data.GRD.category+'</td>';
-        text += '</tr>';
-        text += '<tr><td>&nbsp;</td></tr>';
-        text += '<tr>';
-        text += '<td>Record Structure:&nbsp;&nbsp;</td>';
-        text += '<td>'+this.props.data.GRD.module+'/'+this.props.data.GRD.type+'/'+this.props.data.GRD.sub_type+'/'+this.props.data.GRD.category+'</td>';
-        text += '</tr>';
-        text += '<tr><td>&nbsp;</td></tr>';
-        text += '<tr>';
-        text += '<td>Mask: </td>';
+        text += '<tr style="background-color: white;"><td>&nbsp;</td></tr>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Mask: </strong></td>';
         text += '<td>'+this.props.data.GRD.pattern+'</td>';
         text += '</tr>';
-        text += '<tr>';
-        text += '<td>Example Mask: </td>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Example Mask: </strong></td>';
         let pattern_size;
         if (this.props.data.GRD.pattern) pattern_size = parseInt((/\$\$SEQ(\d+)\$\$/g).exec(this.props.data.GRD.pattern)[1]);
         if (!pattern_size) pattern_size = 5;
         text += '<td>'+this.props.data.GRD.pattern.replace(/\$\$SEQ(\d+)\$\$/, "0".repeat(pattern_size))+'</td>';
         text += '</tr>';
         text += '</table>';
+
+        text += '<table style="width:50%; float:left; border-left: 1px grey solid;">';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Record Structure:&nbsp;&nbsp;</strong></td>';
+        text += '<td>'+this.props.data.GRD.module+'/'+this.props.data.GRD.type+'/'+this.props.data.GRD.sub_type+'/'+this.props.data.GRD.category+'</td>';
+        text += '</tr>';
+        text += '<tr style="background-color: white;"><td>&nbsp;</td></tr>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Module: </strong></td>';
+        text += '<td>'+this.props.data.GRD.module+'</td>';
+        text += '</tr>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Type: </strong></td>';
+        text += '<td>'+this.props.data.GRD.type+'</td>';
+        text += '</tr>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>SubType: </strong></td>';
+        text += '<td>'+this.props.data.GRD.sub_type+'</td>';
+        text += '</tr>';
+        text += '<tr style="background-color: white;">';
+        text += '<td><strong>Category: </strong></td>';
+        text += '<td>'+this.props.data.GRD.category+'</td>';
+        text += '</tr>';
+        text += '</table>';
         text += '</div>';
         //End of GRD
 
         text += this.addNotes(1);
+
+        //Intake Form
 
         //Custom Fields
         text += '<hr/>';
@@ -1204,11 +1226,11 @@ class FIN extends Component {
             text += '<h3>'+this.props.data.CF.group_code+' - '+this.props.data.CF.subgroups[c].subgroup+'</h3>';
             text += '<table style="width:100%" border="1">';
             text += '<tr>';
-            text += '<td style="width:20%"><Strong>Field Name</Strong></td>';
-            text += '<td style="width:20%"><Strong>Type</Strong></td>';
-            text += '<td style="width:20%"><Strong>Required</Strong></td>';
-            text += '<td style="width:20%"><Strong>ACA Mode</Strong></td>';
-            text += '<td style="width:20%"><Strong>Display Order</Strong></td>';
+            text += '<th style="width:20%"><Strong>Field Name</Strong></th>';
+            text += '<th style="width:20%"><Strong>Type</Strong></th>';
+            text += '<th style="width:20%"><Strong>Required</Strong></th>';
+            text += '<th style="width:20%"><Strong>ACA Mode</Strong></th>';
+            text += '<th style="width:20%"><Strong>Display Order</Strong></th>';
             text += '</tr>';
             for (let f in this.props.data.CF.subgroups[c].fields) {
                 let field = this.props.data.CF.subgroups[c].fields[f];
@@ -1249,12 +1271,12 @@ class FIN extends Component {
         text += '<h4 style="margin:0 0 15 0">Effective: '+this.props.data.FEE.effective+'</h4>';
         text += '<table style="width:100%" border="1">';
         text += '<tr>';
-        text += '<td style="width:16.66%"><Strong>Fee Code</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>Amount</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>Auto-Invoice</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>Auto-Assess</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>ACA Mode</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>Display Order</Strong></td>';
+        text += '<th style="width:16.66%"><Strong>Fee Code</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Amount</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Auto-Invoice</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Auto-Assess</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>ACA Mode</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Display Order</Strong></th>';
         text += '</tr>';
         for (let f in this.props.data.FEE.fees) {
             let fee = this.props.data.FEE.fees[f];
@@ -1273,6 +1295,40 @@ class FIN extends Component {
 
         text += '<hr/>';
 
+        //Inspections
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Inspections</h2>';
+        text += '<h3>'+this.props.data.INSP.code+' - '+this.props.data.INSP.name+'</h3>';
+        text += '<table style="width:100%" border="1">';
+        text += '<tr>';
+        text += '<th style="width:16.66%"><Strong>Inspection Name</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Checklist Group</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Result Group</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Required/Optional</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>ACA Displayable</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Display Order</Strong></th>';
+        text += '</tr>';
+        for (let i in this.props.data.INSP.inspections) {
+            let insp = this.props.data.INSP.inspections[i];
+            text += '<tr>';
+            text += '<td>'+insp.type+'</td>';
+            text += '<td>'+insp.checklist+'</td>';
+            text += '<td>'+insp.result_group+'</td>';
+            text += '<td>'+(insp.required ? "Required" : "Optional")+'</td>';
+            text += '<td>'+(insp.aca ? "Yes" : "No")+'</td>';
+            text += '<td>'+insp.order+'</td>';
+            text += '</tr>';
+        }
+        text += '</table>';
+
+        text += this.addNotes(8);
+        text += '</div>';
+
+        text += '<hr/>';
+
+        //ResGroups
+        //Checklists
+
         //Statuses
         text += '<div style="padding:0 0 10px 10px">';
         text += '<h2>Statuses</h2>';
@@ -1280,8 +1336,8 @@ class FIN extends Component {
         text += '<h3 style="margin:0 0 10 0">'+this.props.data.STAT.group_code+'</h3>';
         text += '<table style="width:100%" border="1">';
         text += '<tr>';
-        text += '<td style="width:16.66%"><Strong>Status</Strong></td>';
-        text += '<td style="width:16.66%"><Strong>Back-End Status</Strong></td>';
+        text += '<th style="width:16.66%"><Strong>Status</Strong></th>';
+        text += '<th style="width:16.66%"><Strong>Back-End Status</Strong></th>';
         text += '</tr>';
         for (let s in this.props.data.STAT.statuses) {
             let status = this.props.data.STAT.statuses[s];
@@ -1292,14 +1348,53 @@ class FIN extends Component {
         }
         text += '</table>';
         text += '</div>';
-        text += this.addNotes(8);
+        text += this.addNotes(9);
+
+        //Document
+
+        //Notifications
+        text += '<hr/>';
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Notifications</h2>';
+        for (let n in this.props.data.NOTE) {
+            let note = this.props.data.NOTE[n];
+            text += '<h3 style="margin:0 0 10 0">'+note.name+'</h3>';
+            text += '<table style="width:100%" border="1">';
+            text += '<tr>';
+            text += '<td style="width:25%"><Strong>From: </Strong></td>';
+            text += '<td style="width:25%">'+note.from+'</td>';
+            text += '<td style="width:25%"><Strong>CC: </Strong></td>';
+            text += '<td style="width:25%">'+note.cc+'</td>';
+            text += '</tr>';
+            text += '<tr>';
+            text += '<td><Strong>Importance: </Strong></td>';
+            text += '<td colspan="3">'+note.importance+'</td>';
+            text += '</tr>';
+            text += '<tr>';
+            text += '<td><Strong>Subject: </Strong></td>';
+            text += '<td colspan="3">'+note.title+'</td>';
+            text += '</tr>';
+            text += '<tr>';
+            text += '<td colspan="4" style="text-align: center;"><strong>Content: </strong></td>';
+            text += '</tr>';
+            text += '<tr>';
+            text += '<td colspan="4">'+note.content+'</td>';
+            text += '</tr>';
+            text += '<tr>';
+            text += '<td><Strong>Description: </Strong></td>';
+            text += '<td colspan="3">'+note.description+'</td>';
+            text += '</tr>';
+            text += '</table>';
+            text += '<br/><br/>';
+        }
+        text += this.addNotes(4);
 
         //Footer
         text += '<hr/>';
         text += this.addNotes(0, false);
         text += this.addNotes(12, false);
 
-        text += '<table style="width:100%" border="1">';
+        text += '<table style="width:100%">';
         text += '<tr>';
         text += '<td>'+(new Date()).toUTCString()+'</td>';
         text += '<td>'+this.props.data.id+'</td>';
@@ -1318,9 +1413,13 @@ class FIN extends Component {
         let notes = Object.keys(this.props.data.notes).filter(item => {
             return this.props.data.notes[item].page === page;
         })
-        if (notes) {
-            if (opt) text += "<p>Notes:</p>";
+        if (notes.length) {
             text += "<table border='1'>";
+            if (opt) {
+                text += '<tr>';
+                text += '<th colspan="2">Notes</th>';
+                text += '</tr>';
+            };
             for (let n in notes) {
                 text += '<tr>';
                 text += '<td>'+this.props.data.notes[notes[n]].value+'</td>';
