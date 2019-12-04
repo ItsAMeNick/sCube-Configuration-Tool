@@ -49,6 +49,11 @@ class GRD extends Component {
                 </div>
                 <div style={{"width":"50%","padding":"10px","float":"left"}}>
                     <Row>
+                        <Col><Form.Label>Agency Name</Form.Label></Col>
+                        <Col><Form.Control id="agency" value={this.props.page_data.agency} type="text" onChange={this.handleChange}/></Col>
+                    </Row>
+                    <br/>
+                    <Row>
                         <Col><Form.Label>Service Provider Code</Form.Label></Col>
                         <Col><Form.Control id="svp" value={this.props.page_data.svp} type="text" onChange={this.handleChange}/></Col>
                     </Row>

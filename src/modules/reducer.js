@@ -1,6 +1,8 @@
 import _ from "lodash";
 import uuidv1 from "uuid/v1";
 
+import firestore from "../modules/firestore.js";
+
 const initialState = {
     id: uuidv1(),
     version: "1-1",
@@ -9,6 +11,7 @@ const initialState = {
     GRD: {
         svp: "",
         alias: "",
+        agency: "",
         module: "",
         type: "",
         sub_type: "",
@@ -54,12 +57,23 @@ const sCubeReducer = (state = initialState, action) => {
         case "save_state": {
             let newState = _.cloneDeep(state);
             newState.GRD.version = action.payload.version;
-            let element = document.createElement("a");
-            let file = new Blob([JSON.stringify(newState)], {type: 'text/plain'});
-            element.href = URL.createObjectURL(file);
-            element.download = action.payload.filename + ".sCube";
-            document.body.appendChild(element); // Required for this to work in FireFox
-            element.click();
+            // let element = document.createElement("a");
+            // let file = new Blob([JSON.stringify(newState)], {type: 'text/plain'});
+            // element.href = URL.createObjectURL(file);
+            // element.download = action.payload.filename + ".sCube";
+            // document.body.appendChild(element); // Required for this to work in FireFox
+            // element.click();
+            let doc = {
+                Agency: newState.GRD.agency,
+                Record_Alias: newState.GRD.alias,
+                Record_ID: newState.GRD.alias,
+                SVP: newState.GRD.svp,
+                Version: newState.GRD.version,
+                Version_ID: newState.id,
+                data: JSON.stringify(newState)
+            }
+            console.log(doc);
+            firestore.collection("sCube").add(doc)
             return newState;
         }
 
