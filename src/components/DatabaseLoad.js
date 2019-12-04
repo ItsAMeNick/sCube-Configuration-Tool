@@ -22,9 +22,13 @@ class DatabaseLoad extends Component {
 
     componentDidMount(){
         //Some kind of limiter could be added to a load only needs to be done once, or on demand
-
+        if (window.location.href.split("#").length >= 2) {
+            this.setState({agency: window.location.href.split("#")[1]})
+        } else {
+            return null;
+        }
         //This will pull everything from the firebase
-        firestore.collection("sCube").get()
+        firestore.collection("sCube").where("SVP","==",window.location.href.split("#")[1]).get()
             .then(querySnapshot => {
                 //This gets all the raw data
                 let rawData = {};
@@ -117,6 +121,7 @@ class DatabaseLoad extends Component {
           if (window.confirm(text)) {
               this.setState({version: version});
               this.props.load(this.state.data[this.state.agency].records[this.state.record].versions[version].data)
+              window.location.hash = "";
           }
     }
 

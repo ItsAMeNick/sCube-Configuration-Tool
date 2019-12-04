@@ -42,13 +42,14 @@ class FIN extends Component {
         let capTypeModel = this.genCapType();
         zip.file("CapTypeModel.xml", capTypeModel);
 
-        //Gen Mask Model
-        let maskModel = this.genMaskModel();
-        zip.file("ReferenceMaskModel.xml", maskModel);
-
-        //Gen Sequence Model
-        let sequenceModel = this.genSequenceModel();
-        zip.file("SequenceModel.xml", sequenceModel);
+        //Removed 12/4/19 - Zoner
+        // //Gen Mask Model
+        // let maskModel = this.genMaskModel();
+        // zip.file("ReferenceMaskModel.xml", maskModel);
+        //
+        // //Gen Sequence Model
+        // let sequenceModel = this.genSequenceModel();
+        // zip.file("SequenceModel.xml", sequenceModel);
 
         //Notifications Template
         let notificationTemplates = this.genNotificationTemplates();
@@ -187,17 +188,17 @@ class FIN extends Component {
         text += "<copyAllAssociatedAPO>N</copyAllAssociatedAPO>";
         text += "</capTypeGISModel>";
 
-        //CapType Mask Model (UPDATE ONCE MASK IS ADDED!)
-        text += "<capTypeMaskModel>";
-        text += "<capMaskName>"+
-                this.props.data.GRD.module +"/"+
-                (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
-                (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
-                (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</capMaskName>";
-        text += "<capkeyMaskName>Default</capkeyMaskName>";
-        text += "<partialAltIdMask>Default</partialAltIdMask>";
-        text += "<temporaryAltIdMask>Default</temporaryAltIdMask>";
-        text += "</capTypeMaskModel>";
+        // //CapType Mask Model (UPDATE ONCE MASK IS ADDED!)
+        // text += "<capTypeMaskModel>";
+        // text += "<capMaskName>"+
+        //         this.props.data.GRD.module +"/"+
+        //         (!this.props.data.GRD.type ? "NA" : this.props.data.GRD.type) +"/"+
+        //         (!this.props.data.GRD.sub_type ? "NA" : this.props.data.GRD.sub_type) +"/"+
+        //         (!this.props.data.GRD.category ? "NA" : this.props.data.GRD.category) +"</capMaskName>";
+        // text += "<capkeyMaskName>Default</capkeyMaskName>";
+        // text += "<partialAltIdMask>Default</partialAltIdMask>";
+        // text += "<temporaryAltIdMask>Default</temporaryAltIdMask>";
+        // text += "</capTypeMaskModel>";
 
         text += "<expirationCode>NONE</expirationCode>";
         if (this.props.data.FEE.code) {

@@ -90,6 +90,9 @@ const sCubeReducer = (state = initialState, action) => {
             //Update version
             let current = newState.version.split("-");
             newState.version = current[0] + "-" + (parseInt(current[1])+1);
+
+            window.location.hash = "#" + newState.GRD.svp;
+
             return newState;
         }
 

@@ -57,17 +57,7 @@ class GRD extends Component {
                         <Col><Form.Label>Service Provider Code</Form.Label></Col>
                         <Col><Form.Control id="svp" value={this.props.page_data.svp} type="text" onChange={this.handleChange}/></Col>
                     </Row>
-                    <hr/>
-                    <Row>
-                        <Col><Form.Label>Mask Pattern</Form.Label></Col>
-                        <Col><Form.Control id="pattern" value={this.props.page_data.pattern} type="text" onChange={this.handleChange}/></Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <p/>
-                            <p>A mask pattern consists of a combination of Variable Substitutions and literal text. It has one sequence number variable that can be placed anywhere in the pattern. All variables can appear in any position of the mask pattern. All variables are enclosed in “$$” delimiters. For example, a sequence number variable would be written as $$SEQ05$$. Sequence Mask Patterns return results in all uppercase.</p>
-                        </Col>
-                    </Row>
+
                 </div>
                 </Card.Body>
                 <Card.Footer/>
@@ -75,6 +65,19 @@ class GRD extends Component {
         );
     }
 }
+
+//Removed 12/4/19
+//<Row>
+//     <Col><Form.Label>Mask Pattern</Form.Label></Col>
+//     <Col><Form.Control id="pattern" value={this.props.page_data.pattern} type="text" onChange={this.handleChange}/></Col>
+// </Row>
+// <hr/>
+// <Row>
+//     <Col>
+//         <p/>
+//         <p>A mask pattern consists of a combination of Variable Substitutions and literal text. It has one sequence number variable that can be placed anywhere in the pattern. All variables can appear in any position of the mask pattern. All variables are enclosed in “$$” delimiters. For example, a sequence number variable would be written as $$SEQ05$$. Sequence Mask Patterns return results in all uppercase.</p>
+//     </Col>
+// </Row>
 
 const mapStateToProps = state => ({
     page_data: state.GRD
