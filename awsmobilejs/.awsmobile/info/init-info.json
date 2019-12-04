@@ -1,0 +1,65 @@
+{
+	"projectPath": "C:\\Users\\zonern\\Dropbox\\sCube\\sCube WebApps\\scube-config-tool",
+	"projectInfo": {
+		"ProjectName": "scube-config-tool",
+		"ProjectPath": "C:\\Users\\zonern\\Dropbox\\sCube\\sCube WebApps\\scube-config-tool",
+		"InitializationTime": "",
+		"LastConfigurationTime": "",
+		"LastNPMInstallTime": "",
+		"FrontendLastBuildTime": "",
+		"LastPublishTime": "",
+		"BackendLastSyncTime": "",
+		"BackendLastBuildTime": "",
+		"BackendLastPushTime": "",
+		"BackendProjectID": "",
+		"BackendProjectName": "",
+		"BackendProjectConsoleUrl": "",
+		"BackendProjectCreationTime": "",
+		"BackendProjectLastUpdatedTime": "",
+		"Framework": "react"
+	},
+	"packageJson": {
+		"name": "scube-config-tool",
+		"version": "0.1.0",
+		"private": true,
+		"dependencies": {
+			"bootstrap": "^4.3.1",
+			"jspdf": "^1.5.3",
+			"jszip": "^3.2.2",
+			"lodash": "^4.17.15",
+			"react": "^16.9.0",
+			"react-bootstrap": "^1.0.0-beta.12",
+			"react-dom": "^16.9.0",
+			"react-redux": "^7.1.1",
+			"react-scripts": "3.1.2",
+			"redux": "^4.0.4",
+			"redux-thunk": "^2.3.0",
+			"shallowequal": "^1.1.0",
+			"uuid": "^3.3.3"
+		},
+		"scripts": {
+			"start": "react-scripts start",
+			"build": "react-scripts build",
+			"test": "react-scripts test",
+			"eject": "react-scripts eject"
+		},
+		"eslintConfig": {
+			"extends": "react-app"
+		},
+		"browserslist": {
+			"production": [
+				">0.2%",
+				"not dead",
+				"not op_mini all"
+			],
+			"development": [
+				"last 1 chrome version",
+				"last 1 firefox version",
+				"last 1 safari version"
+			]
+		}
+	},
+	"framework": "react",
+	"initialStage": "clean-slate",
+	"strategy": "create"
+}

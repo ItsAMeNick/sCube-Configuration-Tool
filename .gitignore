@@ -13,6 +13,9 @@ cloc*
 /build
 build*
 
+#database
+firestore.js
+
 # misc
 .DS_Store
 .env.local
