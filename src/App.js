@@ -46,6 +46,10 @@ class App extends Component {
         // this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
+    componentDidMount() {
+        this.props.mode(window.prompt("Please provide your email-address."));
+    }
+
     handlePageBody() {
         switch(page_map[this.props.page].id) {
             case "STRT": return <STRT title={page_map[this.props.page].title}/>;
@@ -212,6 +216,18 @@ class App extends Component {
     //     document.removeEventListener('keydown', this.handleKeyPress);
     // }
 
+    canSave(mode) {
+        if (mode) {
+            return (
+                <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
+                    Save
+                </Button>
+            );
+        } else {
+            return null;
+        }
+    }
+
     render() {
         return (
         <div className="App">
@@ -235,9 +251,7 @@ class App extends Component {
                 <Card>
                     <Card.Header>
                         <strong>{page_map[this.props.page].title}</strong>
-                        <Button style ={{"float":'right'}} variant="success" onClick={(e) => this.handleSave(e)}>
-                            Save
-                        </Button>
+                        {this.canSave(this.props.mode)}
                     </Card.Header>
                     {this.handlePageBody()}
                     {
@@ -265,6 +279,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+    mode: state.mode,
     page: state.page,
     GRD: state.GRD,
     id: state.id,
@@ -279,6 +294,10 @@ const mapDispatchToProps = dispatch => ({
     save: (filename, version) => dispatch({
         type: "save_state",
         payload: {filename: filename, version: version}
+    }),
+    mode: (email) => dispatch({
+        type: "update_mode",
+        payload: email
     })
 });
 

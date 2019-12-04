@@ -1,10 +1,12 @@
 import _ from "lodash";
 import uuidv1 from "uuid/v1";
 
-import firestore from "../modules/firestore.js";
+import firestore from "./firestore.js";
+import approved_users from "../components/approved_users.js"
 
 const initialState = {
     id: uuidv1(),
+    mode: false,
     version: "1-1",
     page: 0,
     notes: {},
@@ -54,15 +56,32 @@ const sCubeReducer = (state = initialState, action) => {
             return state;
         }
 
+        case "update_mode": {
+            let newState = _.cloneDeep(state);
+            if (approved_users.emails.includes(action.payload)) {
+                newState.mode = true;
+            } else {
+                newState.mode = false;
+            }
+            console.log(newState.mode);
+            return newState;
+        }
+
         case "save_state": {
             let newState = _.cloneDeep(state);
             newState.GRD.version = action.payload.version;
+            //remove things not to be saved
+            delete newState.mode;
+
+            // // Download things
             // let element = document.createElement("a");
             // let file = new Blob([JSON.stringify(newState)], {type: 'text/plain'});
             // element.href = URL.createObjectURL(file);
             // element.download = action.payload.filename + ".sCube";
             // document.body.appendChild(element); // Required for this to work in FireFox
             // element.click();
+
+            // Firebase
             let doc = {
                 Agency: newState.GRD.agency,
                 Record_Alias: newState.GRD.alias,
@@ -91,7 +110,7 @@ const sCubeReducer = (state = initialState, action) => {
             let current = newState.version.split("-");
             newState.version = current[0] + "-" + (parseInt(current[1])+1);
 
-            window.location.hash = "#" + newState.GRD.svp;
+            window.location.hash = "#" + newState.GRD.svp + "#" + newState.GRD.alias;
 
             return newState;
         }
