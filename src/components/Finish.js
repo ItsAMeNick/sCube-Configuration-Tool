@@ -644,7 +644,7 @@ class FIN extends Component {
     //Make the RefDocumentModel file
     genDocGroup() {
         let text = "";
-        let counter = 325;
+        let counter = 330;
 
         text += this.genTopBlurb();
         for (let d in this.props.data.DOCS.docs) {
@@ -656,17 +656,18 @@ class FIN extends Component {
             text += this.genServProvCode();
             text += this.genAuditModel();
             text += "<autoDownload>N</autoDownload>";
-            text += "<deleteRole>"+(doc.delete ? "0111100000" : "0000000000")+"</deleteRole>";
+            let anything_checked = doc.delete || doc.title || doc.upload || doc.download;
+            let placeholder = anything_checked ? "0000000000" : "0111100000";
+            text += "<deleteRole>"+(doc.delete ? "0111100000" : placeholder)+"</deleteRole>";
             text += "<XDocEntityTypes/>";
             text += "<documentComment></documentComment>";
             text += "<refDocumentI18NModels/>";
             text += "<documentType>"+doc.type+"</documentType>";
             text += "<documentsecurityModels/>";
-            let anything_checked = doc.delete || doc.title || doc.upload || doc.download;
             text += "<restrictDocTypeForACA>"+(anything_checked ? "Y" : "N")+"</restrictDocTypeForACA>";
-            text += "<titleRestrictRole>"+(doc.title ? "0111100000" : "0000000000")+"</titleRestrictRole>";
-            text += "<uploadRole>"+(doc.upload ? "0111100000" : "0000000000")+"</uploadRole>";
-            text += "<viewRole>"+(doc.download ? "0111100000" : "0000000000")+"</viewRole>";
+            text += "<titleRestrictRole>"+(doc.title ? "0111100000" : placeholder)+"</titleRestrictRole>";
+            text += "<uploadRole>"+(doc.upload ? "0111100000" : placeholder)+"</uploadRole>";
+            text += "<viewRole>"+(doc.download ? "0111100000" : placeholder)+"</viewRole>";
             text += "</refDocument>";
         }
         text += "</list>";

@@ -258,7 +258,7 @@ const sCubeReducer = (state = initialState, action) => {
         }
         case "update_document_group": {
             let newState = _.cloneDeep(state);
-            newState.DOCS.group = action.payload;
+            newState.DOCS.group = action.payload.toUpperCase();
             return newState;
         }
         case "update_document_item": {
