@@ -45,20 +45,22 @@ class DatabaseLoad extends Component {
                     if (!data[rawData[i].Module].records[rawData[i].Record_ID]) data[rawData[i].Module].records[rawData[i].Record_ID] = {name: rawData[i].Record_Alias, versions:{}};
                     data[rawData[i].Module].records[rawData[i].Record_ID].versions[rawData[i].Version_ID] = {name: rawData[i].Version, data: rawData[i].data};
                 }
-                console.log(data);
                 this.setState({data: data});
 
                 //This should be done in the reducer to stop repetition
                 this.setState({loaded: true})
-            }).then(() => {
-                if (window.location.href.split("#").length >= 4) {
-                    this.setState({agency: window.location.href.split("#")[1], record: window.location.href.split("#")[2], version: window.location.href.split("#")[3]});
-                    if (Object.keys(this.state.data).length) {
+
+                return data;
+            }).then((data) => {
+                if (window.location.href.split("#").length >= 6 && window.location.href.split("#")[5] === "load") {
+                    this.setState({module: window.location.href.split("#")[2], record: window.location.href.split("#")[3].replace(/(%20)/g, " "), version: window.location.href.split("#")[4]});
+                    if (Object.keys(data).length) {
                         let struct = window.location.href.split("#");
-                        this.props.load(this.state.data[struct[1]].records[struct[2]].versions[struct[3]].data);
+                        console.log(struct);
+                        this.props.load(data[struct[2]].records[struct[3].replace(/(%20)/g, " ")].versions[struct[4]].data);
                     }
                 } else if (window.location.href.split("#").length >= 3) {
-                    this.setState({agency: window.location.href.split("#")[1], record: window.location.href.split("#")[2]});
+                    this.setState({module: window.location.href.split("#")[2], record: window.location.href.split("#")[3].replace(/(%20)/g, " ")});
                 }
             });
     }

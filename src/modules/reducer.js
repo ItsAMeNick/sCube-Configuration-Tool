@@ -117,7 +117,7 @@ const sCubeReducer = (state = initialState, action) => {
             let current = newState.version.split("-");
             newState.version = current[0] + "-" + (parseInt(current[1])+1);
 
-            newState.loaded_file = "#" + newState.GRD.svp + "#" + newState.GRD.module + "#" + newState.GRD.alias + "#" + newState.version;
+            newState.loaded_file = "#" + newState.GRD.svp + "#" + newState.GRD.module + "#" + newState.GRD.alias + "#" + newState.id;
             window.location.hash = newState.loaded_file;
 
             return newState;

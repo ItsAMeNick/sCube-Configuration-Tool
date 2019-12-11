@@ -1438,6 +1438,13 @@ class FIN extends Component {
                 <Card.Body>
                     <Button onClick={() => this.bigRedButton()}>Generate & Download</Button>
                 </Card.Body>
+                <Card.Body>
+                    <Button onClick={() => {
+                        let copyText = window.location + this.props.loaded_file + "#load";
+                        navigator.clipboard.writeText(copyText);
+                        alert("Copied!");
+                    }}>Copy Link</Button>
+                </Card.Body>
                 <Card.Footer/>
             </React.Fragment>
         );
@@ -1445,7 +1452,8 @@ class FIN extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state
+    data: state,
+    loaded_file: state.loaded_file
 });
 
 const mapDispatchToProps = dispatch => ({
