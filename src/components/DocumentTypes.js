@@ -52,6 +52,7 @@ class DOC extends Component {
                 <td>
                     <Form.Control id={"delete"} checked={this.props.page_data.docs[s].delete} type="checkbox" onChange={e => this.handleChangeItem(e, s)}/>
                 </td>
+                <td><Button id={"delete"} variant="light" onClick={() => this.props.delete(s)}>Delete</Button></td>
             </tr>);
         }
         return rows;
@@ -100,6 +101,10 @@ const mapDispatchToProps = dispatch => ({
     add: () => dispatch({
         type: "add_doc",
         payload: null,
+    }),
+    delete: (id) => dispatch({
+        type: "delete_doc",
+        payload: id,
     }),
     updateDocument: (value) => dispatch({
         type: "update_document_group",

@@ -58,6 +58,7 @@ class FEE extends Component {
                         <option label="Read-Only" value="R"/>
                     </Form.Control>
                 </td>
+                <td><Button id={"delete"} variant="light" onClick={() => this.props.delete(s)}>Delete</Button></td>
             </tr>);
         }
         return rows;
@@ -117,6 +118,10 @@ const mapDispatchToProps = dispatch => ({
     add: () => dispatch({
         type: "add_Fee",
         payload: null,
+    }),
+    delete: (id) => dispatch({
+        type: "delete_Fee",
+        payload: id,
     }),
     update: (id, value) => dispatch({
         type: "update_Fee",

@@ -9,7 +9,7 @@ const initialState = {
     mode: false,
     loaded_file: "",
     version: "1-1",
-    page: 10,
+    page: 0,
     notes: {},
     GRD: {
         svp: "",
@@ -223,7 +223,6 @@ const sCubeReducer = (state = initialState, action) => {
             };
             return newState;
         }
-
         case "update_Fee_schedule": {
             let newState = _.cloneDeep(state);
             newState.FEE[action.payload.id] = action.payload.value;
@@ -232,6 +231,11 @@ const sCubeReducer = (state = initialState, action) => {
         case "update_Fee": {
             let newState = _.cloneDeep(state);
             newState.FEE.fees[action.payload.id] = action.payload.value;
+            return newState;
+        }
+        case "delete_Fee": {
+            let newState = _.cloneDeep(state);
+            delete newState.FEE.fees[action.payload];
             return newState;
         }
 
@@ -256,6 +260,11 @@ const sCubeReducer = (state = initialState, action) => {
         case "update_document_item": {
             let newState = _.cloneDeep(state);
             newState.DOCS.docs[action.payload.id] = action.payload.value;
+            return newState;
+        }
+        case "delete_doc": {
+            let newState = _.cloneDeep(state);
+            delete newState.DOCS.docs[action.payload];
             return newState;
         }
 
