@@ -9,7 +9,7 @@ const initialState = {
     mode: false,
     loaded_file: "",
     version: "1-1",
-    page: 0,
+    page: 10,
     notes: {},
     GRD: {
         svp: "",
@@ -46,6 +46,10 @@ const initialState = {
         inspections: {},
         checklists: {},
         result_groups: {},
+    },
+    DOCS: {
+        group: "",
+        docs: {}
     },
     SDL: {}
 };
@@ -230,6 +234,31 @@ const sCubeReducer = (state = initialState, action) => {
             newState.FEE.fees[action.payload.id] = action.payload.value;
             return newState;
         }
+
+        case "add_doc": {
+            let newState = _.cloneDeep(state);
+            let id = uuidv1();
+            newState.DOCS.docs[id] = {
+                id: id,
+                type: "",
+                title: true,
+                download: true,
+                upload: true,
+                delete: true,
+            };
+            return newState;
+        }
+        case "update_document_group": {
+            let newState = _.cloneDeep(state);
+            newState.DOCS.group = action.payload;
+            return newState;
+        }
+        case "update_document_item": {
+            let newState = _.cloneDeep(state);
+            newState.DOCS.docs[action.payload.id] = action.payload.value;
+            return newState;
+        }
+
         case "add_Status": {
             let newState = _.cloneDeep(state);
             let id = uuidv1();
