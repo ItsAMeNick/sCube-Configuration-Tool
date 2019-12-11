@@ -95,6 +95,9 @@ class CHCK extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    Ex vis sonet mucius praesent, repudiare definitionem ea mea. Usu te iisque minimum. Pri errem omittam ne, ut modo eripuit mel, nisl indoctum evertitur his in. Ut duo unum feugiat, nusquam tacimates his ne.
+                </Card.Body>
                 <div>
                     {!Object.keys(this.props.page_data).length ? <br/> : null}
                     {this.genChecklists()}

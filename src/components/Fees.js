@@ -67,6 +67,9 @@ class FEE extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    No purto docendi fuisset vix, cu cum legere molestiae, his te omnesque oporteat. Quo te solum oblique, tale saepe vel eu, mundi sonet aperiam pri ut. Vix et quando eligendi intellegebat, ne mel probatus adipisci delicata. Ut dicit nonumes delicatissimi nec, vis at vivendo civibus fastidii. Ei omittantur definitionem vel, ei veniam labores referrentur has. Per ad fierent constituto disputationi, eam iuvaret vocibus expetenda eu, duo ad primis discere.
+                </Card.Body>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>
                             <Row>

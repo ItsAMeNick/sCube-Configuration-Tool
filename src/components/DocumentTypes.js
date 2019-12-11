@@ -61,14 +61,17 @@ class DOC extends Component {
     render() {
         return (
             <React.Fragment>
-                    <div style={{"width":"70%","float":"left"}}>
-                        <Card.Body>
-                            <Row>
-                                <Col>Document Type Group</Col>
-                                <Col><Form.Control id="group" value={this.props.page_data.group} type="text" onChange={this.handleChange}/></Col>
-                            </Row>
-                        </Card.Body>
-                    </div>
+                <Card.Body>
+                    Cu quo duis dictas, eam ex diam iriure apeirian, eam nullam molestiae eu. Duo ex suas constituto, his nonumy accumsan intellegebat an. Usu te dicat affert, ius te meis facete, nonumes repudiandae te vix. Sea in quodsi volumus alienum, at utroque referrentur suscipiantur per.
+                </Card.Body>
+                <div style={{"width":"70%","float":"left"}}>
+                    <Card.Body>
+                        <Row>
+                            <Col>Document Type Group</Col>
+                            <Col><Form.Control id="group" value={this.props.page_data.group} type="text" onChange={this.handleChange}/></Col>
+                        </Row>
+                    </Card.Body>
+                </div>
                 <div><Card.Body>
                 <Table striped bordered responsive>
                     <thead>

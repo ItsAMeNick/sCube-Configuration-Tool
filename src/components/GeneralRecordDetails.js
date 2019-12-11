@@ -21,6 +21,9 @@ class GRD extends Component {
         return (
             <React.Fragment>
                 <Card.Body>
+                    Nec nibh dicam eripuit in, mea cibo adipiscing omittantur eu, an aliquando ullamcorper eos. In esse intellegam nec, mazim dignissim mel in. Liber epicurei liberavisse sed te. No augue aliquip expetenda eum. Has an adhuc maiestatis.
+                </Card.Body>
+                <Card.Body>
                 <div style={{"width":"50%","padding":"10px","float":"left"}}>
                     <Row>
                         <Col><Form.Label>Record Type Alias</Form.Label></Col>

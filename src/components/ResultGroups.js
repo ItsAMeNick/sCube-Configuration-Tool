@@ -99,6 +99,9 @@ class RESG extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    Habeo eruditi pri cu, est ut possim convenire hendrerit. Ex eos nominavi persecuti voluptatibus, at mel primis recusabo. Cu ius repudiare democritum, est et debitis oportere efficiendi. Ea regione patrioque mel. Nam at tale novum postea, mundi ubique splendide sea an.
+                </Card.Body>
                 <div>
                     {!Object.keys(this.props.page_data).length ? <br/> : null}
                     {this.genResultGroups()}

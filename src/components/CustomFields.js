@@ -147,6 +147,9 @@ class CF extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    Ei partem viderer per, pro ea veritus electram definitionem. Sea aliquid intellegat et. Pri dicunt saperet neglegentur ex, ancillae epicurei luptatum nec te. Vel cu erant dicunt appetere, in oratio pertinax argumentum sea.
+                </Card.Body>
                 <div>
                 <div style={{"width":"70%","float":"left"}}>
                     <Card.Body>

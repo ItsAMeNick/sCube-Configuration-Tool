@@ -135,6 +135,9 @@ class INTK extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    Quo ei enim molestiae, sit ex eloquentiam repudiandae. Odio aeque accumsan vis an, no utamur aeterno voluptatibus eos, solet oporteat pri te. No eum nulla voluptatum, usu mutat nihil et. Cu tempor doctus vel, ea vix pertinax interesset. Audire salutandi an mea, ne mei verterem gubergren.
+                </Card.Body>
                 <div>
                     <div style={{"width":"70%","float":"left"}}>
                         <Card.Body>

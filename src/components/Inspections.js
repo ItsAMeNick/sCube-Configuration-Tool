@@ -98,6 +98,9 @@ class INSP extends Component {
     render() {
         return (
             <React.Fragment>
+                <Card.Body>
+                    Ad usu simul consul ridens. Sed in inimicus iudicabit maiestatis. Feugiat delicata neglegentur ius at, at his integre moderatius. Ullum dicta menandri his ex, cu per viderer deleniti lucilius. Labore nostro adipisci eu usu.
+                </Card.Body>
                 <div>
                 <Card.Body>
                     <Row style={{"width":"100%"}}>
