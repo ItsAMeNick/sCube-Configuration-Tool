@@ -1487,7 +1487,11 @@ class FIN extends Component {
         return (
             <React.Fragment>
                 <Card.Body>
+                    <p>
                     Mel soleat appareat ex. Nam in indoctum cotidieque, vis harum urbanitas te, nam in dicat sapientem laboramus. Id integre imperdiet consectetuer vim, usu ne ferri verear labitur. Labores sensibus ne pro, in inani movet vitae duo, sonet legimus eam id.
+                    </p><p><strong>
+                    Please save the record before attempting the "Download" or "Copy Link" buttons!
+                    </strong></p>
                 </Card.Body>
                 <Card.Body>
                     <Button onClick={() => this.bigRedButton()}>Generate & Download</Button>
@@ -1496,7 +1500,7 @@ class FIN extends Component {
                     <Button onClick={() => {
                         let copyText = window.location + this.props.loaded_file;
                         navigator.clipboard.writeText(copyText);
-                        alert("Copied!");
+                        alert("Copied!\nPlease note that this link will only work if this is a saved record.  If the provided link fails, the record must be reloaded from the welcome screen and a new link generated.  Always test your link before sharing with others.");
                     }}>Copy Link</Button>
                 </Card.Body>
                 <Card.Footer/>
