@@ -38,6 +38,10 @@ class FIN extends Component {
         let sharedDropDownList = this.genSharedDropdwnLists();
         zip.file("SharedDropDownListModel.xml", sharedDropDownList);
 
+        //Gen Document Group
+        let docGroup = this.genDocGroup();
+        zip.file("RefDocumentModel.xml", docGroup);
+
         //Gen CapTypeModel
         let capTypeModel = this.genCapType();
         zip.file("CapTypeModel.xml", capTypeModel);
@@ -175,17 +179,17 @@ class FIN extends Component {
 
         //These are some lines about ACA, GIS, and Asset models
         text += "<capTypeACAModel>";
-        text += "<feeCalcFactor>H</feeCalcFactor>";
-        text += "<isIssue>N</isIssue>";
-        text += "<isRenewal>N</isRenewal>";
-        text += "<searchableInACA>Y</searchableInACA>";
+            text += "<feeCalcFactor>H</feeCalcFactor>";
+            text += "<isIssue>N</isIssue>";
+            text += "<isRenewal>N</isRenewal>";
+            text += "<searchableInACA>Y</searchableInACA>";
         text += "</capTypeACAModel>";
         text += "<capTypeAssetModel>";
-        text += "<estProdUnits>0.0</estProdUnits>";
-        text += "<valueRequired>N</valueRequired>";
+            text += "<estProdUnits>0.0</estProdUnits>";
+            text += "<valueRequired>N</valueRequired>";
         text += "</capTypeAssetModel>";
-        text += "<capTypeGISModel>";
-        text += "<copyAllAssociatedAPO>N</copyAllAssociatedAPO>";
+            text += "<capTypeGISModel>";
+            text += "<copyAllAssociatedAPO>N</copyAllAssociatedAPO>";
         text += "</capTypeGISModel>";
 
         // //CapType Mask Model (UPDATE ONCE MASK IS ADDED!)
@@ -230,22 +234,22 @@ class FIN extends Component {
         text += "<capTypeRelationList/>";
 
         text += "<capTypeRelationModel>";
-        text += "<capTypeRelations/>";
-        text += "<category>"+this.props.data.GRD.category+"</category>";
-        text += "<group>"+this.props.data.GRD.module+"</group>";
-        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
-        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
-        text += "<type>"+this.props.data.GRD.type+"</type>";
+            text += "<capTypeRelations/>";
+            text += "<category>"+this.props.data.GRD.category+"</category>";
+            text += "<group>"+this.props.data.GRD.module+"</group>";
+            text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+            text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+            text += "<type>"+this.props.data.GRD.type+"</type>";
         text += "</capTypeRelationModel>";
 
         text += "<capTypeSecurityModel>";
-        text += "<capTypeSecurityPolicyModels/>";
-        text += "<capTypeSecurityStatusPolicyModels/>";
-        text += "<category>"+this.props.data.GRD.category+"</category>";
-        text += "<group>"+this.props.data.GRD.module+"</group>";
-        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
-        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
-        text += "<type>"+this.props.data.GRD.type+"</type>";
+            text += "<capTypeSecurityPolicyModels/>";
+            text += "<capTypeSecurityStatusPolicyModels/>";
+            text += "<category>"+this.props.data.GRD.category+"</category>";
+            text += "<group>"+this.props.data.GRD.module+"</group>";
+            text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+            text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+            text += "<type>"+this.props.data.GRD.type+"</type>";
         text += "</capTypeSecurityModel>";
 
         //Trying to omit this
@@ -265,14 +269,27 @@ class FIN extends Component {
         // </captypeStandardComment>
 
         text += '<citizenAccessModel refId="'+counter+'@CapTypeCitizenAccessModel">';
-        counter++;
-        text += "<category>"+this.props.data.GRD.category+"</category>";
-        text += "<group>"+this.props.data.GRD.module+"</group>";
-        text += "<refXEntityPermissionModels/>";
-        text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
-        text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
-        text += "<type>"+this.props.data.GRD.type+"</type>";
+            counter++;
+            text += "<category>"+this.props.data.GRD.category+"</category>";
+            text += "<group>"+this.props.data.GRD.module+"</group>";
+            text += "<refXEntityPermissionModels/>";
+            text += "<serviceProviderCode>"+this.props.data.GRD.svp+"</serviceProviderCode>";
+            text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+            text += "<type>"+this.props.data.GRD.type+"</type>";
         text += "</citizenAccessModel>";
+
+        if (this.props.data.DOCS.group) {
+            text += "<docCode>"+this.props.data.DOCS.group+"</docCode>";
+            text += "<documentModels>";
+                text += "<category>NA</category>";
+                text += "<docCode>"+this.props.data.DOCS.group+"</docCode>";
+                text += "<group>"+this.props.data.GRD.module+"</group>";
+                text += "<refRequiredDocumentModels/>";
+                text += this.genServProvCode();
+                text += "<subType>"+this.props.data.GRD.sub_type+"</subType>";
+                text += "<type>"+this.props.data.GRD.type+"</type>";
+            text += "</documentModels>";
+        }
 
         text += "<isCheckedLiscenedVerification>Y</isCheckedLiscenedVerification>";
         text += "<isCloneOptionSelected>Y</isCloneOptionSelected>";
@@ -568,7 +585,7 @@ class FIN extends Component {
         return text;
     }
 
-    //Generate the shared Dropdown Lists
+    //Generate the Notification Templates
     genNotificationTemplates() {
         let text = "";
         let counter = 17365;
@@ -621,6 +638,39 @@ class FIN extends Component {
             text += "</notificationTemplate>";
         }
         text += "</list>";
+        return text;
+    }
+
+    //Make the RefDocumentModel file
+    genDocGroup() {
+        let text = "";
+        let counter = 325;
+
+        text += this.genTopBlurb();
+        for (let d in this.props.data.DOCS.docs) {
+            let doc = this.props.data.DOCS.docs[d];
+            text += '<refDocument refId="1@RefDocumentModel">';
+            text += "<docCode>"+this.props.data.DOCS.group+"</docCode>";
+            text += "<docSeqNumber>"+counter+"</docSeqNumber>";
+            counter++;
+            text += this.genServProvCode();
+            text += this.genAuditModel();
+            text += "<autoDownload>N</autoDownload>";
+            text += "<deleteRole>"+(doc.delete ? "0111100000" : "0000000000")+"</deleteRole>";
+            text += "<XDocEntityTypes/>";
+            text += "<documentComment></documentComment>";
+            text += "<refDocumentI18NModels/>";
+            text += "<documentType>"+doc.type+"</documentType>";
+            text += "<documentsecurityModels/>";
+            let anything_checked = doc.delete || doc.title || doc.upload || doc.download;
+            text += "<restrictDocTypeForACA>"+(anything_checked ? "Y" : "N")+"</restrictDocTypeForACA>";
+            text += "<titleRestrictRole>"+(doc.title ? "0111100000" : "0000000000")+"</titleRestrictRole>";
+            text += "<uploadRole>"+(doc.upload ? "0111100000" : "0000000000")+"</uploadRole>";
+            text += "<viewRole>"+(doc.download ? "0111100000" : "0000000000")+"</viewRole>";
+            text += "</refDocument>";
+        }
+        text += "</list>";
+
         return text;
     }
 
