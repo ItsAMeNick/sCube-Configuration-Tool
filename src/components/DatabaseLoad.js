@@ -111,8 +111,6 @@ class DatabaseLoad extends Component {
                       "Version: " + version + "\n";
           if (window.confirm(text)) {
               this.props.load(this.state.data[this.state.module].records[this.state.record].versions[version].data)
-              console.log(window.location.hash.split("#"));
-              window.location.hash = "#" + window.location.hash.split("#")[1];
           }
     }
 

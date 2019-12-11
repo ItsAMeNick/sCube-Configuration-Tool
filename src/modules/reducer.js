@@ -7,6 +7,7 @@ import approved_users from "../components/approved_users.js"
 const initialState = {
     id: uuidv1(),
     mode: false,
+    loaded_file: "",
     version: "1-1",
     page: 0,
     notes: {},
@@ -72,6 +73,7 @@ const sCubeReducer = (state = initialState, action) => {
             newState.GRD.version = action.payload.version;
             //remove things not to be saved
             delete newState.mode;
+            delete newState.loaded_file;
 
             // // Download things
             // let element = document.createElement("a");
@@ -115,7 +117,8 @@ const sCubeReducer = (state = initialState, action) => {
             let current = newState.version.split("-");
             newState.version = current[0] + "-" + (parseInt(current[1])+1);
 
-            window.location.hash = "#" + newState.GRD.svp + "#" + newState.GRD.alias;
+            newState.loaded_file = "#" + newState.GRD.svp + "#" + newState.GRD.module + "#" + newState.GRD.alias + "#" + newState.version;
+            window.location.hash = newState.loaded_file;
 
             return newState;
         }
