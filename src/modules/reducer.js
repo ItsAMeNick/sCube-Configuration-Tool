@@ -84,15 +84,17 @@ const sCubeReducer = (state = initialState, action) => {
             // Firebase
             let doc = {
                 Agency: newState.GRD.agency,
+                Module: newState.GRD.module,
                 Record_Alias: newState.GRD.alias,
                 Record_ID: newState.GRD.alias,
                 SVP: newState.GRD.svp,
                 Version: newState.GRD.version,
                 Version_ID: newState.id,
-                data: JSON.stringify(newState)
+                data: JSON.stringify(newState),
+                Time_Stamp: new Date().valueOf()
             }
-            console.log(doc);
             firestore.collection("sCube").add(doc)
+            //console.log(doc);
             return newState;
         }
 
@@ -102,6 +104,9 @@ const sCubeReducer = (state = initialState, action) => {
             // If commented out, loading a save will return a user to the page that
             // the app was saved on
             newState.page = 1;
+
+            // Maintain the authentication status
+            newState["mode"] = state.mode;
 
             // Generate a new ID for the version
             newState.id = uuidv1();
