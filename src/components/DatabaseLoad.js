@@ -40,10 +40,9 @@ class DatabaseLoad extends Component {
                 //Format the data
                 let data = {};
                 for (let i in rawData) {
-                    console.log(rawData[i]);
                     if (!data[rawData[i].Module]) data[rawData[i].Module] = {agency: rawData[i].Agency, svp: rawData[i].SVP, records: {}};
                     if (!data[rawData[i].Module].records[rawData[i].Record_ID]) data[rawData[i].Module].records[rawData[i].Record_ID] = {name: rawData[i].Record_Alias, versions:{}};
-                    data[rawData[i].Module].records[rawData[i].Record_ID].versions[rawData[i].Version_ID] = {name: rawData[i].Version, data: rawData[i].data};
+                    data[rawData[i].Module].records[rawData[i].Record_ID].versions[rawData[i].Version_ID] = {name: rawData[i].Version, time: rawData[i].Time_Stamp, data: rawData[i].data};
                 }
                 this.setState({data: data});
 
@@ -100,7 +99,7 @@ class DatabaseLoad extends Component {
         for (let a in versions) {
             console.log(versions[a])
             items.push(
-                <option key={versions[a]} label={this.state.data[this.state.module].records[this.state.record].versions[versions[a]].name} value={versions[a]}/>
+                <option key={versions[a]} label={this.state.data[this.state.module].records[this.state.record].versions[versions[a]].name + " | " + (new Date(this.state.data[this.state.module].records[this.state.record].versions[versions[a]].time).toLocaleString())} value={versions[a]}/>
             )
         }
         return items;
