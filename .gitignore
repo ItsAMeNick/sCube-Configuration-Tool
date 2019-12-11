@@ -14,7 +14,6 @@ cloc*
 build*
 
 #database
-firestore.js
 
 # misc
 .DS_Store
