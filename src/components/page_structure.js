@@ -59,13 +59,8 @@ var pages = {
         id: "DOC"
     },
     11: {
-        title: "Shared Dropdown Lists",
-        order: 11,
-        id: "DDL"
-    },
-    12: {
         title: "Generate XML - Finish",
-        order: 12,
+        order: 11,
         id: "FIN"
     },
 };

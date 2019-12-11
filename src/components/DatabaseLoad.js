@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
+import Form from "react-bootstrap/Form";
 
 import firestore from "../modules/firestore.js";
 
@@ -14,7 +15,7 @@ class DatabaseLoad extends Component {
         this.state = {
             loaded: false,
             data: {},
-            agency: "",
+            module: "",
             record: "",
             version: "",
         }
@@ -39,11 +40,12 @@ class DatabaseLoad extends Component {
                 //Format the data
                 let data = {};
                 for (let i in rawData) {
-                    if (!data[rawData[i].SVP]) data[rawData[i].SVP] = {agency: rawData[i].Agency, records: {}};
-                    if (!data[rawData[i].SVP].records[rawData[i].Record_ID]) data[rawData[i].SVP].records[rawData[i].Record_ID] = {name: rawData[i].Record_Alias, versions:{}};
-                    data[rawData[i].SVP].records[rawData[i].Record_ID].versions[rawData[i].Version_ID] = {name: rawData[i].Version, data: rawData[i].data};
+                    console.log(rawData[i]);
+                    if (!data[rawData[i].Module]) data[rawData[i].Module] = {agency: rawData[i].Agency, svp: rawData[i].SVP, records: {}};
+                    if (!data[rawData[i].Module].records[rawData[i].Record_ID]) data[rawData[i].Module].records[rawData[i].Record_ID] = {name: rawData[i].Record_Alias, versions:{}};
+                    data[rawData[i].Module].records[rawData[i].Record_ID].versions[rawData[i].Version_ID] = {name: rawData[i].Version, data: rawData[i].data};
                 }
-
+                console.log(data);
                 this.setState({data: data});
 
                 //This should be done in the reducer to stop repetition
@@ -61,48 +63,42 @@ class DatabaseLoad extends Component {
             });
     }
 
-    getAgency() {
-        let agencies = Object.keys(this.state.data);
-        let items = [];
-        for (let a in agencies) {
+    getModule() {
+        let modules = Object.keys(this.state.data);
+        console.log(modules);
+        let items = [<option key={"0"} />];
+        for (let a in modules) {
             items.push(
-                <ListGroup.Item active={this.state.agency === agencies[a]} href={"#"+agencies[a]} action key={agencies[a]} id={agencies[a]} onClick={(e) => this.setState({agency: e.target.href.split("#")[1]})}>
-                    {this.state.data[agencies[a]].agency}
-                </ListGroup.Item>
+                <option key={modules[a]} label={modules[a]} value={modules[a]}/>
             )
         }
         return items;
     }
 
     getRecord() {
-        if (!this.state.agency) return null;
-        if (!this.state.data[this.state.agency]) return null;
-        let records = Object.keys(this.state.data[this.state.agency].records);
-        let items = [];
+        if (!this.state.module) return null;
+        if (!this.state.data[this.state.module]) return null;
+        let records = Object.keys(this.state.data[this.state.module].records);
+        let items = [<option key={"0"} />];
         for (let a in records) {
             items.push(
-                <ListGroup.Item active={this.state.record === records[a]} href={"#"+this.state.agency+"#"+records[a]} action key={records[a]} id={records[a]} onClick={(e) => this.setState({record: e.target.href.split("#")[2]})}>
-                    {this.state.data[this.state.agency].records[records[a]].name}
-                </ListGroup.Item>
+                <option key={records[a]} label={this.state.data[this.state.module].records[records[a]].name} value={records[a]}/>
             )
         }
         return items;
     }
 
     getVersion() {
-        if (!this.state.agency) return null;
-        if (!this.state.data[this.state.agency]) return null;
+        if (!this.state.module) return null;
+        if (!this.state.data[this.state.module]) return null;
         if (!this.state.record) return null;
-        if (!this.state.data[this.state.agency].records[this.state.record]) return null;
-        let versions = Object.keys(this.state.data[this.state.agency].records[this.state.record].versions);
-        let items = [];
+        if (!this.state.data[this.state.module].records[this.state.record]) return null;
+        let versions = Object.keys(this.state.data[this.state.module].records[this.state.record].versions);
+        let items = [<option key={"0"} />];
         for (let a in versions) {
+            console.log(versions[a])
             items.push(
-                <ListGroup.Item active={this.state.version === versions[a]} href={"#"+this.state.agency+"#"+this.state.record+"#"+versions[a]} action key={versions[a]} id={versions[a]} onClick={(e) => {
-                    this.helpLoad(e, e.target.href.split("#")[3]);
-                }}>
-                    {this.state.data[this.state.agency].records[this.state.record].versions[versions[a]].name}
-                </ListGroup.Item>
+                <option key={versions[a]} label={this.state.data[this.state.module].records[this.state.record].versions[versions[a]].name} value={versions[a]}/>
             )
         }
         return items;
@@ -110,13 +106,13 @@ class DatabaseLoad extends Component {
 
     helpLoad(event, version) {
         let text = "The record below will be loaded:\n\n"
-        text += "SVP: " + this.state.agency + "\n" +
+        text += "SVP: " + this.state.module + "\n" +
                       "Alias: " + this.state.record + "\n" +
                       "Version: " + version + "\n";
           if (window.confirm(text)) {
-              this.setState({version: version});
-              this.props.load(this.state.data[this.state.agency].records[this.state.record].versions[version].data)
-              window.location.hash = "";
+              this.props.load(this.state.data[this.state.module].records[this.state.record].versions[version].data)
+              console.log(window.location.hash.split("#"));
+              window.location.hash = "#" + window.location.hash.split("#")[1];
           }
     }
 
@@ -127,17 +123,40 @@ class DatabaseLoad extends Component {
                     <Row>
                     <Col sm={4}>
                         <ListGroup>
-                            {this.getAgency()}
+                            Module:
                         </ListGroup>
                     </Col>
                     <Col sm={4}>
                         <ListGroup>
-                            {this.getRecord()}
+                            Record:
                         </ListGroup>
                     </Col>
                     <Col sm={4}>
                         <ListGroup>
-                            {this.getVersion()}
+                            Version:
+                        </ListGroup>
+                    </Col>
+                    </Row>
+                    <Row>
+                    <Col sm={4}>
+                        <ListGroup>
+                            <Form.Control as="select" id={"module"} value={this.state.module} onChange={(e) => this.setState({module: e.target.value})}>
+                                {this.getModule()}
+                            </Form.Control>
+                        </ListGroup>
+                    </Col>
+                    <Col sm={4}>
+                        <ListGroup>
+                            <Form.Control as="select" id={"record"} value={this.state.record} onChange={(e) => this.setState({record: e.target.value})}>
+                                {this.getRecord()}
+                            </Form.Control>
+                        </ListGroup>
+                    </Col>
+                    <Col sm={4}>
+                        <ListGroup>
+                            <Form.Control as="select" id={"value"} value={this.state.version} onChange={(e) => {this.setState({version: e.target.value}); this.helpLoad(e, e.target.value)}}>
+                                {this.getVersion()}
+                            </Form.Control>
                         </ListGroup>
                     </Col>
                     </Row>

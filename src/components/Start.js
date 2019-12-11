@@ -35,10 +35,12 @@ class STRT extends Component {
                     </Card.Text>
                 </Card.Body>
                 <DatabaseLoad/>
-                <Card.Body>
-                    <p>Load File: </p>
-                    <input type="file" name="file" id="file_loadsave" onChange={(e) => this.handleChange(e)}/>
-                </Card.Body>
+                {
+                // <Card.Body>
+                //     <p>Load File: </p>
+                //     <input type="file" name="file" id="file_loadsave" onChange={(e) => this.handleChange(e)}/>
+                // </Card.Body>
+                }
                 <Card.Footer/>
             </React.Fragment>
         );
