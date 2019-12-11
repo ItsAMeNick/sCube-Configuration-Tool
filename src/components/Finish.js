@@ -1403,6 +1403,31 @@ class FIN extends Component {
         text += this.addNotes(9);
 
         //Document
+        text += '<div style="padding:0 0 10px 10px">';
+        text += '<h2>Document Groups</h2>';
+        text += '<h3>'+this.props.data.DOCS.group+'</h3>';
+        text += '<table style="width:100%" border="1">';
+        text += '<tr>';
+        text += '<th style="width:20%"><Strong>Document Type</Strong></th>';
+        text += '<th style="width:20%"><Strong>Title Viewable</Strong></th>';
+        text += '<th style="width:20%"><Strong>Downloadable</Strong></th>';
+        text += '<th style="width:20%"><Strong>Uploadable/Optional</Strong></th>';
+        text += '<th style="width:20%"><Strong>Deletable</Strong></th>';
+        text += '</tr>';
+        for (let d in this.props.data.DOCS.docs) {
+            let doc = this.props.data.DOCS.docs[d];
+            text += '<tr>';
+            text += '<td>'+doc.type+'</td>';
+            text += '<td>'+(doc.title ? "Yes" : "No")+'</td>';
+            text += '<td>'+(doc.download ? "Yes" : "No")+'</td>';
+            text += '<td>'+(doc.upload ? "Yes" : "No")+'</td>';
+            text += '<td>'+(doc.delete ? "Yes" : "No")+'</td>';
+            text += '</tr>';
+        }
+        text += '</table>';
+
+        text += this.addNotes(10);
+        text += '</div>';
 
         //Notifications
         text += '<hr/>';
@@ -1437,14 +1462,13 @@ class FIN extends Component {
             text += '<td colspan="3">'+note.description+'</td>';
             text += '</tr>';
             text += '</table>';
-            text += '<br/><br/>';
         }
         text += this.addNotes(4);
 
         //Footer
         text += '<hr/>';
         text += this.addNotes(0, false);
-        text += this.addNotes(12, false);
+        text += this.addNotes(11, false);
 
         text += '<table style="width:100%">';
         text += '<tr>';
@@ -1468,6 +1492,7 @@ class FIN extends Component {
         if (notes.length) {
             text += "<table border='1'>";
             if (opt) {
+                text += '<br/>';
                 text += '<tr>';
                 text += '<th colspan="2">Notes</th>';
                 text += '</tr>';

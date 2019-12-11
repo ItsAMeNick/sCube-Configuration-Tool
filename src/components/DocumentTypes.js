@@ -77,10 +77,10 @@ class DOC extends Component {
                     <thead>
                         <tr>
                             <th>Document Type</th>
-                            <th>Title Viewable</th>
-                            <th>Downloadable</th>
-                            <th>Uploadable</th>
-                            <th>Deletable</th>
+                            <th>Title Viewable (ACA)</th>
+                            <th>Downloadable (ACA)</th>
+                            <th>Uploadable (ACA)</th>
+                            <th>Deletable (ACA)</th>
                         </tr>
                     </thead>
                     <tbody>
