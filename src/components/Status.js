@@ -49,6 +49,7 @@ class STAT extends Component {
                         <option label="VOID" value="VOID"/>
                     </Form.Control>
                 </td>
+                <td><Button id={"delete"} variant="light" onClick={() => this.props.delete(s)}>Delete</Button></td>
             </tr>);
         }
         return rows;
@@ -104,6 +105,10 @@ const mapDispatchToProps = dispatch => ({
         type: "add_Status",
         payload: null,
     }),
+    delete: (id) => dispatch({
+        type: "delete_status",
+        payload: id,
+    }),
     updateStatus: (id, value) => dispatch({
         type: "update_status",
         payload: {
@@ -111,7 +116,6 @@ const mapDispatchToProps = dispatch => ({
             value: value,
         },
     }),
-
     updateID: (code) => dispatch({
         type: "update_Status_Group",
         payload: code,

@@ -197,7 +197,11 @@ const sCubeReducer = (state = initialState, action) => {
             };
             return newState;
         }
-
+        case "delete_IF_setting": {
+            let newState = _.cloneDeep(state);
+            delete newState.IF.settings[action.payload];
+            return newState;
+        }
         case "update_IF_code": {
             let newState = _.cloneDeep(state);
             newState.IF.group_code = action.payload;
@@ -278,7 +282,11 @@ const sCubeReducer = (state = initialState, action) => {
             };
             return newState;
         }
-
+        case "delete_status": {
+            let newState = _.cloneDeep(state);
+            delete newState.STAT.statuses[action.payload];
+            return newState;
+        }
         case "update_Status_Group": {
             let newState = _.cloneDeep(state);
             newState.STAT.group_code = action.payload;

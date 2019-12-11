@@ -116,6 +116,7 @@ class INTK extends Component {
                         <Form.Control id={"order"} value={this.props.page_data.settings[s].order} type="number" onChange={e => this.handleChangeItem(e, s)}/>
                     : null}
                 </td>
+                <td><Button id={"delete"} variant="light" onClick={() => this.props.delete(s)}>Delete</Button></td>
             </tr>);
             used.push(this.props.page_data.settings[s].label);
             //Check if/how contacts are being Handled
@@ -182,6 +183,10 @@ const mapDispatchToProps = dispatch => ({
     add: () => dispatch({
         type: "add_IF_setting",
         payload: null,
+    }),
+    delete: (id) => dispatch({
+        type: "delete_IF_setting",
+        payload: id,
     }),
     update: (id, value) => dispatch({
         type: "update_IF_setting",
