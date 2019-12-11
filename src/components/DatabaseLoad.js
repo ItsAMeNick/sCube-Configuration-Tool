@@ -55,7 +55,11 @@ class DatabaseLoad extends Component {
                     this.setState({module: window.location.href.split("#")[2], record: window.location.href.split("#")[3].replace(/(%20)/g, " "), version: window.location.href.split("#")[4]});
                     if (Object.keys(data).length) {
                         let struct = window.location.href.split("#");
-                        console.log(struct);
+                        if (!data[struct[2]].records[struct[3].replace(/(%20)/g, " ")].versions[struct[4]]) {
+                            window.alert("Version not found.");
+                            window.location.hash = window.location.hash.split("#").slice(0,4).join("#");
+                            return null;
+                        }
                         this.props.load(data[struct[2]].records[struct[3].replace(/(%20)/g, " ")].versions[struct[4]].data);
                     }
                 } else if (window.location.href.split("#").length >= 3) {

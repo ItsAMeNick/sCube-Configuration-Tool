@@ -1494,7 +1494,7 @@ class FIN extends Component {
                 </Card.Body>
                 <Card.Body>
                     <Button onClick={() => {
-                        let copyText = window.location + this.props.loaded_file + "#load";
+                        let copyText = window.location + this.props.loaded_file;
                         navigator.clipboard.writeText(copyText);
                         alert("Copied!");
                     }}>Copy Link</Button>
